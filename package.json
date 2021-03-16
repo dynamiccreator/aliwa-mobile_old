@@ -1,0 +1,25 @@
+{
+  "name": "ALiWa",
+  "version": "0.0.1",
+  "author": "dynamiccreator",
+  "description": "ALiWa (alpha) - A light wallet for the Alias crpytocurrency.",
+  "main": "main.js",
+  "license": "(MIT) UNLICENSED",
+  "contributors": [],
+"dependencies": {
+    "aes256": "*",
+    "argon2": "*",
+    "bip39": "*",
+    "bs58": "*",
+    "bs58check": "*",
+    "create-hash": "*",
+    "electron-squirrel-startup": "^1.0.0",
+    "elliptic": "*",
+    "hdkey": "*",
+    "lokijs": "*",
+    "npx": "^10.2.2",
+    "numeral": "*",
+    "path": "*",
+    "socket.io-client": "*"
+  }
+}

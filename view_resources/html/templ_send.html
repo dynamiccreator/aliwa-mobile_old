@@ -1,0 +1,89 @@
+<div class="ui segment" style="background: #594663;margin: auto;width:95%;max-width: 50rem;margin-top:6rem">
+    <div style="margin: auto;text-align: center;">
+    <div style="text-align: left">
+
+            <span class="aliwa_input_label">Send To</span> <br>
+        <div style="float:left; width:75%;">
+            <div class="ui input large fluid" style="margin-top:0.5rem;">
+                <input id="view_send_input_destination" type="text" value="" class="aliwa_input_field" placeholder="Destination Address">
+                <i id="view_send_input_destination_clear" class="times link icon white inverted large" style="margin-top: 0.5rem"></i>
+            </div>    
+        </div>
+        <div style="float:left;text-align: right; width:25%;">                      
+            <button id="view_send_button_copy" class="ui teal right icon button massive" style="background: none;">
+                <i class="inverted copy icon"></i>
+            </button>
+            <button id="view_send_button_scan" class="ui teal right icon button massive disabled" style="background: none;">
+                <i class="inverted expand icon"></i>
+
+            </button> 
+            <button id="view_send_button_address_book" class="ui teal right icon button massive" style="background: none;">
+                <i class="book icon"></i>
+            </button>
+        </div>
+        <div style="clear: both"></div>
+
+         <span class="aliwa_input_label aliwa_input_label_distance">Label</span> <br>
+
+        <div class="ui input large fluid" style="margin-top:0.5rem;">
+            <input id="view_send_input_label" type="text" value="" class="aliwa_input_field" placeholder="(optional)">
+            <i id="view_send_input_label_clear" class="times link icon white inverted large" style="margin-top: 0.5rem"></i>
+        </div>
+
+        <br>
+         <span class="aliwa_input_label aliwa_input_label_distance">Note</span> <br>
+
+        <div class="ui input large fluid" style="margin-top:0.5rem;">
+            <input id="view_send_input_note" type="text" value="" class="aliwa_input_field" placeholder="(optional) max. 24 characters">
+            <i id="view_send_input_note_clear" class="times link icon white inverted large" style="margin-top: 0.5rem"></i>
+        </div>
+
+        <br>
+
+        <div style="float: left;width: 55%;">
+          <span class="aliwa_input_label aliwa_input_label_distance">Amount</span>  
+            <br>
+
+            <div class="ui input large fluid" style="margin-top:0.5rem;">
+                <input id="view_send_input_amount" type="text" value="" class="aliwa_input_field" style= "font-family:aliwa_mono;" placeholder="0.00000000">
+                <i id="view_send_input_amount_clear" class="times link icon white inverted large" style="margin-top: 0.5rem"></i>
+            </div>
+
+            <span id="send_currency_value" style="color:#8a8c8e;font-size: 1.5rem;margin-top: 0.7rem;display: inline-block;font-family:aliwa_mono;">0.00</span> 
+
+        </div>
+
+        <div style="float: left;width: 45%;">
+
+            <div style="float:left;">
+                <span style="color: #f38320;font-size: 1.5rem;margin-top: 4.5rem;display: inline-block;">ALIAS</span> <br>
+                <span id="send_currency_label" style="color: #8a8c8e;font-size: 1.5rem;margin-top: 1.2rem;display: inline-block;">USD</span> 
+            </div>
+            <div id="view_send_button_max_amount" style="float:right;"> <button class="ui right icon button large white" style="background: #fff;margin-top: 1.5rem;">
+                  <i class="white sort amount up icon"></i>  Max.
+                </button></div>  
+
+        </div>                  
+        <div style="clear: both"></div>
+
+         <div class="ui segment" style="background: #382b3f">
+            <span style="color:#aaa;font-size: 1rem;display: inline-block;">Available:</span>
+            <span style="float: right;color:#aaa;font-size: 1rem;display: inline-block;">&nbsp;&nbsp;ALIAS</span>
+            <span id="view_send_available_balance" style="float: right;font-size: 1rem;color:#fff;font-family:aliwa_mono;">0.00000000</span>
+            <br>
+            <span style="color:#aaa;font-size: 1rem;display: inline-block;">Tx. Fee:</span>
+            <span style="float: right;color:#aaa;font-size: 1rem;display: inline-block;">&nbsp;&nbsp;ALIAS</span>
+            <span id="view_send_fee" style="float: right;font-size: 1rem;color:#fff;font-family:aliwa_mono">0.00010000</span>
+
+            <div style="clear: both;"></div>
+         </div>
+
+        <div style="margin: auto;text-align: center;">
+            <button id="view_send_button_send_transaction" class="ui icon button alias_orange_button2 massive" style="margin-top:1.5rem;width:20rem">
+                Send
+            </button>
+        </div>
+
+    </div>
+</div>
+</div>
