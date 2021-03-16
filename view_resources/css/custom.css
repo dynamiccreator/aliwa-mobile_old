@@ -1,0 +1,126 @@
+/*.aliwa_fadingIn {
+    transition:opacity 1s linear;
+    opacity:0;
+}
+
+.aliwa_out {
+    opacity:0;
+}*/
+
+/*.menu > div,.menu > a{
+  height:4.5rem;
+   
+}*/
+
+.item {
+    height:4.5rem;
+}
+
+.item > * {
+    padding-top: 0.5rem;
+}
+
+ @font-face {
+  font-family: aliwa_font;
+  src: url("Gotham Book Regular.otf");
+  /*src: url("Gotham Bold Regular.ttf");*/
+}
+
+ @font-face {
+  font-family: aliwa_mono;
+  /*src: url("Space Gothic Regular.ttf");*/
+  src: url("PT Mono Bold.ttf");
+  /*src: url("Fira Mono Bold.ttf");*/
+ 
+}
+
+
+html * {
+    font-family:aliwa_font;
+}
+
+
+.aliwa_fadingIn {
+	opacity: 1;
+	animation-name: aliwa_fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 0.5s;
+}
+
+@keyframes aliwa_fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.alias_orange_button{
+    background: #382b3f;
+    background: #fbaa26 !important;
+/*    background: #fbaa26;*/
+    border:none !important;
+}
+
+.alias_orange_button:hover{
+    background: #f38320 !important;
+}
+
+.alias_orange_button2{
+    background: #f38320 !important;
+/*    background: #fbaa26;*/
+    border:0;
+    color: #fff !important;
+}
+
+.alias_orange_button2:hover{
+    background: #fbaa26 !important;
+}
+
+.aliwa_input_label,.aliwa_input_label_distance{
+    color:#fff;
+    font-size: 1.5rem;
+}
+
+.aliwa_input_label_distance{
+    margin-top: 1.5rem;
+    display: inline-block;
+}
+
+.aliwa_input_field{
+    background: none !important;
+    border:none !important;
+    color:#f38320 !important;
+    border-bottom: 0.2rem solid #fff !important;
+    padding: 0.5rem 0.5rem 0.5rem 0 !important;
+    border-radius: 0 !important;
+    font-size: 1.5rem !important;
+    text-overflow: ellipsis !important;
+}
+
+.aliwa_input_field::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #f38320 !important;
+  opacity: 0.6 !important; /* Firefox */
+}
+
+.aliwa_orange_text{
+    color:#f38320 !important;
+    font-size: 1.5rem;
+}
+
+#view_qr_code > img,.c_qr_code > img{
+    width: 60%;
+    height: auto;
+    margin: auto;
+    border:0.5rem solid #fff;
+}
+
+@media only screen and (max-width: 767.98px){
+    tr{
+        border-bottom: 0.5rem solid #382b3f !important;  
+        /*padding: 0rem 0rem 0rem 0rem !important;*/
+    }
+}
+

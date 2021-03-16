@@ -1,0 +1,162 @@
+<section id="dialogues_contacts">
+<div class="ui modal">
+  <i class="close icon"></i>
+  <div id="dialogues_contacts_header" class="header">
+    Contact Address
+  </div>
+  <div class="description" style="text-align: center;margin-top: 0.5rem;">
+      <div id="dialogues_contacts_address" style="width:90%;color:#000;display: inline-block;overflow: hidden;text-overflow: ellipsis;"></div>
+      <p id="dialogues_contacts_label" class="aliwa_orange_text" style="width:90%;display: inline-block;"></p>      
+    </div>
+  <div id="modal_qr_code" class="c_qr_code" style="">
+   </div> 
+    
+  
+  <div class="actions">
+    <div id="dialogues_contacts_send" class="ui black button alias_orange_button2">
+       <i class="inverted right arrow icon"></i> Send
+    </div>
+    <div id="dialogues_contacts_copy" class="ui black button alias_orange_button2">
+       <i class="inverted copy icon"></i>Copy
+    </div>
+      
+      
+      
+      <div id="dialogues_contacts_edit" class="ui black icon dropdown button alias_orange_button2">
+          <i class="inverted edit icon"></i>Edit Label
+          <div id="dialogues_contacts_edit_popup" class="menu">
+              <div class="item" style="background: #fff;text-align: center">
+                  
+                  <div class="ui icon input">
+                      <input id="dialogues_contacts_edit_input" type="text" value="" placeholder="Label">
+                      <i id="dialogues_contacts_edit_clear" class="times link icon large" style="margin-right: -1rem;margin-top: 0.3rem"></i>
+                  </div> 
+                  <button id="dialogues_contacts_edit_confirm" class="ui button alias_orange_button2 ">OK</button>
+              </div>             
+          </div>
+      </div>
+      
+          
+    <div id="dialogues_contacts_delete" class="ui  button black" style="background: #382b3f;">
+       <i  class="inverted user minus icon"></i>Delete Contact
+    </div>    
+      
+  </div>
+</div>
+</section>
+
+<section id="dialogues_receiving">
+<div class="ui modal">
+  <i class="close icon"></i>
+  <div id="dialogues_receiving_header" class="header">
+    Receiving Address
+  </div>
+  <div class="description" style="text-align: center;margin-top: 0.5rem;">
+      <div id="dialogues_receiving_address" style="width:90%;color:#000;display: inline-block;overflow: hidden;text-overflow: ellipsis;"></div>
+      <p id="dialogues_receiving_label" class="aliwa_orange_text" style="width:90%;display: inline-block;"></p>      
+    </div>
+  <div id="modal_qr_code" class="c_qr_code" style="">
+   </div> 
+    
+  
+  <div class="actions">
+    <div id="dialogues_receiving_copy" class="ui black button alias_orange_button2">
+       <i class="inverted copy icon"></i>Copy
+    </div>
+         
+      <div id="dialogues_receiving_edit" class="ui black icon dropdown button alias_orange_button2">
+          <i class="inverted edit icon"></i>Edit Label
+          <div id="dialogues_receiving_edit_popup" class="menu">
+              <div class="item" style="background: #fff;text-align: center;">
+                  
+                  <div class="ui icon input">
+                      <input id="dialogues_receiving_edit_input" type="text" value="" placeholder="Label">
+                      <i id="dialogues_receiving_edit_clear" class="times link icon large" style="margin-right: -1rem;margin-top: 0.3rem"></i>
+                  </div> 
+                  <button id="dialogues_receiving_edit_confirm" class="ui button alias_orange_button2 ">OK</button>
+              </div>             
+          </div>
+      </div>
+           
+  </div>
+</div>
+</section>
+
+<section id="popup_dialogue" style="z-index: 1000;background: #f38320;width: 100%;height:auto;position: fixed;bottom: 0px;color: white;text-align: center;padding:2rem;">
+    <div style="font-size: 3.5rem;width: 100%"><p id="popup_dialogue_text"></p></div>   
+</section>
+
+
+<section id="dialogues_modal">
+    <div class="ui modal">
+        
+        <div id="dialogues_modal_header" class="header">
+            
+        </div>
+        <div id="dialogues_modal_description" class="description" style="text-align: left;margin-top: 0.5rem;padding:1rem;overflow-y:auto;display: block;max-height: 25rem;">
+
+        </div>
+
+        <div class="actions">
+            <div id="dialogues_modal_yes" class="ui black button alias_orange_button2 approve">
+                YES
+            </div>
+
+            <div id="dialogues_modal_no" class="ui  button black deny" style="background: #382b3f;">
+                NO
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="dialogues_info">
+    <div class="ui modal">
+        <i class="close icon"></i>
+        <div id="dialogues_info_header" class="header">
+            
+        </div>
+        <div id="dialogues_info_description" class="description" style="text-align: center;margin-top: 0.5rem;padding:1rem;">
+
+        </div>
+
+        <div class="actions">
+            <div id="dialogues_info_ok" class="ui black button alias_orange_button2 approve">
+                OK
+            </div>
+    </div>
+</section>
+
+
+<section id="dialogues_input">
+    <div class="ui modal">
+        <i class="close icon"></i>
+        <div id="dialogues_input_header" class="header">
+
+        </div>
+        <div id="dialogues_input_description" class="description" style="text-align: left;margin-top: 0.5rem;padding:1rem;">
+            
+            <div class="ui segment" style="background: #594663;margin: auto;width:95%;max-width: 50rem;margin-top:1rem">
+                <div style="margin: auto;text-align: center;">
+                    <div style="text-align: left">
+
+                        <span id="dialogues_input_label" class="aliwa_input_label aliwa_input_label_distance">Password</span> <br>
+
+                        <div class="ui input large fluid" style="margin-top:0.5rem;">
+                            <input id="dialogues_input_input" type="password" value="" class="aliwa_input_field" placeholder="Password">
+                            <i id="dialogues_input_input_clear" class="times link icon white inverted large" style="margin-top: 0.5rem"></i>
+                        </div>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <div id="dialogues_input_yes" class="ui black button alias_orange_button2 approve">
+                OK
+            </div>
+            <div id="dialogues_input_no" class="ui black button deny">
+                Abort
+            </div>
+        </div>
+</section>
