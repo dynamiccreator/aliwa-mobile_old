@@ -250,39 +250,63 @@ function actions_overview(){
      
      $("#view_settings").off("click").on("click",function(){
         view_settings();              
-     }); 
-     fetch_overview();
+     });
+     
+     //show balance
+     set_balance();
+     
+     start_sync_interval();
 }
 
-async function fetch_overview() {
-await load_balance();
-if(sync_interval==null){
-  sync_interval=setInterval(async function(){
-        load_balance();     
-        }, 1000);
+async function set_balance() {
+
+    //show balance
+    if (global_balance != null) {
+        var total_split = global_balance.total.split(".");
+
+        //update overview
+        $("#balance_alias").text(total_split[0] + ".");
+        $("#balance_alias_digits").text(total_split[1]);
+        $("#view_overview_field_balance_available").text(global_balance.available);
+        $("#view_overview_field_balance_unconfirmed").text(global_balance.unconfirmed);
+
+        //update send
+        $("#view_send_available_balance").text(global_balance.available);
+    }
+}
+async function start_sync_interval(){   
+    if(sync_interval==null){
+      sync_interval=setInterval(async function(){
+            load_balance();     
+            }, 1000);
+    }
 }
 
 async function load_balance(){
     var sync_state = await window.electron.ipcRenderer_invoke("get_sync_state");
             if (sync_state == "synced") {
-                var return_wallet = await window.electron.ipcRenderer_invoke("get_overview");
-                var balance=return_wallet.return_wallet;
-                global_balance=balance;
-//                console.log("balance: ", balance);
-                var total_split=balance.total.split(".");
-                
-                //update overview
-                $("#balance_alias").text(total_split[0]+".");
-                $("#balance_alias_digits").text(total_split[1]);
-                $("#view_overview_field_balance_available").text(balance.available);
-                $("#view_overview_field_balance_unconfirmed").text(balance.unconfirmed);
-                
-                //update send
-                $("#view_send_available_balance").text(balance.available);
-                
-                if(!return_wallet.was_updated){
+                var was_updated= await window.electron.ipcRenderer_invoke("gui_was_updated");
+                if(!was_updated){                  
+                    await window.electron.ipcRenderer_invoke("set_gui_updated");
+                    //update overview and Send
+                    var balance = await window.electron.ipcRenderer_invoke("get_balance");    
+                    global_balance = balance;
+                    set_balance();
+
+                    
+                    //update transactions
+                   if($("#view_transactions_table_body").html()!=null){
+                        console.log($("#view_transactions_table_body"))
+
+                    var cur_num=parseInt($("#view_transactions_pagination_container_page_third").text());
+                    var j_clone=await transactions_pagination(cur_num-1, "height", true);
+                    $('#view_transactions_table_body').html(j_clone.find("#view_transactions_table_body").html());
+                    transactions_pagination_actions();
+                    }
+
+                    //IF new transactions:
                     //show notifications on new txs
-                    //update tx and etc.
+                    //update tx and etc.                    
                 }
 
                 
@@ -292,8 +316,7 @@ async function load_balance(){
             }
 }
         
-}
-
+        
 function view_send(user_inputs){
     window.scrollTo(0, 0);
     $("body").html(build_from_key("send")).hide();
@@ -509,14 +532,16 @@ async function get_max_amount(destinations_for_send){
      
          
         var fee=await window.electron.ipcRenderer_invoke("get_fee",destinations);
+        var start=new Date().getUTCMilliseconds();
         while(fee==false){  
-            console.log( destinations[destinations.length-1].amount);
-            destinations[destinations.length-1].amount=numeral(destinations[destinations.length-1].amount).subtract(0.0001).value();
+//            console.log( destinations[destinations.length-1].amount);           
+            destinations[destinations.length-1].amount=numeral(destinations[destinations.length-1].amount).subtract(0.0001).value();          
             fee=await window.electron.ipcRenderer_invoke("get_fee",destinations);
-            console.log( destinations[destinations.length-1].amount);
+//            console.log( destinations[destinations.length-1].amount);
 //            fee=await window.electron.ipcRenderer_invoke("get_fee",destinations);
                        
         }
+        console.log("wait: "+(new Date().getUTCMilliseconds()-start));
         var max=destinations[destinations.length-1].amount;
         return {max:max,fee:fee};
 }
@@ -713,12 +738,33 @@ async function tab_to_transactions(){
     $("#tab_first").removeClass("active");
     $("#tab_second").addClass("active");
     
-    
-     var j_load=$(templ_loads["transactions"]);
+   
+    var table_html=await transactions_pagination(0,"height",true);     
+         
+//     j_load.find("#view_address_book_receive_table_body").html(table_list);
+     
+     //transition
+     $('#overview_segment').transition('slide right',50,function(){
+          $('#overview_segment').html(table_html);        
+          transactions_pagination_actions();
+          
+          
+     },"easeInOutQuad").transition('slide left',100,"easeInOutQuad");
+     
+      $('#tab_first').off("click").on('click',function(){
+          tab_to_overview();
+      });
+      
+      
+         
+}
+
+async function transactions_pagination(i_page,i_field,i_direction){
+    var j_load=$(templ_loads["transactions"]);
      //manipulate
      var j_clone=j_load.clone();
-     var list=await window.electron.ipcRenderer_invoke('list_transactions',0, "height", true);
-    console.log(list);
+     var list=await window.electron.ipcRenderer_invoke("list_transactions",i_page,i_field,i_direction);
+//    console.log(list);
     var sync_height=list.sync_height;  
     var result=list.result;
     var table_list="";
@@ -751,7 +797,7 @@ async function tab_to_transactions(){
         
        
         var line=j_load.find("#view_transactions_table_body tr:nth-child(1)").clone();
-        console.log(line.find("td:nth-child(1)").html());
+//        console.log(line.find("td:nth-child(1)").html());
         
         line.find("td:nth-child(1) h4 i").removeClass("question").addClass(confirm_symbol);
         line.find("td:nth-child(1) h4 div span").text(""+confirmations);
@@ -773,25 +819,79 @@ async function tab_to_transactions(){
         
     }
     j_clone.find("#view_transactions_table_body").html(table_list);
-//     j_load.find("#view_address_book_receive_table_body").html(table_list);
-     
-     //transition
-     $('#overview_segment').transition('slide right',50,function(){
-          $('#overview_segment').html(j_clone);
-          $("#view_transactions_table_body tr").off("click").on("click",function(){
-        var tx=$(this).prop("id").split("_")[1];
-        show_dialogue_info(templ_loads,"Transaction",(""+tx),"OK",function(){
+    
+    //pagination
+    var page=list.page;
+    var page_max=list.page_max-1;
+    if(page<1){j_clone.find("#view_transactions_pagination_container_left_arrow").addClass("disabled");}
+    if(page>=page_max){j_clone.find("#view_transactions_pagination_container_right_arrow").addClass("disabled");}
+    
+    if(page==0){j_clone.find("#view_transactions_pagination_container_page_first").hide();}
+    else{j_clone.find("#view_transactions_pagination_container_page_first").text(1);}
+    
+       
+    if(page<2){j_clone.find("#view_transactions_pagination_container_page_second").hide();}
+    if(page-1==1){j_clone.find("#view_transactions_pagination_container_page_second").text(2);}
+    
+    
+    
+    j_clone.find("#view_transactions_pagination_container_page_third").text((page+1));
+    if(page+1>=page_max && page+2!=page_max){j_clone.find("#view_transactions_pagination_container_page_fourth").hide();}
+    if(page+1==page_max-1){j_clone.find("#view_transactions_pagination_container_page_fourth").text(page+2)}
+    
+    j_clone.find("#view_transactions_pagination_container_page_fifth").text(page_max+1)
+    if(page>=page_max){ j_clone.find("#view_transactions_pagination_container_page_fifth").hide();}
+    
+    
+    return j_clone;
+}
+
+async function transactions_pagination_actions(){
+    //pagination actions
+          $("#view_transactions_table_body tr").off("click").on("click",async function(){
+                var tx=$(this).prop("id").split("_")[1];
+                var full_tx=await window.electron.ipcRenderer_invoke("get_single_transaction",tx);
+                console.log(full_tx);               
+                show_dialogue_info(templ_loads,"Transaction",('<div style="width:100%;text-align:left"><b>Transaction ID:</b><br><a class="dialogue_link" href="https://chainz.cryptoid.info/alias/tx.dws?'+tx+'.htm">'+tx+'</a><div>'),"OK",function(){
            
-        });
-      });
-     },"easeInOutQuad").transition('slide left',100,"easeInOutQuad");
-     
-      $('#tab_first').off("click").on('click',function(){
-          tab_to_overview();
-      });
-      
-      
-         
+                });
+          });
+          
+          $("#view_transactions_pagination_container_left_arrow").off("click").on("click",async function(){
+                var cur_num=parseInt($("#view_transactions_pagination_container_page_third").text());
+                var j_clone=await transactions_pagination(cur_num-2, "height", true);
+                $('#overview_segment').html(j_clone);
+                transactions_pagination_actions();
+          });
+          
+          $("#view_transactions_pagination_container_right_arrow").off("click").on("click",async function(){
+                var cur_num=parseInt($("#view_transactions_pagination_container_page_third").text());
+                var j_clone=await transactions_pagination(cur_num, "height", true);
+                 $('#overview_segment').html(j_clone);
+                 transactions_pagination_actions();
+          });
+          
+          $(".tx_pagination_item_num").off("click").on("click",async function(){
+              if(!isNaN(parseInt($(this).text()))){
+                var j_clone=await transactions_pagination(parseInt($(this).text())-1, "height", true);
+                $('#overview_segment').html(j_clone);
+                transactions_pagination_actions();
+              }
+            
+          });
+          
+          input_clear_button_func("#transactions_pagination_goto_input","#transactions_pagination_goto_input_clear");
+          
+          $("#transactions_pagination_goto_button").off("click").on("click",async function(){
+//              var max=parseInt($("#view_transactions_pagination_container_page_fifth").text()-1);
+                var page=parseInt($("#transactions_pagination_goto_input").val())-1;
+                if(page>=0 && page <= parseInt($("#view_transactions_pagination_container_page_fifth").text())-1){
+                    var j_clone=await transactions_pagination(page, "height", true);
+                    $('#overview_segment').html(j_clone);
+                    transactions_pagination_actions();
+                }
+          });
+                    
 }
 
 function tab_to_overview(){

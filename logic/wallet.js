@@ -18,6 +18,8 @@ class aliwa_wallet{
      sync_state=null;
      gui_was_updated=false;
      sync_fails=0;
+     pagination_num=10;
+     sync_shift=0;
      
          
     constructor(){
@@ -95,9 +97,9 @@ class aliwa_wallet{
             });
             
             this.socket.on("server_respond_send_raw_tx",(result) =>{
-                console.log("##############SEND TX ANSWER: ",result);
-                console.log("send_array:"+JSON.stringify(result));
-                console.log("pure_message:",JSON.parse(result.message));
+//                console.log("##############SEND TX ANSWER: ",result);
+//                console.log("send_array:"+JSON.stringify(result));
+//                console.log("pure_message:",JSON.parse(result.message));
                 
         var message=JSON.parse(result.message);
         if(message.result.length==64){    //only if result is a valid tx
@@ -110,6 +112,7 @@ class aliwa_wallet{
             var private_standard_address_list=this.db_wallet.get_wallet_addresses(0,0,(cnf.used_pos.standard+20));
             var private_change_address_list=this.db_wallet.get_wallet_addresses(1,0,(cnf.used_pos.change+20));
             this.db_wallet.update_transactions({from:cnf.sync_height+1,to:cnf.sync_height,inputs:[],outputs:[]},private_standard_address_list,private_change_address_list);
+            this.save_wallet(null);
         }
         
                 
@@ -202,13 +205,13 @@ class aliwa_wallet{
             
             setTimeout(function(){
                 if(that.sync_state=="waiting"){
-                    if(that.sync_fails<2){
-                    that.sync();
-                    that.sync_fails++;                  
-                    }
-                    else{that.sync_fails=0;}
-                }that.sync_fails=0;
-            },5600);
+                    if(that.sync_fails<4){
+                        that.sync();
+                        that.sync_fails++;
+                        that.sync_shift+=500;
+                    }                  
+                }else{that.sync_fails=0;}
+            },1000);
         }
 
                       
@@ -315,13 +318,13 @@ class aliwa_wallet{
         var result = [];
         var tx_array = txs.chain().find().simplesort(order_field, {desc: direction}).data({forceClones: true, removeMeta: true});
         var len = tx_array.length;
-        var page_start=page*20;
-        for(var i=page_start;i<page_start+20 && i<len;i++){
+        var page_start=page*this.pagination_num;
+        for(var i=page_start;i<page_start+this.pagination_num && i<len;i++){
             result.push(tx_array[i]);
         }
         var cnf=this.db_wallet.get_config_values(); 
         
-        return {page:page,result:result,page_max:Math.ceil(len/20),sync_height:cnf.sync_height};
+        return {page:page,result:result,page_max:Math.ceil(len/this.pagination_num),sync_height:cnf.sync_height};
 
 
     }
@@ -335,7 +338,7 @@ class aliwa_wallet{
         this.socket.emit("send_raw_tx",hex,tx_object);             
     }
     
-    create_transaction(destinations,fee,utxo_result) {       
+    create_transaction(destinations,fee,utxo_result) {
         var amount=this.db_wallet.numeral(0);
         for(var i=0;i<destinations.length;i++){
             amount.add(destinations[i].amount);
@@ -351,7 +354,7 @@ class aliwa_wallet{
                 console.error("amount exeeds balance("+utxo_result.sum.value()+") by: "+(this.db_wallet.numeral(amount.value()).subtract(utxo_result.sum.value()).value()));
                 return false;
             }
-            else{this.create_transaction(destinations,fee);}//new select with updated fee, when not all UTXOs are included
+            else{return this.create_transaction(destinations,fee);}//new select with updated fee, when not all UTXOs are included
         }
         
         if (utxo_result != false) {
@@ -397,7 +400,7 @@ class aliwa_wallet{
             var total_fee=this.db_wallet.numeral((Math.ceil((tx_size+10)/1000))).multiply(this.const_fee).value();
             if(fee!=total_fee){
                 console.error("fee to small: "+fee+ " < "+total_fee);
-                this.create_transaction(destinations,total_fee,utxo_result);
+                return this.create_transaction(destinations,total_fee,utxo_result);
             }
             else{
 //                console.log("final fee: "+fee);

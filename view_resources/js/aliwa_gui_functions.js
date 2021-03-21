@@ -211,9 +211,12 @@ function show_dialogue_info(templ_loads,title,text,ok_title,f){
         $("#dialogues_info_description").html(text);
         $("#dialogues_info_ok").text(ok_title);
         
-        
-        
-    
+        $(".dialogue_link").off("click").on("click", async function () {
+            var link=$(this).attr("href");
+            var conf=window.confirm("Open external link in default browser?");//, "Are you sure you want to open "+link+" in your browser?");
+            if(conf){ await window.electron.ipcRenderer_invoke("open_tx_link", link);}          
+        });
+                
         $('.ui.modal').modal({
             duration:150,
             closable: true,
