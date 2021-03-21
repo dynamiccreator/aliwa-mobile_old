@@ -15,4 +15,4 @@ A light wallet for the ALIAS cryptocurrency
 4. `electron-forge import`
 5. (optional for logo) copy the inside of `"config": {}` from  "confg package" file into "package.json" into 
    the "config" object of an electron maker ("@electron-forge/maker-deb" for the .deb package)
-7. `npm run make`
+6. `npm run make`
