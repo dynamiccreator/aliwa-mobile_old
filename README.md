@@ -1,7 +1,7 @@
 # aliwa
 A light wallet for the ALIAS cryptocurrency
 
-## Alpha notice
+## Alpha Notice
 While in alpha version: For updates build from source or do the Manual Update below.
 
 ## Manual Update
