@@ -8,6 +8,22 @@ module.exports = function () {
    
    
    //STARTUP************************************************************
+    function syncing_loop(time){
+        setTimeout(async function(){
+            if(wallet!=null && wallet!=undefined){
+                await wallet.sync();         
+            }
+            
+            if(wallet!=null && wallet!=undefined && wallet.sync_shift>0){
+                syncing_loop(time+wallet.sync_shift);
+                wallet.sync_shift=0;
+            }
+            else{syncing_loop(time);}           
+        },time);     
+   }
+   
+    syncing_loop(30000);
+        
    ipcMain.handle('open_wallet', async (event) => {
     var wal = new aliwa.aliwa_wallet();
     var data = wal.read_wallet_DB();
@@ -64,31 +80,26 @@ module.exports = function () {
     var can_load_db = await wallet.load_wallet_DB(data, pw);   
     if (can_load_db === true) {
         await wallet.connect_to_server(); 
-        wallet.sync();
+        setTimeout(function(){wallet.sync();},1500);           
     return true;}
     else{ return false;}
    });
-   
-    setInterval(async function(){
-        if(wallet!=null && wallet!=undefined){
-            await wallet.sync();         
-        }
-//        setTimeout(async function(){
-//            if(wallet.sync_state!="synced"){
-//                await wallet.sync();   
-//            }
-//        },5500);
-   },30000);
-    
+     
    ipcMain.handle('get_sync_state', async (event) => {
         return wallet.sync_state;
    });
    
-   ipcMain.handle('get_overview', async (event) => {     
-        var return_wallet=await wallet.get_balance();
-        var was_updated=wallet.get_gui_updated();
-        wallet.set_gui_updated(true);
-        return {was_updated:was_updated,return_wallet: return_wallet};       
+  ipcMain.handle('gui_was_updated', async (event) => {      
+    return wallet.gui_was_updated;
+   });
+   
+   ipcMain.handle('set_gui_updated', async (event) => {      
+     wallet.gui_was_updated=true;
+   }); 
+   
+   ipcMain.handle('get_balance', async (event) => {     
+        var balance=await wallet.get_balance();
+        return balance;   
    });
    
    //RECEIVE*****************************************************************
@@ -137,10 +148,23 @@ module.exports = function () {
   
   //TRANSACTIONS VIEW********************************************************
   
-  ipcMain.handle('list_transactions', async (event,page, order_field, direction) => {
+    ipcMain.handle('list_transactions', async (event,page, order_field, direction) => {
         var list_result= wallet.list_transactions(page, order_field, direction);
         return list_result;
    });
+   
+    ipcMain.handle('get_single_transaction', async (event,tx) => {
+        var list_result= wallet.get_single_transaction(tx);
+        return list_result;
+   });
+   
+   //open in browser
+   ipcMain.handle('open_tx_link', async (event,link) => {
+        require("electron").shell.openExternal(link);
+   });
+   
+   
+   
     
    
    

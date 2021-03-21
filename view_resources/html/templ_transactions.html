@@ -1,13 +1,13 @@
 <div class="my_fadeUp" style="display: table;margin-top: 9.5rem;width: 100%;">
 
     <table class="ui fixed basic  table orange inverted  striped selectable " style="background:#594663;width: 100%">
-        <thead>
-            <tr><th class="two wide">Confirmations</th>
-                <th class="two wide">Date <i class="caret down icon"></i></th>
-                <th class="three wide">Value</th>
-                <th class="three wide">Type</th>
-                <th class="three wide">Address</th>
-                <th class="three wide">Note</th>
+        <thead id="view_transactions_header">
+            <tr><th id="view_transactions_header_confirmations" class="two wide">Confirmations</th>
+                <th id="view_transactions_header_date" class="two wide aliwa_pagination_down">Date <i class="caret down icon"></i></th>
+                <th id="view_transactions_header_value" class="three wide">Value</th>
+                <th id="view_transactions_header_type" class="three wide">Type</th>
+                <th id="view_transactions_header_address" class="three wide">Address</th>
+                <th id="view_transactions_header_note" class="three wide">Note</th>
             </tr></thead>
         <tbody id="view_transactions_table_body">
             <tr  class="">
@@ -126,27 +126,27 @@
         </tbody>
         <tfoot>
             <tr><th colspan="6" style="text-align: center;background: #382b3f;">
-      <div class="ui right pagination menu inverted white" style="color:#382b3f;background: none">
-        <a class="icon item" style="height:3rem;padding-top: 0rem;">
+      <div id="view_transactions_pagination_container" class="ui right pagination menu inverted white" style="color:#382b3f;background: none">
+        <a id="view_transactions_pagination_container_left_arrow" class="icon item" style="height:3rem;padding-top: 0rem;">
           <i class="left chevron icon"></i>
         </a>
-        <a class="item" style="height:3rem">1</a>
-        <a class="item" style="height:3rem">..</a>
+        <a id="view_transactions_pagination_container_page_first" class="item tx_pagination_item_num" style="height:3rem">1</a>
+        <a id="view_transactions_pagination_container_page_second" class="item tx_pagination_item_num" style="height:3rem">..</a>
        
-        <a class="item" style="height:3rem;background: #594663;color:#fff">22</a>
+        <a id="view_transactions_pagination_container_page_third" class="item tx_pagination_item_num" style="height:3rem;background: #594663;color:#fff">1</a>
         
-        <a class="item" style="height:3rem">..</a>
-        <a class="item" style="height:3rem">30</a>
-        <a class="icon item" style="height:3rem;padding-top: 0rem;">
+        <a id="view_transactions_pagination_container_page_fourth" class="item tx_pagination_item_num" style="height:3rem">..</a>
+        <a id="view_transactions_pagination_container_page_fifth" class="item tx_pagination_item_num" style="height:3rem">1</a>
+        <a id="view_transactions_pagination_container_right_arrow" class="icon item" style="height:3rem;padding-top: 0rem;">
           <i class="right chevron icon"></i>
         </a>
       </div><br>
-      <button id="pagination_goto" class="ui icon button white large" style="background: #8a8c8e;margin-top: 0.5rem;color:white;">
+      <button id="transactions_pagination_goto_button" class="ui icon button white large" style="margin-top: 0.5rem;background: #fff;">
             Go To
         </button>
-       <div class="ui action input medium" style="margin-top:0.5rem;width: 10rem;">
-                <input type="text" value="" class="aliwa_input_field" placeholder="Page Number">
-                <i class="times link icon white inverted large" style="margin-top: 0.5rem"></i>
+       <div class="ui action input medium" style="margin-top:0.5rem;width: 6rem;">
+                <input id="transactions_pagination_goto_input" type="text" value="" class="aliwa_input_field" placeholder="Page">
+                <i id="transactions_pagination_goto_input_clear" class="times link icon white inverted large" style="margin-top: 0.5rem"></i>
        </div> 
     </th>
   </tr></tfoot>

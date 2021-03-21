@@ -301,7 +301,7 @@ class db_wallet {
 //                console.error(e);
             }
         }
-
+        
         var tx_list_arr = temp_tx_list.find();
 //       console.log(tx_list_arr);process.exit(); 
         var tx_sum = this.numeral(0);      
@@ -323,7 +323,7 @@ class db_wallet {
 
 
                 for (var j = 0; j < temp_tx.inputs.length; j++) {
-
+                            
                     var matching_output = temp_outputs.findOne({'$and': [{"tx": {'$aeq': temp_tx.inputs[j].from_tx}}, {"num": {'$aeq': temp_tx.inputs[j].from_vout}}]});
                     if (matching_output != null) {
                         temp_tx.inputs[j].value = matching_output.value;
@@ -401,7 +401,7 @@ class db_wallet {
 
                    
                    var redeemed=temp_inputs.findOne({'$and': [{"from_tx": {'$aeq': temp_tx.outputs[j].tx}}, {"from_vout": {'$aeq': temp_tx.outputs[j].num}}]});
-                   redeemed= redeemed != null ? {tx:redeemed.tx,height:redeemed.create_height} : null;
+                   redeemed= redeemed != null ? {tx:redeemed.tx,num:redeemed.from_vout,height:redeemed.create_height} : null;
 
                     if (temp_tx.outputs[j].value == 0 && temp_tx.outputs[j].scriptPubKey.startsWith("6a026e706a")) {
                         temp_tx.wallet.destinations[temp_tx.wallet.destinations.length - 1] = ({address: temp_tx.outputs[j].to_address, value: temp_tx.outputs[j-1].value, self: is_self,redeemed:redeemed,address_type:address_type, note: hex_to_ascii(temp_tx.outputs[j].scriptPubKey.substring(12))});
@@ -914,8 +914,6 @@ class db_wallet {
         }
                 
         for(var i=0;i<self_outputs.length;i++){
-             /*    ,"outputs":[{"amount":0.0005,"destination_address":"SivHexqeJ8oJFESt4YZMHusEbFLj5xuP2V"}
-        ,{"destination_address":"STcHXzYe9eFnkC8PAR1nrZy3pNNupE2jt8","amount":0.0074}]}}*/
             //outputs:tx,num,value,scriptPubKey,to_address,create_height,time,mature,blockhash
             var self_output_obj={combined_key:(tx+":"+i),tx:tx,num:i,value:self_outputs[i].amount,scriptPubKey:null,to_address:self_outputs[i].destination_address,create_height:(cnf.sync_height+1000),time:c_time,mature:1,blockhash:null};
             if(db_self_sent_outputs.findOne({combined_key: {'$aeq': (tx+":"+i)}}) == null){
