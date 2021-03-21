@@ -8,6 +8,7 @@ While in alpha version: For updates build from source or do the Manual Update be
 1. Install a build from https://github.com/dynamiccreator/aliwa/releases/tag/0.0.1
 2. (Linux) Replace everything but the folders  "fomantic" and "node_modules" in location "/lib/aliwa/resources/app" with the content of the current commit.
 (Hint: Just find a folder which looks like this repository)
+
 3.(Windows) The same as in linux (Location is "resources\app" from the unzipped folder) 
 
 
