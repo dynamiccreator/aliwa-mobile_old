@@ -2,7 +2,7 @@
 A light wallet for the ALIAS cryptocurrency
 
 ## Download binaries
-LINUX: https://github.com/dynamiccreator/aliwa/releases/download/0.0.2/aliwa_0.0.1_amd64.deb
+LINUX: https://github.com/dynamiccreator/aliwa/releases/download/0.0.2/aliwa_0.0.2_amd64.deb
 
 ## Build from source (electron.js --> https://www.electronjs.org/)
 
