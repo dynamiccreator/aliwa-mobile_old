@@ -3,12 +3,18 @@ const path = require('path');
 
 //start tor
 try {
-   const { execSync } = require('child_process');
-// stderr is sent to stdout of parent process
-// you can set options.stdio if you want it to go elsewhere
+const exec = require('child_process').exec;
 var sep_linux = process.cwd().indexOf("/") > -1;
 var sep = sep_linux ? "/" : "\\";
-const stdout = execSync(process.cwd() + sep +'tor'+sep+'Tor'+sep+'tor.exe'); 
+const myShellScript = exec(process.cwd() + sep +'tor'+sep+'Tor'+sep+'tor.exe');
+
+myShellScript.stdout.on('data', (data)=>{
+    console.log(data); 
+    // do whatever you want here with data
+});
+myShellScript.stderr.on('data', (data)=>{
+    console.error(data);
+});
 } catch (e) {
     
 }
