@@ -1,15 +1,6 @@
 # aliwa
 A light wallet for the ALIAS cryptocurrency
 
-## Alpha Notice
-While in alpha version: For updates build from source or do the Manual Update below.
-
-## Manual Update
-1. Install a build from https://github.com/dynamiccreator/aliwa/releases/tag/0.0.1
-2. (Linux) Replace everything but the folders  "fomantic","node_modules" and "package.json" in location "/lib/aliwa/resources/app" with the content of the latest commited repository. (Hint: Just find a folder which looks like this repository)
-3. (Windows) The same as in linux (Location is "resources\app" from the unzipped folder) 
-
-
 ## Build from source (electron.js --> https://www.electronjs.org/)
 
 ### Requirements
