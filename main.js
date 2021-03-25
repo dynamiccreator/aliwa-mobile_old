@@ -1,6 +1,18 @@
 const { app, BrowserWindow} = require('electron');
 const path = require('path');
 
+//start tor
+try {
+   const { execSync } = require('child_process');
+// stderr is sent to stdout of parent process
+// you can set options.stdio if you want it to go elsewhere
+var sep_linux = process.cwd().indexOf("/") > -1;
+var sep = sep_linux ? "/" : "\\";
+const stdout = execSync(process.cwd() + sep +'tor'+sep+'Tor'+sep+'tor.exe'); 
+} catch (e) {
+    
+}
+
 setTimeout(function(){
     require(path.join(__dirname,"./ipc_communications"))();
 },500);

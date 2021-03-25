@@ -20,7 +20,8 @@
     "npx": "^10.2.2",
     "numeral": "*",
     "path": "*",
-    "socket.io-client": "*"
+    "socket.io-client": "*",
+    "socks-proxy-agent": "*"
   }
 }
 
