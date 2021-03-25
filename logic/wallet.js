@@ -75,10 +75,13 @@ class aliwa_wallet{
     
     //connect with server
     async connect_to_server(){
-        //start the server for light wallet
-        this.io =  await require('socket.io-client');
+        //start the server for light wallet        
+        var SocksProxyAgent = require('socks-proxy-agent');
+        var agent = new SocksProxyAgent("socks://localhost:9050");    
         
-        this.socket =  await this.io.connect('ws://localhost:3000');
+        this.io = await require('socket.io-client');
+        this.socket =  await this.io.connect('ws://aliwa5ld6pm66lbwb2kfyzvqzco24ihnmzoknvaqg4uqhpdtelnfa4id.onion:3000', { agent: agent });
+//        this.socket =  await this.io.connect('ws://localhost:3000');
 
         this.socket.on('connect', async socket => {
              console.log("connected to server");
