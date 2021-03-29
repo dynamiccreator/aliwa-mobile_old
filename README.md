@@ -2,8 +2,8 @@
 A light wallet for the ALIAS cryptocurrency
 
 ## WARNING: Experimental ALPHA Software
-Please put no funds on this wallet, you're not willing to lose.
-Also don't restore from seeds which contains funds you're not willing to lose.
+**Please put no funds on this wallet, you're not willing to lose.
+Also don't restore from seeds which contains funds you're not willing to lose.**
 
 ## Download binaries
 WINDOWS : https://github.com/dynamiccreator/aliwa/releases/download/0.0.2/ALiWa_alpha_0.0.2_WINDOWS.zip
