@@ -12,24 +12,24 @@ A light wallet for the ALIAS cryptocurrency
 	* improve syncing "wait for server" problem when server is syncing itself (still not perfect)
 	* fix qr codes in addressbook
 * Transactions:
-	* Add all details 
-	* Search/Order by
+	* add all details 
+	* search / order by
 	* show labels instead of addresses
 	* edit labels within details
 	* better mobile / narrower screen overview 
 * Address Book:
 	* Contacts/Receive:
-		* Pagination
-		* Order by / Search
+		* pagination
+		* order by / search
 		* new address/ new contact
-		* Edit Label
-		* Delete contact
+		* edit Label
+		* delete contact
 * Send
 	* Auto paste labels from Addressbook on destination address changes
 	* Add new contacts to addressbook on sending
 * Multi Send
 	* partly implemented ( only overview,edit and delete missing)
-* Receive Payment (like Receive but with Note and Amount + (included in qr code like in in core wallet)
+* Receive Payment (like Receive but with Note and Amount + (included in qr code like in the core wallet)
 
 
 ## WARNING: Experimental ALPHA Software
