@@ -9,7 +9,7 @@ Help completing the Alias Light wallet: Donate with ALIAS!
 
 ## Intermediate commit report 9.May 2021
 * Mobile
-	* refractoring code for browserify compatibility (node modules can't be used for cordova)
+	* refactoring code for browserify compatibility (node modules can't be used for cordova)
 		* -> almost mobile ready (only I/O functions and tor migration missing) 
 * Bug fixes:
 	* show note while unconfirmed
