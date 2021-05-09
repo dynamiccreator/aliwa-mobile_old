@@ -56,19 +56,23 @@ app.whenReady().then(createWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
-})
+});
 
 //prevent external links
-app.on('web-contents-created', (event, contents) => {  
+app.on('web-contents-created', (event, contents) => { 
         contents.on('will-navigate', (event, navigationUrl) => {
             event.preventDefault()});
+        //prevent open new window
+        contents.on('new-window', function(event, urlToOpen) {
+            event.defaultPrevented = true;
+        });
     });
-
+    
 app.on('activate', () => {   
     if (BrowserWindow.getAllWindows().length === 0) {
-        createWindow()
+        createWindow();
     }
     
     

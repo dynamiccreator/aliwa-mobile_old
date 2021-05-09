@@ -1,13 +1,19 @@
 <div class="my_fadeUp" style="display: table;margin-top: 9.5rem;width: 100%;">
-
-    <table class="ui fixed basic  table orange inverted  striped selectable " style="background:#594663;width: 100%">
+   <div style="display: inline-block">
+        <div class="ui left icon input" style="margin-left:1rem;margin-top: 0.5rem">     
+            <input id="view_transactions_input_search" type="text" value="" class="aliwa_input_field_search" placeholder="Search address, label...">
+            <i class="search icon white inverted large" style="left:-1.2rem;"></i>   
+        </div>
+        <i id="view_transactions_input_search_clear" class="times link icon white inverted large" style="margin-top: 0.0rem"></i>  
+   </div><br>
+    <table id="view_transactions_table" class="ui fixed basic table orange inverted striped selectable " style="background:#594663;width: 100%">
         <thead id="view_transactions_header">
-            <tr><th id="view_transactions_header_confirmations" class="two wide">Confirmations</th>
-                <th id="view_transactions_header_date" class="two wide aliwa_pagination_down">Date <i class="caret down icon"></i></th>
-                <th id="view_transactions_header_value" class="three wide">Value</th>
-                <th id="view_transactions_header_type" class="three wide">Type</th>
-                <th id="view_transactions_header_address" class="three wide">Address</th>
-                <th id="view_transactions_header_note" class="three wide">Note</th>
+            <tr><th id="view_transactions_header_confirmations" class="two wide aliwa_can_click">Confirmations</th>
+                <th id="view_transactions_header_date" class="two wide aliwa_pagination_down aliwa_can_click">Date <i class="caret down icon"></i></th>
+                <th id="view_transactions_header_value" class="three wide aliwa_can_click">Value</th>
+                <th id="view_transactions_header_type" class="two wide aliwa_can_click">Type</th>
+                <th id="view_transactions_header_address" class="four wide aliwa_can_click">Address</th>
+                <th id="view_transactions_header_note" class="three wide aliwa_can_click">Note</th>
             </tr></thead>
         <tbody id="view_transactions_table_body">
             <tr  class="">
@@ -29,103 +35,10 @@
                 </td>
                 <td data-label="Address">Alias Foundation</td>
                 <td data-label="Note">Test Note</td>
-            </tr>
-            <tr  class="">
-                <td data-label="">
-                    <h4 class="ui image header inverted">
-                        <i class="clock outline icon large "></i>
-                        <div class="content">
-                            1
-                            <div class="sub header">Confirmations
-                            </div>
-                        </div>
-                    </h4>
-                </td>
-                <td data-label="Date">01.01.2021 14:30</td>
-                <td data-label="Value"><span class="ui inverted green text">+4.5</span></td>
-                <td data-label="Type">
-                    <i class="arrow circle left icon large inverted green"></i>
-                    <span class="ui inverted green text">Received From</span>
-                </td>
-                <td data-label="Address">Sagdfgddhfhfjfjhghfhfjzhrtfteswrghfg</td>
-                <td data-label="Note">Test Note</td>
-            </tr>
-            <tr  class="">
-                <td data-label="">
-                    <h4 class="ui image header inverted">
-                        <i class="clock outline icon large "></i>
-                        <div class="content">
-                            3
-                            <div class="sub header">Confirmations
-                            </div>
-                        </div>
-                    </h4>
-
-                </td>
-                <td data-label="Date">01.01.2021 14:30</td>
-                <td data-label="Value">+4.5</td>
-                <td data-label="Type">Sent To</td>
-                <td data-label="Address">Sagdfgddhfhfjfjhghfhfjzhrtfteswrghfg</td>
-                <td data-label="Note">Test Note</td>
-            </tr>
-            <tr  class="">
-                <td data-label="">
-                    <h4 class="ui image header inverted">
-                        <i class="clock icon large "></i>
-                        <div class="content">
-                            4
-                            <div class="sub header">Confirmations
-                            </div>
-                        </div>
-                    </h4>
-                </td>
-                <td data-label="Date">01.01.2021 14:30</td>
-                <td data-label="Value">+4.5</td>
-                <td data-label="Type">Sent To</td>
-                <td data-label="Address">Sagdfgddhfhfjfjhghfhfjzhrtfteswrghfg</td>
-                <td data-label="Note">Test Note</td>
-            </tr>
-            <tr  class="">
-                <td data-label="">
-                    <h4 class="ui image header inverted">
-                        <i class="check circle icon large "></i>
-                        <div class="content">
-                            6
-                            <div class="sub header">Confirmations
-                            </div>
-                        </div>
-                    </h4>
-                    
-                </td>
-                <td data-label="Date">01.01.2021 14:30</td>
-                <td data-label="Value">+4.5</td>
-                <td data-label="Type">Sent To</td>
-                <td data-label="Address">Sagdfgddhfhfjfjhghfhfjzhrtfteswrghfg</td>
-                <td data-label="Note">Test Note</td>
-            </tr>
-            <tr  class="">
-                <td data-label="">
-                    <h4 class="ui image header inverted">
-                        <i class="check circle icon large "></i>
-                        <div class="content">
-                            112
-                            <div class="sub header">Confirmations
-                            </div>
-                        </div>
-                    </h4>
-                </td>
-                <td data-label="Date">01.01.2021 14:30</td>
-                <td data-label="Value"><span class="ui inverted red text">-599.12345678</span></td>
-                <td data-label="Type">
-                     <i class="arrow circle right icon large inverted red"></i>
-                    <span class="ui inverted red text">Sent To</span>
-                </td>
-                <td data-label="Address">Sagdfgddhfhfjfjhghfhfjzhrtfteswrghfg</td>
-                <td data-label="Note" style="color: #8a8c8e">Test Note</td>
-            </tr>
+            </tr>       
         </tbody>
         <tfoot>
-            <tr><th colspan="6" style="text-align: center;background: #382b3f;">
+            <tr><th colspan="6" style="text-align: center;background: #382b3f;text-overflow:unset">
       <div id="view_transactions_pagination_container" class="ui right pagination menu inverted white" style="color:#382b3f;background: none">
         <a id="view_transactions_pagination_container_left_arrow" class="icon item" style="height:3rem;padding-top: 0rem;">
           <i class="left chevron icon"></i>
@@ -142,12 +55,13 @@
         </a>
       </div><br>
       <button id="transactions_pagination_goto_button" class="ui icon button white large" style="margin-top: 0.5rem;background: #fff;">
-            Go To
+            Go 
         </button>
        <div class="ui action input medium" style="margin-top:0.5rem;width: 6rem;">
                 <input id="transactions_pagination_goto_input" type="text" value="" class="aliwa_input_field" placeholder="Page">
                 <i id="transactions_pagination_goto_input_clear" class="times link icon white inverted large" style="margin-top: 0.5rem"></i>
        </div> 
+      <br>      
     </th>
   </tr></tfoot>
     </table>

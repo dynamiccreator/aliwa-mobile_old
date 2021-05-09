@@ -1,29 +1,8 @@
-class db_wallet {
-    loki;
-    db;
-    fs;
-    aes256;
-
-    crypto;
-    argon2;
-    numeral;
-    
-    wallet_functions;
-    
-    wallet_loaded=false;
-    default_path;
-
-    constructor() {
-        this.loki = require("lokijs");
-        this.db = new this.loki("no_path.db");
-        this.fs = require('fs');
-        this.aes256 = require("aes256");
-
-        this.crypto = require('crypto');
-        this.argon2 = require('argon2');
-
-        this.numeral = require('numeral');
-        
+class db_wallet {          
+    constructor() { 
+        this.wallet_loaded=false;
+        this.db = new loki("no_path.db");
+           
        const wallet_functions_r=require("./wallet_functions");
        this.wallet_functions=new wallet_functions_r.wallet_functions();
        
@@ -32,8 +11,8 @@ class db_wallet {
        var sep = sep_linux ? "/" : "\\";
        this.default_path = process.cwd() + sep + "aliwa_dat" + sep + "light_wallet.dat";
        
-        if (!this.fs.existsSync(process.cwd() + sep + "aliwa_dat")) {
-            this.fs.mkdirSync(process.cwd() + sep + "aliwa_dat");
+        if (!fs.existsSync(process.cwd() + sep + "aliwa_dat")) {
+            fs.mkdirSync(process.cwd() + sep + "aliwa_dat");
         }
        
     }
@@ -45,7 +24,7 @@ class db_wallet {
 
 
         try {
-            var database_string = this.fs.readFileSync(path).toString();
+            var database_string = fs.readFileSync(path).toString();
         } catch (err) {
             console.error(err);
             return "file not found";
@@ -70,7 +49,7 @@ class db_wallet {
 
             var pw_hash = await this.get_argon2_password_data(pw, salt);
 
-            var decrypted_database_string = this.aes256.decrypt(pw_hash.hash, data);
+            var decrypted_database_string = aes256.decrypt(pw_hash.hash, data);
 //            console.log(decrypted_database_string);
             try {
                 this.db.loadJSON(decrypted_database_string);
@@ -92,11 +71,11 @@ class db_wallet {
 
 
         if (pw_hash != null) {
-            database_string = pw_salt + ":" + this.aes256.encrypt(pw_hash, database_string);
+            database_string = pw_salt + ":" + aes256.encrypt(pw_hash, database_string);
         }
 
         try {
-            this.fs.writeFileSync(path, database_string);
+            fs.writeFileSync(path, database_string);
         } catch (err) {
             console.error(err);
             return false;
@@ -107,11 +86,11 @@ class db_wallet {
     async get_argon2_password_data(pw, salt) {
 
         if (salt == null) {
-            salt = this.crypto.randomBytes(64).toString('hex');
+            salt = crypto.randomBytes(64).toString('hex');
         }
         salt = Buffer.from(salt, "hex");
         try {
-            var hash = await this.argon2.hash(pw, {salt: salt, timeCost: "12", memoryCost: "24000", type: this.argon2.argon2id, version: 0x13, raw: true});
+            var hash = await argon2.hash(pw, {salt: salt, timeCost: "12", memoryCost: "24000", type: argon2.argon2id, version: 0x13, raw: true});
 //            console.log("get_argon2_password_data:--------------------");
 //            console.log(hash.toString("hex") + " | " + salt.toString("hex"));
             hash = hash.toString("hex");
@@ -164,7 +143,7 @@ class db_wallet {
 
     }
 
-    update_transactions(data, private_standard_address_list,private_change_address_list) {
+    update_transactions(data, private_standard_address_list,private_change_address_list,initial_sync) {
                 
         var full_addresses=[];
         
@@ -183,7 +162,8 @@ class db_wallet {
 
 
          //delete orphans
-         if(data.from <= this.get_config_values().sync_height){
+         if(data.from <= this.get_config_values().sync_height && !initial_sync){
+             console.log("DELETE ORPHANS from "+data.from)
             this.delete_orphans(data.from);
          }
          
@@ -304,9 +284,9 @@ class db_wallet {
         
         var tx_list_arr = temp_tx_list.find();
 //       console.log(tx_list_arr);process.exit(); 
-        var tx_sum = this.numeral(0);      
-        var balance_available= this.numeral(0);
-        var balance_total= this.numeral(0);
+        var tx_sum = numeral(0);      
+        var balance_available= numeral(0);
+        var balance_total= numeral(0);
         for (var i = 0; i < tx_list_arr.length; i++) {
             try {
                 var temp_tx = temp_tx_list.findOne({'tx': {'$aeq': tx_list_arr[i].tx}});
@@ -316,8 +296,8 @@ class db_wallet {
 
 
                 temp_tx.wallet.tx = tx_list_arr[i].tx;
-                temp_tx.wallet.self_balance = this.numeral(0);
-                temp_tx.wallet.fee = this.numeral(0);
+                temp_tx.wallet.self_balance = numeral(0);
+                temp_tx.wallet.fee = numeral(0);
                 temp_tx.wallet.is_self = false;
                 temp_tx.wallet.mature = -1;
 
@@ -448,7 +428,7 @@ class db_wallet {
             tx_sum.add(parseFloat(my_self_balance));
         }
         
-        var balance_unconfirmed= this.numeral(0);
+        var balance_unconfirmed= numeral(0);
         balance_unconfirmed.add(balance_total.value());
         balance_unconfirmed.subtract(balance_available.value());
 //        console.log("balance_unconfirmed: "+balance_unconfirmed.format('0.00000000'));
@@ -577,7 +557,7 @@ class db_wallet {
             }
         }
         
-        this.update_config({used_pos:{standard:highest_used_standard,change:highest_used_change}});
+        this.update_config({used_pos:{standard:highest_used_standard+1,change:highest_used_change+1}});
         this.update_addressbook_receive(highest_used_standard);
         
     }
@@ -593,7 +573,7 @@ class db_wallet {
         for(var i=0;i<private_standard_address_list.length;i++){
             if(db_addressbook_receive.findOne({pos: {'$aeq': private_standard_address_list[i].pos}}) == null){
                 db_addressbook_receive.insert({pos:private_standard_address_list[i].pos,address:private_standard_address_list[i].address,label:(i==0 ? "Default Receiving Address" : null)});
-                console.log("insert new address HD#"+(i+1)+"to address_book: "+private_standard_address_list[i].address+" | "+private_standard_address_list[i].pos);
+                console.log("insert new address HD# "+(private_standard_address_list[i].pos+1)+"to address_book: "+private_standard_address_list[i].address+" | "+private_standard_address_list[i].pos);
             }
         }
     }
@@ -672,15 +652,15 @@ class db_wallet {
                         var has_note=false;
                         for (var j = 0; j < destinations.length; j++) {
                             if(destinations[j].self && destinations[j].note!=undefined){
-                                db_transaction_views.insert({tx: trans_copy[i].tx, num: j, combined_key: (tx + ":" + 0), time: trans_copy[i].time, height: trans_copy[i].height,
-                                    type: "self sent", address: "(n/a)", value: value,note:destinations[j].note, mature:trans_copy[i].mature});
+                                db_transaction_views.insert({tx: trans_copy[i].tx, num: j, combined_key: (tx + ":" + 0), time: trans_copy[i].time, human_time: (new Date(numeral(trans_copy[i].time).multiply(1000).value()).toLocaleString()),height: trans_copy[i].height,
+                                    type: "self sent", address: "(n/a)", value: ((value>=0 ? "+" : "")+numeral(value).format("0.00[000000]")),note:destinations[j].note, mature:trans_copy[i].mature,blockhash:trans_copy[i].blockhash});
                                 has_note=true;
                                 break;
                             }
                         }
                         if(!has_note){
-                            db_transaction_views.insert({tx: trans_copy[i].tx, num: j, combined_key: (tx + ":" + 0), time: trans_copy[i].time, height: trans_copy[i].height,
-                                    type: "self sent", address: "(n/a)", value: value, mature:trans_copy[i].mature});
+                            db_transaction_views.insert({tx: trans_copy[i].tx, num: j, combined_key: (tx + ":" + 0), time: trans_copy[i].time, human_time: (new Date(numeral(trans_copy[i].time).multiply(1000).value()).toLocaleString()),height: trans_copy[i].height,
+                                    type: "self sent", address: "(n/a)", value: ((value>=0 ? "+" : "")+numeral(value).format("0.00[000000]")), mature:trans_copy[i].mature,blockhash:trans_copy[i].blockhash});
                         }
                     }
                 } 
@@ -690,8 +670,8 @@ class db_wallet {
                         var first_used = false;
                         for (var j = 0; j < destinations.length; j++) {
                             if (destinations[j].self && destinations[j].address_type==0) {
-                                db_transaction_views.insert({tx: trans_copy[i].tx, num: j, combined_key: (tx + ":" + j), time: trans_copy[i].time, height: trans_copy[i].height,
-                                type: "received", address: destinations[j].address, value: destinations[j].value,note:destinations[j].note, mature:trans_copy[i].mature});
+                                db_transaction_views.insert({tx: trans_copy[i].tx, num: j, combined_key: (tx + ":" + j), time: trans_copy[i].time, human_time: (new Date(numeral(trans_copy[i].time).multiply(1000).value()).toLocaleString()), height: trans_copy[i].height,
+                                type: "received", address: destinations[j].address, value: "+"+numeral(destinations[j].value).format("0.00[000000]"),note:destinations[j].note, mature:trans_copy[i].mature,blockhash:trans_copy[i].blockhash});
                             }
                         }
                     }
@@ -701,15 +681,15 @@ class db_wallet {
                     if (destinations != null) {
                         var first_used = false;
                         for (var j = 0; j < destinations.length; j++) {
-                            //var value= (j==0 ? this.numeral(send_from[j].value) : send_from[j].value );
+                            //var value= (j==0 ? numeral(send_from[j].value) : send_from[j].value );
                             if (!destinations[j].self) {
                                 var value = destinations[j].value;
                                 if (!first_used) {
-                                    value = this.numeral(destinations[j].value).add(trans_copy[i].fee).value();
+                                    value = numeral(destinations[j].value).add(trans_copy[i].fee).value();
                                     first_used = true;
                                 }
-                                db_transaction_views.insert({tx: trans_copy[i].tx, num: j, combined_key: (tx + ":" + j), time: trans_copy[i].time, height: trans_copy[i].height,
-                                    type: "sent", address: destinations[j].address, value: "-"+value,note:destinations[j].note, mature:trans_copy[i].mature});
+                                db_transaction_views.insert({tx: trans_copy[i].tx, num: j, combined_key: (tx + ":" + j), time: trans_copy[i].time, human_time: (new Date(numeral(trans_copy[i].time).multiply(1000).value()).toLocaleString()), height: trans_copy[i].height,
+                                    type: "sent", address: destinations[j].address, value: "-"+numeral(value).format("0.00[000000]"),note:destinations[j].note, mature:trans_copy[i].mature,blockhash:trans_copy[i].blockhash});
                             }
                         }//end of j-for
                     }
@@ -721,7 +701,7 @@ class db_wallet {
         }
     }
     
-    add_addressbook_receive_address(label){            
+   /* add_addressbook_receive_address(label){            
         var db_addressbook_receive = this.db.getCollection("addressbook_receive");
         if (db_addressbook_receive == null) {           
             db_addressbook_receive = this.db.addCollection("addressbook_receive", {unique: ["pos"]});
@@ -749,6 +729,15 @@ class db_wallet {
             }
         }
         return true;
+    }*/
+        
+     get_contact_addresses(){
+         var db_addressbook_contact = this.db.getCollection("contact_address_book");
+        if (db_addressbook_contact == null) {           
+            db_addressbook_contact = this.db.addCollection("contact_address_book", {unique: ["pos"]});                               
+        }
+                 
+         return this.db.getCollection("contact_address_book");  
     }
     
     change_label_addressbook_receive_address(pos,label){
@@ -771,21 +760,21 @@ class db_wallet {
         var config = this.get_config_values();
 //        console.log(db_unspent.find());
 
-//        console.log("random: "+(this.crypto.randomInt(0,(Math.pow(2,48)-2))/(Math.pow(2,48)-1)));
+//        console.log("random: "+(crypto.randomInt(0,(Math.pow(2,48)-2))/(Math.pow(2,48)-1)));
 //        var unspent_arr=db_unspent.find().sort( () => Math.random() - 0.5) ;
         
         var unspent_arr_fully=db_unspent.find({'$or':
                     [{'$and': [{'mature': {'$aeq': 1}},{'create_height': {'$gt': (config.sync_height-5)}}]},
                      {'mature' : {'$aeq': 0}}]})
-                    .sort( () => (this.crypto.randomInt(0,(Math.pow(2,48)-2))/(Math.pow(2,48)-1)) - 0.5) ;
-        var unspent_arr=db_unspent.find().sort( () => (this.crypto.randomInt(0,(Math.pow(2,48)-2))/(Math.pow(2,48)-1)) - 0.5) ;
+                    .sort( () => (crypto.randomInt(0,(Math.pow(2,48)-2))/(Math.pow(2,48)-1)) - 0.5) ;
+        var unspent_arr=db_unspent.find().sort( () => (crypto.randomInt(0,(Math.pow(2,48)-2))/(Math.pow(2,48)-1)) - 0.5) ;
                
         var balance=config.balance.available;
         var dust_threshold=balance < 0.002 ? 0 : (balance < 0.02 ? 0.001 : (balance < 0.2 ? 0.01 : (balance < 2 ? 0.1 : (balance < 20 ? 0.1 : 1)))); 
         var collector={};
         
         
-        collector.sum=this.numeral(0);
+        collector.sum=numeral(0);
         collector.array=[];
         
         //first try to select only from fully confirmed utxos
@@ -800,7 +789,7 @@ class db_wallet {
         }
                
         var i=0;
-        while((collector.sum.value()<amount || (collector.sum.value()-amount)<dust_threshold) && collector.sum.value()!=balance && collector.sum.value()!=amount && i<unspent_arr_fully.length){
+        while((collector.sum.value()<amount || (collector.sum.value()-amount)<dust_threshold && i<4) && collector.sum.value()!=balance && collector.sum.value()!=amount && i<unspent_arr_fully.length){
             collector.sum.add(unspent_arr_fully[i].value);
             collector.array.push(unspent_arr_fully[i]);     
             i++;           
@@ -810,7 +799,7 @@ class db_wallet {
         
              
         //*** select from all available utxo (1 conf. min.)
-        collector.sum=this.numeral(0);
+        collector.sum=numeral(0);
         collector.array=[];
         
         if(amount>balance){
@@ -868,19 +857,22 @@ class db_wallet {
         var last=-999;
                              
         var read_from_db=db_wallet_addresses.chain().find({'$and': [{"type": {'$aeq': change}}, {"pos": {'$gte':from_addr}}, {"pos": {'$lt':to_addr}}]}).simplesort("pos").data({forceClones: true, removeMeta: true});
-        if(read_from_db[read_from_db.length-1]!=undefined){
+        if(read_from_db!=null && read_from_db.length!=undefined && read_from_db[read_from_db.length-1]!=undefined){
           last=read_from_db[read_from_db.length-1].pos;}
         
-        if(last+1<to_addr || last==undefined){
+        if(last+1<to_addr){
             console.error("add to wallet addresses: "+(last+1)+" -> "+to_addr);
             last=((last+1)<0 || last==undefined) ? 0 : (last+1);
             var add_addresses=this.wallet_functions.get_derived_adresses(config.master_seed,change,last,to_addr);
             for (var i = 0,len=add_addresses.length; i < len; i++) {
-                var input_addr=add_addresses[i];                
+                var input_addr=add_addresses[i]; 
                 input_addr.combined_key=((last+i)+":"+change);
+//                console.log("####################################################INSERT ADDR:"+((last+i)+":"+change)+" | "+input_addr.pos+","+input_addr.type);
                 db_wallet_addresses.insert(input_addr);
             }
-            read_from_db=db_wallet_addresses.chain().find({'$and': [{"type": {'$aeq': change}}, {"pos": {'$gte':from_addr}}, {"pos": {'$lt':to_addr}}]}).simplesort("pos").data({forceClones: true, removeMeta: true});           
+            read_from_db=db_wallet_addresses.chain().find({'$and': [{"type": {'$aeq': change}}, {"pos": {'$gte':from_addr}}, {"pos": {'$lt':to_addr}}]}).simplesort("pos").data({forceClones: true, removeMeta: true});  
+//            console.log("from to:"+from_addr+"->"+to_addr);
+//            console.log(read_from_db);
             return read_from_db;
         }
         else{         
@@ -907,25 +899,39 @@ class db_wallet {
         
         for(var i=0;i<self_inputs.length;i++){
             //inputs: tx,in_index,from_tx,from_vout,create_height,time,blockhash
-            var self_input_obj={combined_key:(tx+":"+i),tx:tx,in_index:i,from_tx:self_inputs[i].prev_tx,from_vout:self_inputs[i].input_index,create_height:(cnf.sync_height+1000),time:c_time,blockhash:null};
+            var self_input_obj={combined_key:(tx+":"+i),tx:tx,in_index:i,from_tx:self_inputs[i].prev_tx,from_vout:self_inputs[i].input_index,create_height:(cnf.sync_height+999999999),time:c_time,blockhash:null};
             if(db_self_sent_inputs.findOne({combined_key: {'$aeq': (tx+":"+i)}}) == null){
                 db_self_sent_inputs.insert(self_input_obj);
             }
         }
-                
+        
+        var nar_counter=0;
         for(var i=0;i<self_outputs.length;i++){
             //outputs:tx,num,value,scriptPubKey,to_address,create_height,time,mature,blockhash
-            var self_output_obj={combined_key:(tx+":"+i),tx:tx,num:i,value:self_outputs[i].amount,scriptPubKey:null,to_address:self_outputs[i].destination_address,create_height:(cnf.sync_height+1000),time:c_time,mature:1,blockhash:null};
-            if(db_self_sent_outputs.findOne({combined_key: {'$aeq': (tx+":"+i)}}) == null){
+            console.log("####SELF OUTPUTS",self_outputs[i]);                              
+            var self_output_obj={combined_key:(tx+":"+(i+nar_counter)),tx:tx,num:(i+nar_counter),value:self_outputs[i].amount,scriptPubKey:null,to_address:self_outputs[i].destination_address,create_height:(cnf.sync_height+999999999),time:c_time,mature:1,blockhash:null};
+            if(db_self_sent_outputs.findOne({combined_key: {'$aeq': (tx+":"+(i+nar_counter))}}) == null){
                 db_self_sent_outputs.insert(self_output_obj);
             }
+            
+              //narration
+            var narration=(self_outputs[i].narration !=undefined ? self_outputs[i].narration : null);          
+            if(narration!=null){
+                nar_counter++;  
+                var nar_hex = ascii_string_to_hex(narration);              
+                narration = "6a" + "026e70" + "6a" + int_toVarint_byte((nar_hex.length / 2), 1) + nar_hex;
+                var self_output_obj={combined_key:(tx+":"+(i+nar_counter)),tx:tx,num:(i+nar_counter),value:0,scriptPubKey:narration,to_address:self_outputs[i].destination_address,create_height:(cnf.sync_height+999999999),time:c_time,mature:1,blockhash:null};
+                if(db_self_sent_outputs.findOne({combined_key: {'$aeq': (tx+":"+(i+nar_counter))}}) == null){
+                    db_self_sent_outputs.insert(self_output_obj);
+                }
+                            
+            }
+            
+           
+            
         }
-        
-        
-        
-        
-    }
-    
+                            
+    }   
   /*  clean_self_sent_txs(inputs,outputs){
         var db_self_sent_inputs = this.db.getCollection("db_self_sent_inputs");
         if (db_self_sent_inputs == null) {   

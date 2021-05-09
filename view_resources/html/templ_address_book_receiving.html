@@ -1,9 +1,20 @@
 <div id="address_book_tab_content" class="my_fadeUp" style="display: table;margin-top: 9.5rem;width: 100%;">
+    <button id="address_book_receive_new_address" class="ui icon button alias_orange_button2 large" style="background: #fff;margin-top: 0.5rem;margin-left:1rem">
+            <i class="inverted plus icon"></i>&nbsp;New Address
+ </button>
+    <div style="display: inline-block">
+  <div class="ui left icon input" style="margin-left:1rem;margin-top: 0.5rem">     
+     <input id="view_address_book_receive_input_search" type="text" value="" class="aliwa_input_field_search" placeholder="Search address, label...">
+     <i class="search icon white inverted large" style="left:-1.2rem;"></i>   
+  </div>
+<i id="view_address_book_receive_input_search_clear" class="times link icon white inverted large" style="margin-top: 0.0rem"></i>  
+    </div>
+    <br>
 <table class="ui fixed basic  table orange inverted  striped selectable unstackable" style="background:#594663;width: 100%">
-        <thead>
-            <tr><th class="three wide">HD # <i class="caret down icon"></i></th>
-                <th class="seven wide">Label</th>
-                <th class="six wide">Address</th>
+        <thead id="view_address_book_receive_header">
+            <tr><th id="view_address_book_receive_header_pos" class="three wide aliwa_pagination_down aliwa_can_click">HD # <i class="caret down icon"></i></th>
+                <th id="view_address_book_receive_header_label" class="seven wide aliwa_can_click">Label</th>
+                <th id="view_address_book_receive_header_address" class="six wide aliwa_can_click">Address</th>
             </tr></thead>
         <tbody  id="view_address_book_receive_table_body">
             <tr  class="address_book_line_receiving">
@@ -12,30 +23,31 @@
                 <td data-label="Address">Saliasaliasaliasalias</td>
             </tr>
         </tbody>
-        <tfoot>
-            <tr><th colspan="6" style="text-align: center;background: #382b3f;">
-      <div class="ui right pagination menu inverted white" style="color:#382b3f;background: none">
-        <a class="icon item" style="height:3rem;padding-top: 0rem;">
+           <tfoot>
+            <tr><th colspan="6" style="text-align: center;background: #382b3f;text-overflow:unset">
+      <div id="view_address_book_receive_pagination_container" class="ui right pagination menu inverted white" style="color:#382b3f;background: none">
+        <a id="view_address_book_receive_pagination_container_left_arrow" class="icon item" style="height:3rem;padding-top: 0rem;">
           <i class="left chevron icon"></i>
         </a>
-        <a class="item" style="height:3rem">1</a>
-        <a class="item" style="height:3rem">..</a>
+        <a id="view_address_book_receive_pagination_container_page_first" class="item tx_pagination_item_num" style="height:3rem">1</a>
+        <a id="view_address_book_receive_pagination_container_page_second" class="item tx_pagination_item_num" style="height:3rem">..</a>
        
-        <a class="item" style="height:3rem;background: #594663;color:#fff">1</a>
+        <a id="view_address_book_receive_pagination_container_page_third" class="item tx_pagination_item_num" style="height:3rem;background: #594663;color:#fff">1</a>
         
-        <a class="item" style="height:3rem">..</a>
-        <a class="item" style="height:3rem">1</a>
-        <a class="icon item" style="height:3rem;padding-top: 0rem;">
+        <a id="view_address_book_receive_pagination_container_page_fourth" class="item tx_pagination_item_num" style="height:3rem">..</a>
+        <a id="view_address_book_receive_pagination_container_page_fifth" class="item tx_pagination_item_num" style="height:3rem">1</a>
+        <a id="view_address_book_receive_pagination_container_right_arrow" class="icon item" style="height:3rem;padding-top: 0rem;">
           <i class="right chevron icon"></i>
         </a>
       </div><br>
-      <button id="pagination_goto" class="ui icon button white large" style="background: #fff;margin-top: 0.5rem;">
-            Go To
+      <button id="address_book_receive_pagination_goto_button" class="ui icon button white large" style="margin-top: 0.5rem;background: #fff;">
+            Go 
         </button>
-       <div class="ui action input medium" style="margin-top:0.5rem;width: 10rem;">
-                <input type="text" value="" class="aliwa_input_field" placeholder="Page Number">
-                <i class="times link icon white inverted large" style="margin-top: 0.5rem"></i>
+       <div class="ui action input medium" style="margin-top:0.5rem;width: 6rem;">
+                <input id="address_book_receive_pagination_goto_input" type="text" value="" class="aliwa_input_field" placeholder="Page">
+                <i id="address_book_receive_goto_input_clear" class="times link icon white inverted large" style="margin-top: 0.5rem"></i>
        </div> 
+      <br>      
     </th>
   </tr></tfoot>
     </table>

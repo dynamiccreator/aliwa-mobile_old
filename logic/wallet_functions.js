@@ -1,18 +1,6 @@
 require("./helper_functions")();
-class wallet_functions {
-    bip39;
-    hdkey;
-    createHash;
-    bs58check;
-    
-    bs58_2;
-
-    constructor() {
-        this.bip39 = require("bip39");
-        this.hdkey = require("hdkey");
-        this.createHash = require("create-hash");
-        this.bs58check = require("bs58check");       
-        this.bs58_2 = require("bs58"); 
+class wallet_functions {  
+    constructor() {          
     }
 
     get_new_seed_words() {
@@ -20,12 +8,12 @@ class wallet_functions {
 //        for (var i = 0; i < 12; i++) {
 //            alias_12 += " alias";
 //        }
-        return this.bip39.generateMnemonic(256);// + alias_12;
+        return bip39.generateMnemonic(256);// + alias_12;
     }
 
     async get_master_seed_string(seed_words, pw) {
-        const seed = await this.bip39.mnemonicToSeed(seed_words, pw); //creates seed buffer
-//        const root = this.hdkey.fromMasterSeed(seed);
+        const seed = await bip39.mnemonicToSeed(seed_words, pw); //creates seed buffer
+//        const root = hdkey.fromMasterSeed(seed);
 //        console.log("SEED: ");
 //        console.log(seed);
 //        console.log(seed.toString("hex"));
@@ -34,7 +22,7 @@ class wallet_functions {
     }
 
     get_derived_adresses(seed, change, from, to) {
-        var root=this.hdkey.fromMasterSeed(Buffer.from(seed,"hex"));
+        var root=hdkey.fromMasterSeed(Buffer.from(seed,"hex"));
         var addresses = [];
 
         for (var i = from; i < to; i++) {
@@ -46,12 +34,12 @@ class wallet_functions {
 
             const step1 = addrnode._publicKey;
 
-            const step2 = this.createHash('sha256').update(step1).digest();
-            const step3 = this.createHash('ripemd160').update(step2).digest();
+            const step2 = createHash('sha256').update(step1).digest();
+            const step3 = createHash('ripemd160').update(step2).digest();
             var step4 = Buffer.allocUnsafe(21);
             step4.writeUInt8(0x3f, 0);
             step3.copy(step4, 1); //step4 now holds the extended RIPMD-160 result
-            const step9 = this.bs58check.encode(step4);
+            const step9 = bs58check.encode(step4);
 //            console.log(i + '. Adress: ' + step9 + " | " + step9.length);
 
             addresses.push({pos: i, type: change,address: step9.toString(), privateKey: addrnode.privateKey.toString('hex'), publicKey: addrnode._publicKey.toString('hex')});
@@ -74,10 +62,9 @@ class wallet_functions {
         var output_hex = "" + int_toVarint8_fd(tx_input_data.outputs.length + narr_count); // output num
 
         for (var o = 0; o < tx_input_data.outputs.length; o++) {
-            output_hex += int_toVarint_byte(Math.floor(tx_input_data.outputs[o].amount * 100000000), 8); // Math.floor because of javascript adding some 0.000000000001 at the end after multiplying 
+            output_hex += int_toVarint_byte(Math.floor(numeral(tx_input_data.outputs[o].amount).multiply(100000000).value()), 8); // Math.floor because of javascript adding some 0.000000000001 at the end after multiplying 
             output_hex += int_toVarint_byte(25, 1);// script length  
-            output_hex += "76a914" + this.bs58_2.decode(tx_input_data.outputs[o].destination_address).toString("hex").substr(2, 40) + "88ac";//output script
-
+            output_hex += "76a914" + bs58_2.decode(tx_input_data.outputs[o].destination_address).toString("hex").substr(2, 40) + "88ac";//output script            
             //build narration if available
             if (tx_input_data.outputs[o].narration != undefined) {
 //                console.log("narration:\n");
@@ -115,7 +102,7 @@ class wallet_functions {
 
                 // only sign itself not other tx inputs
                 if (i == j) {
-                    prepare_sig += int_toVarint_byte(25, 1); // length of script_pubkey
+                    prepare_sig += int_toVarint_byte((parseInt(Math.floor(tx_input_data.inputs[j].script_pubkey.length/2))), 1); // length of script_pubkey
                     prepare_sig += tx_input_data.inputs[j].script_pubkey;   // script_pubkey                       
                 } else {
                     prepare_sig += "00";// nothing to sign 
@@ -130,8 +117,8 @@ class wallet_functions {
             prepare_sig += int_toVarint_byte(4, 4) // ALIAS FORK ID !!!!!!!!!!!!!!
 
             //double hash sha256 
-            var prepare_hash = this.createHash('sha256').update(Buffer.from(prepare_sig, "hex")).digest(); // first hash
-            prepare_hash = (this.createHash('sha256').update(prepare_hash).digest()).toString("hex"); // double hash -> to string
+            var prepare_hash = createHash('sha256').update(Buffer.from(prepare_sig, "hex")).digest(); // first hash
+            prepare_hash = (createHash('sha256').update(prepare_hash).digest()).toString("hex"); // double hash -> to string
 
 
 
@@ -163,8 +150,8 @@ class wallet_functions {
     }
 
 //    wallet_hash(string) {
-//        var hash=this.createHash('sha256').update(Buffer.from(string, "hex")).digest();       
-//       return  this.createHash('sha256').update(hash).digest().toString("hex");  
+//        var hash=createHash('sha256').update(Buffer.from(string, "hex")).digest();       
+//       return  createHash('sha256').update(hash).digest().toString("hex");  
 //    }
 
    
