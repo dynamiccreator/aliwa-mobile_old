@@ -53,11 +53,15 @@
 
         </div>
 
-        <div style="float: left;width: 45%;">
-
-            <div style="float:left;">
+        <div style="float: left;width: 45%;">            
+            <div style="float:left;margin-left: 0.5rem;">              
                 <span style="color: #f38320;font-size: 1.5rem;margin-top: 4.5rem;display: inline-block;">ALIAS</span> <br>
-                <span id="send_currency_label" style="color: #8a8c8e;font-size: 1.5rem;margin-top: 1.2rem;display: inline-block;">USD</span> 
+                <span id="send_currency_label" style="color: #8a8c8e;font-size: 1.5rem;margin-top: 1.2rem;display: inline-block;">USD
+                     <i class="chevron up icon"></i>
+                <!-- <button class="ui icon button">
+                   
+                </button> -->
+                </span> 
             </div>
             <div id="view_send_button_max_amount" style="float:right;"> <button class="ui right icon button large white" style="background: #fff;margin-top: 1.5rem;">
                   <i class="white sort amount up icon"></i>  Max.
@@ -69,7 +73,7 @@
          <div class="ui segment" style="background: #382b3f">
             <span style="color:#aaa;font-size: 1rem;display: inline-block;">Available:</span>
             <span style="float: right;color:#aaa;font-size: 1rem;display: inline-block;">&nbsp;&nbsp;ALIAS</span>
-            <span id="view_send_available_balance" style="float: right;font-size: 1rem;color:#fff;font-family:aliwa_mono;">0.00000000</span>
+            <span id="view_send_available_balance" style="float: right;font-size: 1rem;color:#fff;font-family:aliwa_mono;">-.--------</span>
             <br>
             <span style="color:#aaa;font-size: 1rem;display: inline-block;">Tx. Fee:</span>
             <span style="float: right;color:#aaa;font-size: 1rem;display: inline-block;">&nbsp;&nbsp;ALIAS</span>
@@ -78,8 +82,24 @@
             <div style="clear: both;"></div>
          </div>
 
-        <div style="margin: auto;text-align: center;">
-            <button id="view_send_button_send_transaction" class="ui icon button alias_orange_button2 massive" style="margin-top:1.5rem;width:20rem">
+        <button id="view_send_button_clear" class="ui icon button white large" style="background: #fff;margin-top:1.5rem;margin-left:2rem;">
+                <i class="times icon"></i> Clear
+            </button>
+            <button id="view_send_button_add" class="ui icon button white large" style="background: #fff;margin-top:1.5rem;margin-left:2rem;float:right;">
+                <i class="plus icon"></i> Add
+            </button>
+            <div id="view_send_button_show_list" class="ui labeled button" tabindex="0" style="background: #fff;margin-top:1.5rem;margin-left:2rem;float:right;">
+                <div class="ui icon button white large" style="background: #fff;">
+                    <i class="list icon"></i>  Show List
+                </div>
+                <a id="view_send_button_show_list_number" class="ui basic left pointing label">
+                    0
+                </a>
+            </div>     
+            <br>
+        
+        <div style="margin: auto;text-align: center;">                       
+            <button id="view_send_button_send_transaction" class="ui icon button alias_orange_button2 massive" style="margin-top:1.5rem;width:20rem;">
                 Send
             </button>
         </div>

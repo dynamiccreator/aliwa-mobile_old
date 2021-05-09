@@ -14,7 +14,7 @@
   
   <div class="actions">
     <div id="dialogues_contacts_send" class="ui black button alias_orange_button2">
-       <i class="inverted right arrow icon"></i> Send
+        <i class="inverted right arrow icon"></i>&nbsp;&nbsp;Send
     </div>
     <div id="dialogues_contacts_copy" class="ui black button alias_orange_button2">
        <i class="inverted copy icon"></i>Copy
@@ -25,13 +25,14 @@
       <div id="dialogues_contacts_edit" class="ui black icon dropdown button alias_orange_button2">
           <i class="inverted edit icon"></i>Edit Label
           <div id="dialogues_contacts_edit_popup" class="menu">
-              <div class="item" style="background: #fff;text-align: center">
+              <div class="item" style="background: #382b3f;text-align: center">
                   
-                  <div class="ui icon input">
-                      <input id="dialogues_contacts_edit_input" type="text" value="" placeholder="Label">
-                      <i id="dialogues_contacts_edit_clear" class="times link icon large" style="margin-right: -1rem;margin-top: 0.3rem"></i>
-                  </div> 
+                  <div class="ui input large fluid">
+                      <input id="dialogues_contacts_edit_input" class="aliwa_input_field" type="text" value="" placeholder="Label">
+                      <i id="dialogues_contacts_edit_clear" class="times link icon white inverted large" style="margin-top: 1rem"></i>
+                  </div> <br><br>                 
                   <button id="dialogues_contacts_edit_confirm" class="ui button alias_orange_button2 ">OK</button>
+                  <button id="dialogues_contacts_edit_cancel" class="ui button white " style="background: #fff;">Cancel</button>
               </div>             
           </div>
       </div>
@@ -39,6 +40,13 @@
           
     <div id="dialogues_contacts_delete" class="ui  button black" style="background: #382b3f;">
        <i  class="inverted user minus icon"></i>Delete Contact
+       <div id="dialogues_contacts_delete_popup" class="menu" style="padding: 2rem;width:20rem;background: #fff">
+              <div class="item" style="background: #fff;text-align: center;">
+                  <span style="color:#382b3f"><b>Are you sure?</b></span><br><br>               
+                  <button id="dialogues_contacts_delete_popup_confirm" class="ui button alias_orange_button2 ">Delete</button>
+                  <button id="dialogues_contacts_delete_popup_deny" class="ui button black " style="background: #382b3f">Abort</button>
+              </div>             
+          </div>
     </div>    
       
   </div>
@@ -60,6 +68,9 @@
     
   
   <div class="actions">
+    <div id="dialogues_receiving_receive_payment" class="ui black button alias_orange_button2">
+     <i class="hand holding usd icon"></i>Receive Payment 
+    </div> 
     <div id="dialogues_receiving_copy" class="ui black button alias_orange_button2">
        <i class="inverted copy icon"></i>Copy
     </div>
@@ -67,13 +78,14 @@
       <div id="dialogues_receiving_edit" class="ui black icon dropdown button alias_orange_button2">
           <i class="inverted edit icon"></i>Edit Label
           <div id="dialogues_receiving_edit_popup" class="menu">
-              <div class="item" style="background: #fff;text-align: center;">
+              <div class="item" style="background: #382b3f;text-align: center;">
                   
-                  <div class="ui icon input">
-                      <input id="dialogues_receiving_edit_input" type="text" value="" placeholder="Label">
-                      <i id="dialogues_receiving_edit_clear" class="times link icon large" style="margin-right: -1rem;margin-top: 0.3rem"></i>
-                  </div> 
+                  <div class="ui input large fluid">
+                      <input id="dialogues_receiving_edit_input" class="aliwa_input_field" type="text" value="" placeholder="Label">
+                      <i id="dialogues_receiving_edit_clear" class="times link icon white inverted large" style="margin-top: 1rem"></i>
+                  </div> <br><br>                 
                   <button id="dialogues_receiving_edit_confirm" class="ui button alias_orange_button2 ">OK</button>
+                  <button id="dialogues_receiving_edit_cancel" class="ui button white" style="background: #fff;">Cancel</button>
               </div>             
           </div>
       </div>
@@ -137,7 +149,7 @@
             
             <div class="ui segment" style="background: #594663;margin: auto;width:95%;max-width: 50rem;margin-top:1rem">
                 <div style="margin: auto;text-align: center;">
-                    <div style="text-align: left">
+                    <div id="dialogues_input_inputs" style="text-align: left">
 
                         <span id="dialogues_input_label" class="aliwa_input_label aliwa_input_label_distance">Password</span> <br>
 
@@ -152,11 +164,48 @@
         </div>
 
         <div class="actions">
-            <div id="dialogues_input_yes" class="ui black button alias_orange_button2 approve">
+            <div id="dialogues_input_yes" class="ui black button alias_orange_button2">
                 OK
             </div>
             <div id="dialogues_input_no" class="ui black button deny">
                 Abort
             </div>
         </div>
+</section>
+
+<section id="single_transaction_dialogue">
+    
+    <div id="single_transaction_dialogue_tx_link" class="ui dropdown" style="width: 100%;text-align: left;overflow: hidden;">
+        <b>Transaction ID:</b><br><a class="" href="" style="text-overflow: ellipsis;display: block;overflow: hidden"></a>
+          <div id="single_transaction_dialogue_tx_popup" class="menu">
+              <div class="item" style="background: #fff;text-align: center">
+                  <b>Open external link in default browser?</b><br><br>               
+                  <button id="single_transaction_dialogue_popup_tx_confirm" class="ui button alias_orange_button2 ">Open</button>
+                  <button id="single_transaction_dialogue_popup_tx_deny" class="ui button black " style="background: #382b3f">Abort</button>
+              </div>             
+          </div>
+      </div>
+    <br><br>
+    <div id="single_transaction_dialogue_blockhash_link" class="ui dropdown" style="width: 100%;text-align: left;overflow: hidden;">
+        <b>Blockhash:</b><br><a class="" href="" style="text-overflow: ellipsis;display: block;overflow: hidden"></a>
+          <div id="single_transaction_dialogue_blockhash_popup" class="menu">
+              <div class="item" style="background: #fff;text-align: center">
+                  <b>Open external link in default browser?</b><br><br>               
+                  <button id="single_transaction_dialogue_popup_blockhash_confirm" class="ui button alias_orange_button2 ">Open</button>
+                  <button id="single_transaction_dialogue_popup_blockhash_deny" class="ui button black " style="background: #382b3f">Abort</button>
+              </div>             
+          </div>
+      </div>
+    <br><br>
+    <div style="width: 100%;text-align: left;">
+        <b>Status:</b>&nbsp;<span id="single_transaction_dialogue_status"></span><br><br>
+        <b>Date:</b>&nbsp;<span id="single_transaction_dialogue_date"></span><br><br>
+        <b>Transaction Fee:</b>&nbsp;<span id="single_transaction_dialogue_fee"></span><br><br>
+        <b>Net Amount:</b>&nbsp;<span id="single_transaction_dialogue_amount" style="font-size: 1.2rem"></span><br><br>
+        <div class="ui clearing divider"></div>
+        <div id="single_transaction_dialogue_destinations"></div>
+        <div id="single_transaction_dialogue_send_from"></div>
+    </div>
+     
+    
 </section>

@@ -9,6 +9,19 @@ function show_dialogue_address(current_line,templ_loads,type){
         $("#dialogues_"+type+"_label").text(current_line.children(':nth-child(2)').text());
         
         
+        //receiving payment
+        $("#dialogues_"+type+"_receive_payment").off("click").on("click",function(){
+            
+            $('.ui.modal').modal({duration:0,onHidden:function(){
+                clean_modal(type);           
+            }}).modal("hide",function(){
+                view_receive_payment({pos:(parseInt(current_line.children(':nth-child(1)').text())-1),address:current_line.children(':nth-child(3)').text(),label:current_line.children(':nth-child(2)').text()});
+                clean_modal(type);      
+            });                      
+        });
+       
+        
+        
         //copy        
         $("#dialogues_"+type+"_copy").off("click").on("click",function(){
             var clip_text=$("#dialogues_"+type+"_address").text();
@@ -33,14 +46,11 @@ function show_dialogue_address(current_line,templ_loads,type){
                              
         });
         
-        //delete
-         $("#dialogues_"+type+"_delete").off("click").on("click",function(){
-            
-        });
         
-        
+       
+              
         //edit
-        $("#dialogues_"+type+"_edit").off('click').on('click',function(){
+        $("#dialogues_"+type+"_edit").off('click').on('click',function(){           
             console.log("show popup");
             var button_top_pos=$("#dialogues_"+type+"_edit").position().top;
             button_top_pos-= $("#dialogues_"+type+"_edit_popup").height();
@@ -50,12 +60,75 @@ function show_dialogue_address(current_line,templ_loads,type){
             $("#dialogues_"+type+"_edit_popup").toggle();
             $("#dialogues_"+type+"_edit_popup").off("click").on("click",function(e){ e.stopPropagation();});
             
+            $("#dialogues_"+type+"_edit_input").val(current_line.children(':nth-child(2)').text());
+            var unedited=$("#dialogues_"+type+"_edit_input").val();
+            
             input_clear_button_func("#dialogues_"+type+"_edit_input", "#dialogues_"+type+"_edit_clear");
                    
-            $("#dialogues_"+type+"_edit_confirm").off("click").on("click",function(){
+            $("#dialogues_"+type+"_edit_confirm").off("click").on("click",async function(){
+                if($("#dialogues_"+type+"_edit_input").val()==unedited){
+                   $("#dialogues_"+type+"_edit_popup").hide();
+                   return;
+                }
                //change label and hide
+               
+                if(type=="receiving"){
+                     //change label and hide
+                     $("#dialogues_"+type+"_label").text($("#dialogues_"+type+"_edit_input").val());
+                     current_line.children(':nth-child(2)').text($("#dialogues_"+type+"_edit_input").val());
+                     
+                    var res=await window.electron.ipcRenderer_invoke("change_receive_address_label",(parseInt(current_line.children(':nth-child(1)').text())-1),$("#dialogues_"+type+"_edit_input").val());
+                    if(res=="duplicated"){
+                        show_popup_action(templ_loads,"error","Label is duplicated!");
+                        return;
+                    }                   
+                    await window.electron.ipcRenderer_invoke("save_wallet",null);
+                }
+                if(type=="contacts"){
+                    var res=await window.electron.ipcRenderer_invoke("change_contact_address",(parseInt(current_line.children(':nth-child(1)').text())-1),$("#dialogues_"+type+"_edit_input").val());
+                    if(res=="duplicated label"){
+                        show_popup_action(templ_loads,"error","Label is duplicated!"); 
+                        return;
+                    }
+                    if(res=="duplicated address"){
+                      show_popup_action(templ_loads,"error","Address is duplicated!"); 
+                      return;
+                    } 
+                    if(res==false){ show_popup_action(templ_loads,"error","Basic Contacts are immutable!"); return;}
+                    //change label and hide
+                    $("#dialogues_"+type+"_label").text($("#dialogues_"+type+"_edit_input").val());
+                    current_line.children(':nth-child(2)').text($("#dialogues_"+type+"_edit_input").val());
+                    await window.electron.ipcRenderer_invoke("save_wallet",null);
+                }
+//                
                 $("#dialogues_"+type+"_edit_popup").hide();
-            });               
+            });
+            
+            $("#dialogues_"+type+"_edit_cancel").off("click").on("click",async function(){
+                $("#dialogues_"+type+"_edit_popup").hide();
+            }); 
+        });
+        
+        //remove contact
+        $("#dialogues_contacts_delete_popup").toggle();
+        $("#dialogues_"+type+"_delete").off('click').on('click',function(){  
+            var button_top_pos = $("#dialogues_contacts_delete").position().top;
+            $("#dialogues_contacts_delete_popup").css({position: "fixed",top: (button_top_pos - 125),right:"0rem"});
+            button_top_pos -= $("#dialogues_contacts_delete_popup").height();       
+            $("#dialogues_contacts_delete_popup").toggle();
+            
+            $("#dialogues_contacts_delete_popup_confirm").off("click").on("click", async function () {
+                             
+                var res=await window.electron.ipcRenderer_invoke("delete_contact_address",(parseInt(current_line.children(':nth-child(1)').text())-1));
+                if(res==false){ show_popup_action(templ_loads,"error","Basic Contacts are immutable!"); return;}
+                $('.ui.modal').modal("hide");
+                await window.electron.ipcRenderer_invoke("save_wallet",null);
+                
+                show_popup_action(templ_loads,"info","Contact deleted!");
+                var j_clone=await address_book_contacts_pagination();
+                $('#address_book_tab_content').html(j_clone);
+                address_book_contacts_actions();
+            });
         });
         
         
@@ -91,7 +164,7 @@ function show_popup_action(templ_loads,type,text,hold_duration){
     popup.find("#popup_dialogue_text").html(text);
     popup.hide();
     
-      
+    $("#popup_dialogue").remove();  
     $("body").append(popup);
     
      if(type=="error"){
@@ -151,6 +224,7 @@ function show_qr_code(elementID, text) {
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.H
     });
+    return qrcode;
 }
 
 function clean_modal(type) {
@@ -202,7 +276,7 @@ function show_dialogue_modal(templ_loads,title,text,yes_title,no_title,data,yes,
        
 }
 
-function show_dialogue_info(templ_loads,title,text,ok_title,f){  
+ function show_dialogue_info(templ_loads,title,text,ok_title,f,inside_f){  
         var dialogue=$(templ_loads["dialogues"]).filter("#dialogues_info");
         $("body").append(dialogue);
        
@@ -216,10 +290,15 @@ function show_dialogue_info(templ_loads,title,text,ok_title,f){
             var conf=window.confirm("Open external link in default browser?");//, "Are you sure you want to open "+link+" in your browser?");
             if(conf){ await window.electron.ipcRenderer_invoke("open_tx_link", link);}          
         });
+        
+        if(inside_f!=undefined){
+            inside_f();           
+        }
                 
         $('.ui.modal').modal({
             duration:150,
             closable: true,
+//            transition:"fade",
             onDeny: function () {
 //                window.alert('Wait not yet!');
                 
@@ -245,7 +324,7 @@ function show_dialogue_info(templ_loads,title,text,ok_title,f){
        
 }
 
-function show_dialogue_input(templ_loads,title,text,input_name,input_type,yes_title,no_title,data,yes,no){  
+function show_dialogue_input(templ_loads,title,text,input_name,input_type,yes_title,no_title,data,yes,no,more){  
         var dialogue=$(templ_loads["dialogues"]).filter("#dialogues_input");
         $("body").append(dialogue);
        
@@ -260,6 +339,22 @@ function show_dialogue_input(templ_loads,title,text,input_name,input_type,yes_ti
         $("#dialogues_input_input").prop("type", input_type);
         
         input_clear_button_func("#dialogues_input_input","#dialogues_input_input_clear");
+        
+       var append="";
+        if(more!= undefined){
+            for(var i=0;i<more.length;i++){
+                var i_clone=$("#dialogues_input_inputs").clone();             
+                i_clone.find("#dialogues_input_label").attr("id","dialogues_input_label"+(i+2)).text(more[i].input_name);
+                i_clone.find("#dialogues_input_input").attr("id","dialogues_input_input"+(i+2)).prop("placeholder", more[i].input_name).prop("type", more[i].input_type);
+                i_clone.find("#dialogues_input_input_clear").attr("id","dialogues_input_input_clear"+(i+2));
+                i_clone.append("<br><br>");
+                append+=i_clone.html();                                         
+               
+            }
+             $("#dialogues_input_inputs").append(append);
+            for(var i=0;i<more.length;i++){input_clear_button_func("#dialogues_input_input"+(i+2),"#dialogues_input_input_clear"+(i+2));} 
+        }
+        
         
         $("#dialogues_input_yes").off("click").on("click",async function(){
             yes(data);
@@ -291,4 +386,9 @@ function show_dialogue_input(templ_loads,title,text,input_name,input_type,yes_ti
         })
                 .modal('show');
        
+}
+
+function alias_address_check(address){
+    if(address.replace(/[a-km-zA-HJ-NP-Z1-9]/g,"").length>0 || address[0]!="S" || address.length!=34){return false;}
+    return true;
 }

@@ -89,7 +89,7 @@ html * {
     display: inline-block;
 }
 
-.aliwa_input_field{
+.aliwa_input_field,.aliwa_input_field_search,.aliwa_input_field_white{
     background: none !important;
     border:none !important;
     color:#f38320 !important;
@@ -100,9 +100,30 @@ html * {
     text-overflow: ellipsis !important;
 }
 
-.aliwa_input_field::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+.aliwa_input_field::placeholder,.aliwa_input_field_search::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #f38320 !important;
   opacity: 0.6 !important; /* Firefox */
+}
+
+.aliwa_input_field_search{
+     padding: 0.5rem 0.5rem 0.5rem 2rem !important;
+}
+
+.aliwa_input_field_search > i.icon{
+    width: auto !important;
+   padding: 0rem !important;
+   margin: 0rem !important;
+   left:0;
+}
+
+.aliwa_input_field_white{
+  font-size: 1.0rem !important;  
+  border-bottom: 0.2rem solid #f38320 !important; 
+  outline:none !important;
+}
+
+.aliwa_input_field_white:focus{
+    outline:none !important;  
 }
 
 .aliwa_orange_text{
@@ -117,10 +138,54 @@ html * {
     border:0.5rem solid #fff;
 }
 
+.aliwa_can_click{
+   cursor: pointer !important; 
+}
+
+.desktop_hide{
+    display:none !important;
+}
+
 @media only screen and (max-width: 767.98px){
     tr{
         border-bottom: 0.5rem solid #382b3f !important;  
-        /*padding: 0rem 0rem 0rem 0rem !important;*/
+        /*padding: 0rem 0rem 0rem 0rem !important;*/  
     }
+    #view_transactions_table thead th:nth-child(1) {
+    display:none !important;
+  }
+    
+    #view_transactions_table td:nth-child(1) {
+    display:none !important;
+  }
+  
+   #view_transactions_table th:nth-child(4) {
+    display:none !important;
+  }
+    
+    #view_transactions_table td:nth-child(4) {
+    display:none !important;
+  }
+  
+   #view_transactions_table th:nth-child(5) {
+    display:none !important;
+  }
+    
+    #view_transactions_table td:nth-child(5) {
+    display:none !important;
+  }
+  
+   #view_transactions_table th:nth-child(6) {
+    display:none !important;
+  }
+    
+    #view_transactions_table td:nth-child(6) {
+    display:none !important;
+  }
+  
+  .desktop_hide{
+    display:inline !important;
+    margin-right: 0.5rem !important;
+}
 }
 

@@ -4,14 +4,15 @@ module.exports = function () {
    const path = require('path');
    
    var wallet=null;
+   var syncing_loop_timeout=null;
    
    
    
    //STARTUP************************************************************
     function syncing_loop(time){
-        setTimeout(async function(){
-            if(wallet!=null && wallet!=undefined){
-                await wallet.sync();         
+        syncing_loop_timeout = setTimeout(async function(){
+            if(wallet!=null && wallet!=undefined){               
+                await wallet.sync();        
             }
             
             if(wallet!=null && wallet!=undefined && wallet.sync_shift>0){
@@ -22,8 +23,7 @@ module.exports = function () {
         },time);     
    }
    
-    syncing_loop(30000);
-        
+          
    ipcMain.handle('open_wallet', async (event) => {
     var wal = new aliwa.aliwa_wallet();
     var data = wal.read_wallet_DB();
@@ -75,12 +75,21 @@ module.exports = function () {
    
    //OVERVIEW*************************************************************  
    ipcMain.handle('load_wallet', async (event,pw) => {
+    if(wallet!=null){
+        wallet.disconnect();
+        delete wallet;
+        wallet=null;
+    }
     wallet = new aliwa.aliwa_wallet();
     var data = wallet.read_wallet_DB();
     var can_load_db = await wallet.load_wallet_DB(data, pw);   
     if (can_load_db === true) {
-        await wallet.connect_to_server(); 
-        setTimeout(function(){wallet.sync();},1500);           
+        await wallet.connect_to_server();
+        if(syncing_loop_timeout!=null){
+                clearTimeout(syncing_loop_timeout);
+                syncing_loop_timeout=null;
+        }
+        syncing_loop(30000);
     return true;}
     else{ return false;}
    });
@@ -107,6 +116,10 @@ module.exports = function () {
         return wallet.get_highest_unused_receive_address();
    });
    
+    ipcMain.handle('add_new_receive_addr', async (event,label) => {             
+        return wallet.new_receive_address(label);
+   });
+   
      ipcMain.handle('change_receive_address_label', async (event,pos,label) => {             
         return wallet.change_receive_address_label(pos,label);
    });
@@ -123,9 +136,14 @@ module.exports = function () {
    });
    
    ipcMain.handle('get_fee', async (event,destinations) => {
-        var tx_build= await wallet.create_transaction(destinations);
+        var tx_build= await wallet.create_transaction(destinations,undefined,undefined,true);
         if(tx_build!=false){
-        return tx_build.fee;}
+        if(tx_build.exceed!=undefined){
+            console.log("exceed returned with: "+tx_build.exceed);
+            return tx_build;
+        }    
+        return tx_build.fee;
+        }
         else{return false;}
    });
    
@@ -139,17 +157,44 @@ module.exports = function () {
    //ADDRESSBOOK*************************************************************
    
    
-   ipcMain.handle('list_receive_addresses', async (event,page, order_field, direction) => {
-        var list_result= wallet.list_receive_addresses(page, order_field, direction);
+   ipcMain.handle('list_receive_addresses', async (event,page, order_field, direction, search) => {
+        var list_result= wallet.list_receive_addresses(page, order_field, direction, search);
         return list_result;
    });
+   
+   ipcMain.handle('list_contact_addresses', async (event,page, order_field, direction, search) => {
+        var list_result= wallet.list_contact_addresses(page, order_field, direction, search);
+        return list_result;
+   });
+   
+   ipcMain.handle('add_new_contact_address', async (event,label,address) => {
+        var list_result= wallet.new_contact_address(label,address);
+        return list_result;
+   });
+   
+    ipcMain.handle('change_contact_address', async (event,pos,label) => {
+        var list_result= wallet.change_contact_address_label(pos,label);
+        return list_result;
+   });
+   
+   ipcMain.handle('change_contact_address_by_address', async (event,address,label) => {
+        var list_result= wallet.change_contact_address_label_find_by_address(address,label);
+        return list_result;
+   });
+   
+     ipcMain.handle('delete_contact_address', async (event,pos) => {
+        var list_result= wallet.delete_contact_address(pos);
+        return list_result;
+   });
+   
+   
    
    
   
   //TRANSACTIONS VIEW********************************************************
   
-    ipcMain.handle('list_transactions', async (event,page, order_field, direction) => {
-        var list_result= wallet.list_transactions(page, order_field, direction);
+    ipcMain.handle('list_transactions', async (event,page, order_field, direction, search) => {
+        var list_result= wallet.list_transactions(page, order_field, direction, search);
         return list_result;
    });
    
@@ -162,6 +207,18 @@ module.exports = function () {
    ipcMain.handle('open_tx_link', async (event,link) => {
         require("electron").shell.openExternal(link);
    });
+   
+   //label list
+   ipcMain.handle('get_address_labels', async (event,address_list) => {
+        var list_result= wallet.get_labels(address_list);
+        return list_result;
+   });
+   
+   ipcMain.handle('set_address_label_contact_or_receive', async (event,address,label) => {
+        return wallet.set_label_contact_or_receive(address,label);       
+   });
+  
+   
    
    
    
