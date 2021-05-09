@@ -2,9 +2,10 @@
 A light wallet for the ALIAS cryptocurrency  - https://alias.cash/
 
 ## Donations
-Help completing the the Alias Light wallet: Donate with ALIAS
-Public ALIAS address: SSq7CjsPzfanmCkcN9XhKHg7yMn3bXj8i5
-Private ALIAS address: smYhZCsqgJdRkWB64GaLZ165HejRCL3tAkmDmxdCrG2McnuH7gReE3LjDoXLRqf3txrwiuE3BCpFFAADDbU1oYW4fr7y9MnU37U3AD
+Help completing the Alias Light wallet: Donate with ALIAS! 
+	
+	Public ALIAS address: SSq7CjsPzfanmCkcN9XhKHg7yMn3bXj8i5
+	Private ALIAS address: smYhZCsqgJdRkWB64GaLZ165HejRCL3tAkmDmxdCrG2McnuH7gReE3LjDoXLRqf3txrwiuE3BCpFFAADDbU1oYW4fr7y9MnU37U3AD
 
 ## Intermediate commit report 9.May 2021
 * Mobile
