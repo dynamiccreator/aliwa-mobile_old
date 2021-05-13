@@ -363,6 +363,13 @@ function view_send(user_inputs){
     if(transaction_current_send_number>0){
         $("#navbar_title").html('<span>Send</span><a id="view_send_transaction_number" class="ui circular label" style="background:#f38320;color:#fff;display: block;margin-left: 8rem;position: fixed;margin-top: -1.6rem !important;">'+(transaction_current_send_number+1)+'</a>');
     }
+    
+    if(transaction_current_send_number<transaction_send_list.length){
+        $("#view_send_button_add span").html("&nbsp;Update");
+        $("#view_send_button_add").find("i").removeClass("plus").addClass("check");
+    }
+    
+    
     $("#view_send_button_show_list_number").text(transaction_send_list.length);
     
     //fill form from temp fill
@@ -459,7 +466,187 @@ function view_send(user_inputs){
      
      //add transaction
      $("#view_send_button_add").off("click").on("click",async function(){
-        //check address
+        add_update_send_list();
+     });
+     
+     //show transaction list
+     $("#view_send_button_show_list").off("click").on("click", async function () {
+         
+        if(transaction_current_send_number<transaction_send_list.length){   
+            var list_update=await add_update_send_list();
+            if(!list_update){return;}
+        }
+         
+         
+        var tx_dest = JSON.parse(JSON.stringify(transaction_send_list));
+        if(tx_dest.length<1){show_popup_action(templ_loads,"error","List is empty!"); return;}
+        var tx_info = await window.electron.ipcRenderer_invoke("get_raw_tx", tx_dest);
+        if (tx_info == false) {
+            show_popup_action(templ_loads, "error", "Unknown error");
+            return;
+        }
+
+        var fee = tx_info.fee;
+        $("#view_send_fee").text(numeral(fee).format("0.00000000"));
+        var tx_text = "";
+        var temp_tx_text = "";
+        var total_send = numeral(0);
+        total_send.add(fee);
+        for (var i = 0; i < tx_dest.length; i++) {
+            total_send.add(tx_dest[i].amount);
+            temp_tx_text += '<p class="send_list_item"><i value="'+i+'" class="send_list_edit edit icon large aliwa_can_click">'                          
+                     +'</i>'+"&nbsp;<b>Transaction " + (i + 1) + ": </b>" + numeral(tx_dest[i].amount).format("0.00[000000]") + " ALIAS -> " + (tx_dest[i].label!="" ? tx_dest[i].label : tx_dest[i].destination_address) + '&nbsp;<i value="'+i+'" class="send_list_remove times icon large aliwa_can_click" style="float:right;"></i>'+"<br>";
+            if (tx_dest[i].narration != undefined) {
+                temp_tx_text += "Narration: " + tx_dest[i].narration + "<br><br></p>";
+            } else {
+                temp_tx_text += "<br></p>";
+            }
+        }
+        tx_text += '<b id="modal_send_list_send_total">Send Total: ' + numeral(total_send.value()).format("0.00[000000]")  + ' ALIAS </b> <span id="modal_send_list_send_total_fee" style="display:inline-block;">(incl. ' + fee + ' ALIAS fee)</span><div class="ui divider"></div><br>';
+        tx_text += temp_tx_text;
+        
+                  
+        show_dialogue_modal(templ_loads, "Transaction List", tx_text, "Send List", "OK", tx_dest,  function () {
+             $('.ui.modal').modal("hide");
+             setTimeout(function(){open_send_dialogue(true);},200);
+        }, function () {},function(){
+                $(".send_list_edit").off("click").on("click",async function(){
+                    $("#view_send_button_add span").html("&nbsp;Update");
+                    $("#view_send_button_add").find("i").removeClass("plus").addClass("check");
+                     var i=parseInt($(this).attr("value"));
+                     
+                    $("#view_send_input_destination").val(transaction_send_list[i].destination_address);
+                    $("#view_send_input_label").val(transaction_send_list[i].label);
+                    $("#view_send_input_note").val(transaction_send_list[i].narration);
+                    $("#view_send_input_amount").val(transaction_send_list[i].amount);
+                    
+                    transaction_current_send_number = i;
+                    transaction_amount_sum=numeral(transaction_amount_sum).subtract(transaction_send_list[i].amount).value();
+                    $("#view_send_available_balance").text(numeral(global_balance.available).subtract(transaction_amount_sum).format("0.00000000"));
+                     $("#navbar_title").text("Send");
+                    if(transaction_current_send_number>0){
+                        $("#navbar_title").html('<span>Send</span><a id="view_send_transaction_number" class="ui circular label" style="background:#f38320;color:#fff;display: block;margin-left: 8rem;position: fixed;margin-top: -1.6rem !important;">'+(transaction_current_send_number+1)+'</a>');
+                    }
+                    
+                     
+                    $('.ui.modal').modal("hide"); 
+                });
+                
+                send_list_remove_items();
+                
+            
+           
+                $(".dialogues_modal_actions").prepend('<div id="dialogues_modal_delete" class="ui dropdown icon button white" style="background: #fff;margin-top:1.5rem;float:left;margin-top:0rem;">'
+                                            +'<div id="dialogues_modal_delete_popup" class="menu">'
+                                                +'<div class="item" style="background: #fff;text-align: center">'
+                                                    +' <b>Delete all transactions?</b><br><br> '              
+                                                    +' <button id="dialogues_modal_delete_popup_confirm" class="ui button alias_orange_button2 ">OK</button>'
+                                                    +' <button class="ui button black " style="background: #382b3f">Abort</button>'
+                                                +'</div>'             
+                                            +' </div>'
+                                            +'<i class="times icon"></i> Delete All</div>'); 
+                                                                                                                                                                           
+                $("#dialogues_modal_delete").off("click").on("click",async function(){
+                    var button_top_pos = $("#dialogues_modal_delete").position().top;
+                    button_top_pos -= $("#dialogues_modal_delete_popup").height();
+                    $("#dialogues_modal_delete_popup").css({position: "fixed", width: "90%", top: (button_top_pos - 10)});
+                    $("#dialogues_modal_delete_popup").toggle();
+
+                    $("#dialogues_modal_delete_popup_confirm").off("click").on("click", async function () {
+                       $('.ui.modal').modal("hide"); 
+                       fill_send_form(true); 
+                    });
+                });
+                                             
+            });
+    });
+     
+     //send button
+     $("#view_send_button_send_transaction").off("click").on("click",async function(){
+          open_send_dialogue(false);    
+     });
+}
+
+async function send_list_remove_items(){
+    $(".send_list_remove").off("click").on("click", async function () {
+                var i = parseInt($(this).attr("value"));
+                transaction_send_list.splice(i,1);
+
+                transaction_current_send_number = transaction_send_list.length;
+                $("#navbar_title").text("Send");
+                if (transaction_current_send_number > 0) {
+                    $("#navbar_title").html('<span>Send</span><a id="view_send_transaction_number" class="ui circular label" style="background:#f38320;color:#fff;display: block;margin-left: 8rem;position: fixed;margin-top: -1.6rem !important;">' + (transaction_current_send_number + 1) + '</a>');
+                }
+                $("#view_send_button_show_list_number").text(transaction_send_list.length);
+                clear_send_form();
+                transaction_amount_sum = 0;
+                for (var i = 0; i < transaction_send_list.length; i++) {
+                    transaction_amount_sum = numeral(transaction_amount_sum).add(transaction_send_list[i].amount).value();
+                }
+
+                
+                $("#view_send_available_balance").text(numeral(global_balance.available).subtract(transaction_amount_sum).format("0.00000000"));
+
+                
+
+                //update modal
+                var tx_dest = JSON.parse(JSON.stringify(transaction_send_list));
+                var tx_info = await window.electron.ipcRenderer_invoke("get_raw_tx", tx_dest);
+                var fee = tx_info.fee;
+
+                var total_send = numeral(0);
+                total_send.add(fee);
+                for (var i = 0; i < tx_dest.length; i++) {
+                    total_send.add(tx_dest[i].amount);
+                }
+
+
+                   $("#modal_send_list_send_total").text("Send Total: " + numeral(total_send.value()).format("0.00[000000]")  + ' ALIAS ');
+                   $("#modal_send_list_send_total_fee").text('(incl. ' + fee + ' ALIAS fee)');
+
+                var i = 0;
+                
+                $(this).parent().hide(200, function () {
+                    $(this).remove();
+//                    console.log(tx_dest);
+                    $(".send_list_item").each(function () {
+                        if (i < tx_dest.length) {
+                            var temp_tx_text = '<i value="' + i + '" class="send_list_edit edit icon large aliwa_can_click">'
+                                    + '</i>' + "&nbsp;<b>Transaction " + (i + 1) + ": </b>" + numeral(tx_dest[i].amount).format("0.00[000000]") + " ALIAS -> " + (tx_dest[i].label!="" ? tx_dest[i].label : tx_dest[i].destination_address) + '&nbsp;<i value="' + i + '" class="send_list_remove times icon large aliwa_can_click" style="float:right;"></i>' + "<br>";
+                            if (tx_dest[i].narration != undefined) {
+                                temp_tx_text += "Narration: " + tx_dest[i].narration + "<br><br>";
+                            } else {
+                                temp_tx_text += "<br>";
+                            }
+//                            console.log($(this).html());
+
+                            $(this).html(temp_tx_text);
+                        }
+                        i++;
+                          
+                    });
+                    send_list_remove_items();
+                });
+                 
+               
+                
+                      
+                    
+    
+                   if(transaction_send_list.length<1){
+                       $('.ui.modal').modal("hide"); 
+                   }
+                    
+                /*    $('.ui.modal').modal({duration:0}).modal("hide");
+                    clean_modal("modal");
+                    
+                    if(transaction_send_list.length>0){
+                    setTimeout(function(){$("#view_send_button_show_list").trigger("click");},20);}*/
+                });
+}
+
+async function add_update_send_list(){
+    //check address
          var address=$("#view_send_input_destination").val();
          var label=$("#view_send_input_label").val();
          var narration=$("#view_send_input_note").val();
@@ -475,6 +662,8 @@ function view_send(user_inputs){
          
          var is_valid_form=await check_send_form(address,narration,amount,"#view_send_button_add");
          if(is_valid_form){
+             $("#view_send_button_add span").html("&nbsp;Add");
+             $("#view_send_button_add").find("i").removeClass("check").addClass("plus");
                         
             if(narration.length==0){
                 if(transaction_send_list[transaction_current_send_number]!=null){
@@ -493,20 +682,28 @@ function view_send(user_inputs){
                 }                                
              }
              
-             transaction_current_send_number++;
-             if(transaction_current_send_number>0){
+             transaction_current_send_number=transaction_send_list.length;           
+            if(transaction_current_send_number>0){
                 $("#navbar_title").html('<span>Send</span><a id="view_send_transaction_number" class="ui circular label" style="background:#f38320;color:#fff;display: block;margin-left: 8rem;position: fixed;margin-top: -1.6rem !important;">'+(transaction_current_send_number+1)+'</a>');
             }
             $("#view_send_button_show_list_number").text(transaction_send_list.length);
             clear_send_form();
-            transaction_amount_sum=numeral(transaction_amount_sum).add(amount).value();
+            transaction_amount_sum=0;
+            for(var i=0;i<transaction_send_list.length;i++){
+                transaction_amount_sum=numeral(transaction_amount_sum).add(transaction_send_list[i].amount).value();
+            }
+            
             $("#view_send_available_balance").text(numeral(global_balance.available).subtract(transaction_amount_sum).format("0.00000000"));
+            return true;
          }
-     });
-     
-     //send button
-     $("#view_send_button_send_transaction").off("click").on("click",async function(){
-         //check address
+         return false;
+}
+
+
+
+async function open_send_dialogue(list_only){
+    //check address
+        if(!list_only){
          var address=$("#view_send_input_destination").val();
          var label=$("#view_send_input_label").val();
          var narration=$("#view_send_input_note").val();
@@ -521,14 +718,25 @@ function view_send(user_inputs){
          $("#view_send_input_amount").val(amount);
          
          var is_valid_form=await check_send_form(address,narration,amount,"#view_send_button_send_transaction");
-         if(is_valid_form){
+         }
+         if(is_valid_form || list_only){
+             if(transaction_current_send_number<transaction_send_list.length && !list_only){                
+                  if(narration.length==0){
+                  transaction_send_list[transaction_current_send_number]={amount:amount,destination_address:address,label:label};   
+                }
+                else{
+                    transaction_send_list[transaction_current_send_number]={amount:amount,destination_address:address,narration:narration,label:label};   
+                }
+             }
              var tx_dest=JSON.parse(JSON.stringify(transaction_send_list));
              
-             if(narration.length==0){
-               tx_dest.push({amount:amount,destination_address:address,label:label});   
-             }
-             else{
-                 tx_dest.push({amount:amount,destination_address:address,narration:narration,label:label});   
+             if(!list_only && transaction_current_send_number==transaction_send_list.length){
+                if(narration.length==0){
+                  tx_dest.push({amount:amount,destination_address:address,label:label});   
+                }
+                else{
+                    tx_dest.push({amount:amount,destination_address:address,narration:narration,label:label});   
+                }
              }
              var tx_info=await window.electron.ipcRenderer_invoke("get_raw_tx",tx_dest);
              if(tx_info==false){show_popup_action(templ_loads,"error","Unknown error"); return;}
@@ -541,17 +749,17 @@ function view_send(user_inputs){
              total_send.add(fee);
              for(var i=0;i<tx_dest.length;i++){
                  total_send.add(tx_dest[i].amount);
-                 temp_tx_text+="<b>Transaction "+(i+1)+": </b>"+tx_dest[i].amount+" ALIAS -> "+tx_dest[i].destination_address+"<br>";
+                 temp_tx_text+="<b>Transaction "+(i+1)+": </b>"+ numeral(tx_dest[i].amount).format("0.00[000000]")+" ALIAS -> "+tx_dest[i].destination_address+"<br>";
                  if(tx_dest[i].narration!=undefined){
                     temp_tx_text+="Narration: "+tx_dest[i].narration+"<br><br>";
                  }
-                else{temp_tx_text+="<br><br>"}
+                else{temp_tx_text+="<br>"}
              }
-             tx_text+="<b>Send Total: "+total_send.value()+' ALIAS </b> (incl. '+fee+' ALIAS fee)<div class="ui divider"></div><br>';
+             tx_text+="<b>Send Total: "+ numeral(total_send.value()).format("0.00[000000]") +' ALIAS </b> <span style="display:inline-block;">(incl. '+fee+' ALIAS fee)</span><div class="ui divider"></div><br>';
              tx_text+=temp_tx_text;
              
              var pw_result=await window.electron.ipcRenderer_invoke("compare_password","");
-             show_dialogue_modal(templ_loads,"Confirm Transaction(s)?","Confirm the following transaction(s):<br><br>"+tx_text,(pw_result ? "Send Now":"Confirm"),"Abort",tx_dest,async function(){
+             show_dialogue_modal(templ_loads,"Confirm Transaction"+(tx_dest.length>1 ?"s" : "")+"?","Confirm the following transaction"+(tx_dest.length>1 ?"s" : "")+":<br><br>"+tx_text,(pw_result ? "Send Now":"Confirm"),"Abort",tx_dest,async function(){
                 // ask for password                  
                  console.log("after dialogue:",tx_dest);
                  
@@ -587,21 +795,15 @@ function view_send(user_inputs){
                  },async function(){});
                  },300);
                  }
+
                  
-                 
-                     
-                 
-                   
-                              
-             
              },function(){});
              //valid tx--> ask for confirm --> ask for password --> send
              //--> change label
              
              //--> show success or not
              
-         }       
-     });
+         }  
 }
 
 function clear_send_form() {
@@ -656,6 +858,9 @@ function fill_send_form(empty){
         $("#navbar_title").html('<span>Send</span>');
         $("#view_send_button_show_list_number").text(transaction_send_list.length);
         $("#view_send_available_balance").text(numeral(global_balance.available).subtract(transaction_amount_sum).format("0.00000000"));
+        
+        $("#view_send_button_add span").html("&nbsp;Add");
+        $("#view_send_button_add").find("i").removeClass("check").addClass("plus");
 
     }
     else{
@@ -667,9 +872,9 @@ function fill_send_form(empty){
 }
 
 async function check_send_form(address,narration,amount,shake_id){
-         var address=$("#view_send_input_destination").val();
-         var narration=$("#view_send_input_note").val();
-         var amount=$("#view_send_input_amount").val();
+//         var address=$("#view_send_input_destination").val();
+//         var narration=$("#view_send_input_note").val();
+//         var amount=$("#view_send_input_amount").val();
          
         if(!alias_address_check(address)){
             $(shake_id).transition('shake');
@@ -691,7 +896,19 @@ async function check_send_form(address,narration,amount,shake_id){
             $(shake_id).transition('shake'); 
             show_popup_action(templ_loads,"error","Not enough funds! Amount is too big!"); 
             return false;
-         }       
+         } 
+         
+         //check duplicated destinations
+         for(var i=0;i<transaction_send_list.length;i++){
+             if(address==transaction_send_list[i].destination_address && transaction_current_send_number!=i){
+                $(shake_id).transition('shake'); 
+                show_popup_action(templ_loads,"error","Destination Address is duplicated!"); 
+                return false;
+             }
+         }
+         
+         
+         
          return true;
 }
 
@@ -712,9 +929,15 @@ async function get_max_amount(destinations_for_send){
             note=note.substring(0,24); 
          }
          
-         
-         if(note==""){destinations.push({amount:available_balance,destination_address:address});}
+        
+          if(transaction_current_send_number<transaction_send_list.length){                
+                   if(note==""){destinations[transaction_current_send_number]={amount:available_balance,destination_address:address};}
+                    else{destinations[transaction_current_send_number]={amount:available_balance,destination_address:address,narration:note};}
+          }
+          else{
+              if(note==""){destinations.push({amount:available_balance,destination_address:address});}
          else{destinations.push({amount:available_balance,destination_address:address,narration:note});}
+          }                        
      }
      else{
          destinations=JSON.parse(JSON.stringify(destinations_for_send));
@@ -722,19 +945,19 @@ async function get_max_amount(destinations_for_send){
      
      
         var base_fee=0.0001;
-        destinations[destinations.length-1].amount=numeral(destinations[destinations.length-1].amount).subtract(base_fee).value(); 
+        destinations[transaction_current_send_number].amount=numeral(destinations[transaction_current_send_number].amount).subtract(base_fee).value(); 
 //        var start=new Date().getUTCMilliseconds();
         
         
         var fee=await window.electron.ipcRenderer_invoke("get_fee",destinations);
         if(fee.exceed!=undefined){
-           destinations[destinations.length-1].amount=numeral(destinations[destinations.length-1].amount).subtract(fee.exceed).value();
-           var max=destinations[destinations.length-1].amount;
+           destinations[transaction_current_send_number].amount=numeral(destinations[transaction_current_send_number].amount).subtract(fee.exceed).value();
+           var max=destinations[transaction_current_send_number].amount;
 //            console.log("wait: "+(new Date().getUTCMilliseconds()-start));
            return {max:max,fee:(numeral(base_fee).add(fee.exceed))};
         } 
         else{
-           var max=destinations[destinations.length-1].amount;
+           var max=destinations[transaction_current_send_number].amount;
 //           console.log("wait: "+(new Date().getUTCMilliseconds()-start));
            return {max:max,fee:(numeral(base_fee))};
         }      
@@ -1511,7 +1734,7 @@ async function transactions_pagination(){
         address_list.push(result[i].address);
     }
     var label_list = await window.electron.ipcRenderer_invoke("get_address_labels",address_list);
-    console.log(label_list)
+//    console.log(label_list)
     
     for(var i=0;i<result.length;i++){
         var tx=result[i].tx;

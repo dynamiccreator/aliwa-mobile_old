@@ -237,7 +237,7 @@ function clean_modal(type) {
 }
 
 
-function show_dialogue_modal(templ_loads,title,text,yes_title,no_title,data,yes,no){  
+function show_dialogue_modal(templ_loads,title,text,yes_title,no_title,data,yes,no,inside_f){  
         var dialogue=$(templ_loads["dialogues"]).filter("#dialogues_modal");
         $("body").append(dialogue);
        
@@ -247,7 +247,9 @@ function show_dialogue_modal(templ_loads,title,text,yes_title,no_title,data,yes,
         $("#dialogues_modal_yes").text(yes_title);
         $("#dialogues_modal_no").text(no_title);
         
-        
+        if(inside_f!=undefined){
+            inside_f();           
+        }
     
         $('.ui.modal').modal({
             duration:150,
