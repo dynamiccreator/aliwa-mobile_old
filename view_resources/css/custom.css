@@ -79,7 +79,7 @@ html * {
     background: #fbaa26 !important;
 }
 
-.aliwa_input_label,.aliwa_input_label_distance{
+.aliwa_input_label,.aliwa_input_label_distance,.aliwa_input_label_red{
     color:#fff;
     font-size: 1.5rem;
 }
@@ -89,7 +89,11 @@ html * {
     display: inline-block;
 }
 
-.aliwa_input_field,.aliwa_input_field_search,.aliwa_input_field_white{
+.aliwa_input_label_red{
+    color: #db2828;
+}
+
+.aliwa_input_field,.aliwa_input_field_search,.aliwa_input_field_white,.aliwa_input_field_red{
     background: none !important;
     border:none !important;
     color:#f38320 !important;
@@ -126,6 +130,10 @@ html * {
     outline:none !important;  
 }
 
+.aliwa_input_field_red{
+ border-bottom: 0.2rem solid #db2828 !important;   
+}
+
 .aliwa_orange_text{
     color:#f38320 !important;
     font-size: 1.5rem;
@@ -141,6 +149,32 @@ html * {
 .aliwa_can_click{
    cursor: pointer !important; 
 }
+
+.aliwa_autocomplete_item_hover{
+ padding:1rem;
+ border-width:0px 0px 1px 0px;
+ border-color: #ddd;
+ border-style: solid;
+ cursor: pointer;
+}
+
+.aliwa_autocomplete_item_hover:hover{
+color: #fff;
+background:#f38320;    
+}
+
+
+.ui.inverted.toggle.checkbox input:focus:checked~label:before,
+.ui.inverted.toggle.checkbox input:checked~label:before,
+.ui.toggle.checkbox input:focus:checked~label:before,
+.ui.toggle.checkbox input:checked~label:before,
+.ui.checkbox input:checked:focus~label:before, .ui.checkbox input:not([type=radio]):indeterminate:focus~label:before,
+.ui.checkbox input:checked~label:before,
+.ui.checkbox input:focus~label:before{
+    background:#f38320 !important;
+    background-color: #f38320 !important;
+}
+
 
 .desktop_hide{
     display:none !important;

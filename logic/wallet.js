@@ -16,6 +16,13 @@ bs58check = require("bs58check");
 bs58_2 = require("bs58");
 
 
+//intial states & data
+//  ->serverlist
+var aliwa_serverlist=[{label:"Default Server (onion)",address:"ws://aliwa5ld6pm66lbwb2kfyzvqzco24ihnmzoknvaqg4uqhpdtelnfa4id.onion:3000"},
+                      {label:"localhost",address:"ws://localhost:3000"},
+                      {label:"ssl example",address:"wss://example.com:port"}];
+
+
 class aliwa_wallet{       
                 
     constructor(){
@@ -30,7 +37,11 @@ class aliwa_wallet{
      this.sync_shift=0;
      this.initial_sync=false;
      this.sync_id=null;
-                          
+     
+     this.last_save=new Date().getTime();
+     
+     this.socket=null;
+                                 
        const db_wallet_r=require("./db_wallet");
        this.db_wallet=new db_wallet_r.db_wallet();
        const wallet_functions_r=require("./wallet_functions");
@@ -39,7 +50,7 @@ class aliwa_wallet{
     
        
     //wallet itself,syncing and  status
-    async create_wallet(seed_words,seed_pw,wallet_pw){
+    async create_wallet(seed_words,seed_pw,wallet_pw,backup=false){
         if(seed_words==null){
             seed_words=this.wallet_functions.get_new_seed_words();                             
         }
@@ -53,7 +64,18 @@ class aliwa_wallet{
         //set config
         this.db_wallet.update_config({seed_words:seed_words,seed_pw:seed_pw,master_seed:master_seed_string,wallet_pw:wallet_pw,
                                       sync_height:0,last_rewind:{time:0,block_height:0},balance:{unconfirmed:0,available:0,total:0},
-                                      used_pos:{standard:0,change:0}});
+                                      used_pos:{standard:0,change:0},
+                                      alias_prices:null,selected_currency:null,
+                                      is_notifications_enabled:false,
+                                      aliwa_server_address_label:aliwa_serverlist[0].label,aliwa_server_address:aliwa_serverlist[0].address,
+                                      has_backup:backup});
+                                  
+        await this.set_wallet_pw(wallet_pw);                           
+                                  
+        //add basic contacts
+        this.new_contact_address("Alias Foundation","SdrdWNtjD7V6BSt3EyQZKCnZDkeE28cZhr");
+        this.new_contact_address("Aliwa Donation Address","SSq7CjsPzfanmCkcN9XhKHg7yMn3bXj8i5");
+        this.new_contact_address("Aliwa Server Provider","not provided");
         
         //save wallet
         this.save_wallet(null);
@@ -75,82 +97,134 @@ class aliwa_wallet{
     }
     
  
-    save_wallet(path){
+    save_wallet(path,force=false){
         //save_database
-        console.error("SAVING WAS CALLED");
-        var obj=this.db_wallet.get_config_values();
-        this.db_wallet.save_database(path,obj.wallet_pw,obj.wallet_pw_salt);
+        if(!this.db_wallet.wallet_loaded){return;}
+        console.error("SAVING WAS CALLED");       
         this.gui_was_updated=false;
+        if(force || this.last_save < (new Date().getTime()-(1000*60*5))){
+            this.last_save=new Date().getTime();
+            var obj=this.db_wallet.get_config_values();
+            this.db_wallet.save_database(path,obj.wallet_pw,obj.wallet_pw_salt);
+            console.error("SAVING EXECUTED");       
+        }
     }
     
     //connect with server
-    async connect_to_server(){
-        //start the server for light wallet        
+    async connect_to_server() {
+        //start the server for light wallet 
+        var cnf = this.db_wallet.get_config_values();
+               
         var SocksProxyAgent = require('socks-proxy-agent');
-        var agent = new SocksProxyAgent("socks://localhost:9050");    
+        var agent = new SocksProxyAgent("socks://localhost:9050");
         
         
-//        this.socket =  await io.connect('ws://aliwa5ld6pm66lbwb2kfyzvqzco24ihnmzoknvaqg4uqhpdtelnfa4id.onion:3000', { agent: agent });
-        this.socket =  await io.connect('ws://localhost:3000');
+        //update community servers
+        this.delete_aliwa_server_address_community_list();
+        
+        for(var i=0;i<aliwa_serverlist.length;i++){
+            this.add_aliwa_server_address(aliwa_serverlist[i].label,aliwa_serverlist[i].address,"community",true);
+        }
+        //change of list !!!
+        
 
+//
+        if(cnf.aliwa_server_address==null){
+            this.socket = await io.connect('ws://localhost:3000');   
+        } 
+        if(cnf.aliwa_server_address!=null && !cnf.aliwa_server_address.includes(".onion")){
+            this.socket =  await io.connect(cnf.aliwa_server_address);
+        }  
+        
+        if(cnf.aliwa_server_address!=null && cnf.aliwa_server_address.includes(".onion")){
+            this.socket =  await io.connect(cnf.aliwa_server_address, { agent: agent });
+        }    
+        
+              
         this.socket.on('connect', async socket => {
-             console.log("connected to server");
+            console.log("connected to server");
             // either with send()
-            this.socket.send('hello'); 
+            this.socket.send('hello');
             this.sync();
         });
-        
+
         // handle the event sent with socket.send()
-            this.socket.on('message', (data) => {
-                console.log(data);
-            }); 
-        
-         // handle the event sent with socket.send()
-            this.socket.on('server_respond_sync_data',async (data) => {
-                await this.update_from_server(data);
-            });
-            
-            this.socket.on("server_respond_send_raw_tx",(result) =>{
-                console.log("##############SEND TX ANSWER: ",result);
+        this.socket.on('message', (data) => {
+            console.log(data);
+        });
+
+        // handle the event sent with socket.send()
+        this.socket.on('server_respond_sync_data', async (data) => {
+            await this.update_from_server(data);
+        });
+
+        this.socket.on("server_respond_send_raw_tx", (result) => {
+            console.log("##############SEND TX ANSWER: ", result);
 //                console.log("send_array:"+JSON.stringify(result));
 //                console.log("pure_message:",JSON.parse(result.message));
-                
-        var message=JSON.parse(result.message);
-        if(message.result==undefined || message.result==null){return false;}
-        if(message.result.length==64){    //only if result is a valid tx
-            
-            //update self sent                                                   
-            this.db_wallet.update_self_sent_txs(message.result,result.data.inputs,result.data.outputs);
-            //update transactions
 
-            var cnf=this.db_wallet.get_config_values();
-            var private_standard_address_list=this.db_wallet.get_wallet_addresses(0,0,(cnf.used_pos.standard+20));
-            var private_change_address_list=this.db_wallet.get_wallet_addresses(1,0,(cnf.used_pos.change+20));
-            this.db_wallet.update_transactions({from:cnf.sync_height+1,to:cnf.sync_height,inputs:[],outputs:[]},private_standard_address_list,private_change_address_list);
-            this.gui_was_updated=false;
-            this.save_wallet(null);
-        }
-        else{
-            console.error(message.error);
-            return message.error;
-        }
+            var message = JSON.parse(result.message);
+            if (message.result == undefined || message.result == null) {
+                return false;
+            }
+            if (message.result.length == 64) {    //only if result is a valid tx
+
+                //update self sent                                                   
+                this.db_wallet.update_self_sent_txs(message.result, result.data.inputs, result.data.outputs);
+                //update transactions
+
+                var cnf = this.db_wallet.get_config_values();
+                var private_standard_address_list = this.db_wallet.get_wallet_addresses(0, 0, (cnf.used_pos.standard + 20));
+                var private_change_address_list = this.db_wallet.get_wallet_addresses(1, 0, (cnf.used_pos.change + 20));
+                this.db_wallet.update_transactions({from: cnf.sync_height + 1, to: cnf.sync_height, inputs: [], outputs: []}, private_standard_address_list, private_change_address_list);
+                this.gui_was_updated = false;
+                this.save_wallet(null);
+            } else {
+                console.error(message.error);
+                return message.error;
+            }
+
+
+        });
         
-                
-            });
+           this.socket.on("server_mempool_txs", (result) => {
+            console.log("##############MEMPOOL TX FROM SERVER: ", result);
+//                console.log("send_array:"+JSON.stringify(result));
+//                console.log("pure_message:",JSON.parse(result.message));
+//            console.log("result:", result);
+//            console.log("result.message:", result.message);
+
+
+            //update mempool txs                                                  
+            this.db_wallet.update_mempool_txs(result.message);
             
-            this.socket.on('disconnect', async function () {
+            
+            //update transactions
+            var cnf = this.db_wallet.get_config_values();
+            var private_standard_address_list = this.db_wallet.get_wallet_addresses(0, 0, (cnf.used_pos.standard + 20));
+            var private_change_address_list = this.db_wallet.get_wallet_addresses(1, 0, (cnf.used_pos.change + 20));
+            this.db_wallet.update_transactions({from: cnf.sync_height + 1, to: cnf.sync_height, inputs: [], outputs: []}, private_standard_address_list, private_change_address_list);
+            this.gui_was_updated = false;
+            this.save_wallet(null);
+
+
+        });
+
+        this.socket.on('disconnect', async function () {
             // handle disconnect
-            console.log("Server disconnected");          
-            });                      
+            console.log("Server disconnected");
+        });
     }
     
     async disconnect(){
-       await this.socket.disconnect();     
-       this.socket=null;
+        if(this.socket!=null){
+            await this.socket.disconnect();   
+            this.socket=null;
+        }
     }
     
-     sync(){
-        if(!this.db_wallet.wallet_loaded){        
+     sync(st_start,ch_start){
+        if(!this.db_wallet.wallet_loaded && this.socket!=null){        
             return;
         }
         this.sync_state="syncing";
@@ -160,14 +234,14 @@ class aliwa_wallet{
         this.addr_change_pos=(cnf.used_pos.change+25);
         
         var private_standard_address_list=this.db_wallet.get_wallet_addresses(0,0,this.addr_stan_pos);
-        var private_change_address_list=this.db_wallet.get_wallet_addresses(1,0,this.addr_change_pos);
+        var private_change_address_list=this.db_wallet.get_wallet_addresses(1,0,this.addr_change_pos);    
         var addresses=[];
                           
-        for(var i=0,len=private_standard_address_list.length;i<len;i++){
+        for(var i=(st_start!=undefined ? st_start : 0),len=private_standard_address_list.length;i<len;i++){
             addresses.push(private_standard_address_list[i].address);
         }
         
-        for(var i=0,len=private_change_address_list.length;i<len;i++){
+        for(var i=(ch_start!=undefined ? ch_start : 0),len=private_change_address_list.length;i<len;i++){
             addresses.push(private_change_address_list[i].address);
         }
 //        console.log("addresses | "+addresses.length);
@@ -180,8 +254,15 @@ class aliwa_wallet{
 //this.socket.emit('sync_from',0, addresses,cnf.last_rewind);
     }
     
-    update_from_server(data){
-        var cnf=this.db_wallet.get_config_values();  
+    update_from_server(data){        
+        var cnf=this.db_wallet.get_config_values(); 
+        
+        //prices and server donation
+        this.db_wallet.update_config({alias_prices:data.alias_prices}); 
+        if(data.server_donation_address!=null){
+        this.change_contact_address_address(2,data.server_donation_address);}
+        else{this.change_contact_address_address(2,"not provided");}
+        
         if(data.sync_id!=this.sync_id && cnf.sync_height==0){ // prevent overriding with older data
             console.error("OLD SYNC"); 
             return;
@@ -214,8 +295,8 @@ class aliwa_wallet{
             if(this.addr_stan_pos <= (cnf.used_pos.standard+20) || this.addr_change_pos <= (cnf.used_pos.change+20)){
                 if(cnf.sync_height==0){
                     //initial sync get more addresses from height zero
-                    this.initial_sync=true;
-                    this.sync();
+                    this.initial_sync=true;                   
+                    this.sync(this.addr_stan_pos-1,this.addr_change_pos-1);                  
                 }
                 else{
                     this.db_wallet.update_config({sync_height:data.to,last_rewind:data.last_rewind});
@@ -228,7 +309,7 @@ class aliwa_wallet{
                 this.initial_sync=false;
                 
                 this.sync_state="synced";
-                this.gui_was_updated=false;
+                this.gui_was_updated=false;               
                 this.save_wallet(null);
                 }
 
@@ -261,13 +342,7 @@ class aliwa_wallet{
     }
       
     
-    async is_synced(){
-       if(this.sync_state=="syncing"){
-           return true;
-       } 
-       else{return false;}
-    }
-    
+       
     //config
     get_wallet_pw(){
         var obj=this.db_wallet.get_config_values();
@@ -299,7 +374,15 @@ class aliwa_wallet{
         return {seed_words:obj.seed_words,seed_pw:obj.seed_pw};
     }
     
+    has_backup(){
+         var cnf=this.db_wallet.get_config_values();
+         return cnf.has_backup;
+    }
     
+    set_backup(){
+         this.db_wallet.update_config({"has_backup":true}); 
+    }
+       
     //adressbook    
     
         //addressbook receive
@@ -328,7 +411,7 @@ class aliwa_wallet{
         
      change_receive_address_label(pos,label){
         var receive_addresses=this.db_wallet.get_receive_addresses();
-        if(label!="" && label!=null && this.is_duplicated_label(label)){console.log("duplicated");return "duplicated";}
+        if(label!="" && label!=null && this.is_duplicated_label(label) && receive_addresses.findOne({"pos": {'$aeq': pos}}).label!=label){console.log("duplicated");return "duplicated";}
         var selected_addr=receive_addresses.findOne({"pos": {'$aeq': pos}});
         selected_addr.label=label;
         receive_addresses.update(selected_addr);
@@ -421,7 +504,7 @@ class aliwa_wallet{
         
         return true;
     }
-    
+     
      change_contact_address_address(pos,address){
         var contact_addresses=this.db_wallet.get_contact_addresses();
         
@@ -493,11 +576,8 @@ class aliwa_wallet{
     
      list_contact_addresses(page, order_field, direction, search) { 
         // add / update standard contacts
-        this.new_contact_address("Alias Foundation","SdrdWNtjD7V6BSt3EyQZKCnZDkeE28cZhr");
-        this.new_contact_address("Aliwa Donation Address","not implimented");
-        this.new_contact_address("Aliwa Server Provider","not implimented & not provided");
-                                  
         
+                                        
         if (search == undefined || search == null || search == "") {
             var txs = this.db_wallet.get_contact_addresses();
             var result = [];
@@ -622,14 +702,18 @@ class aliwa_wallet{
     
     async get_single_transaction(tx){
        var single_tx= this.db_wallet.get_single_tx(tx);
+       if(single_tx.send_from!=undefined){
        for(var i=0;i<single_tx.send_from.length;i++){
            var label=await this.get_labels([single_tx.send_from[i].from_address]);
            single_tx.send_from[i].label=label[0];
            
-       }
+       }}
        for(var i=0;i<single_tx.destinations.length;i++){
            var label=await this.get_labels([single_tx.destinations[i].address]);
            single_tx.destinations[i].label=label[0];
+           if(single_tx.send_from==undefined){
+            single_tx.fee=undefined;
+           }
            
        }
 //       console.log(single_tx);
@@ -740,6 +824,125 @@ class aliwa_wallet{
         
        
      }
+     
+     get_and_remove_notifications(){
+        var db_notifications=this.db_wallet.get_notifications(); 
+        var res= db_notifications.chain().find().simplesort("time", {desc: false}).limit(4).data({forceClones: true, removeMeta: true});
+        db_notifications.clear({removeIndices:true});
+        return res;
+     }
+     
+     get_alias_prices(){
+        var cnf=this.db_wallet.get_config_values();  
+//        console.log(cnf.alias_prices);
+        return cnf.alias_prices;
+     }
+     
+     set_selected_currency(currency){     
+        this.db_wallet.update_config({selected_currency:currency});      
+     }
+     
+     get_selected_currency(){
+        var cnf=this.db_wallet.get_config_values();  
+//        console.log(cnf.alias_prices);
+        return cnf.selected_currency;
+     }
+     
+     set_notifications_enabled(value){
+        this.db_wallet.update_config({is_notifications_enabled:value});
+     }
+     
+     is_notifications_enabled(){
+        var cnf=this.db_wallet.get_config_values();  
+        return cnf.is_notifications_enabled;
+     }
+     
+     //server addresses
+     list_server_aliwa_addresses(){
+        var db_aliwa_server_addresses = this.db_wallet.get_aliwa_server_addresses();
+        var cnf=this.db_wallet.get_config_values();  
+                    
+        var community=db_aliwa_server_addresses.chain().find({"type": {'$aeq': "community"}}).simplesort("label", {desc: false}).data({forceClones: true, removeMeta: true});
+        
+        var custom=db_aliwa_server_addresses.chain().find({"type": {'$aeq': "custom"}}).simplesort("label", {desc: false}).data({forceClones: true, removeMeta: true});
+        
+        return {community:community,custom:custom,current_selected:cnf.aliwa_server_address_label};       
+    }
+     
+     
+     
+     add_aliwa_server_address(label,address,type,do_not_save){
+        var db_aliwa_server_addresses = this.db_wallet.get_aliwa_server_addresses();
+        
+        if(db_aliwa_server_addresses.findOne({label: {'$aeq': (label)}}) == null){
+                db_aliwa_server_addresses.insert({label:label,address:address,type:type});
+                if(do_not_save){}else{this.save_wallet(null);}
+                return true;
+        }  
+        else{
+         return false;      
+        }
+        
+    }
+    
+    edit_aliwa_server_address(label,address){
+        var db_aliwa_server_addresses = this.db_wallet.get_aliwa_server_addresses();
+             
+        var doc=db_aliwa_server_addresses.findOne({label: {'$aeq': (label)}});
+        if(doc != null){               
+                doc.address=address;
+                db_aliwa_server_addresses.update(doc);
+                this.save_wallet(null);
+                return true;
+        }  
+        else{
+         return false;      
+        }
+        
+        
+    }
+    
+    delete_aliwa_server_address(label){
+        var db_aliwa_server_addresses = this.db_wallet.get_aliwa_server_addresses();
+        
+        db_aliwa_server_addresses.chain().find({'$and': [{"type": {'$aeq': "custom"}}, {"label": {'$aeq': label}}]}).remove();       
+        this.save_wallet(null);
+        
+    }
+    
+    delete_aliwa_server_address_community_list(){
+        var db_aliwa_server_addresses = this.db_wallet.get_aliwa_server_addresses();
+        
+        db_aliwa_server_addresses.chain().find({"type": {'$aeq': "community"}}).remove();       
+              
+    }
+    
+    switch_to_aliwa_server_address(label,complete_resync){
+        var db_aliwa_server_addresses = this.db_wallet.get_aliwa_server_addresses();
+        
+        var server_address=db_aliwa_server_addresses.findOne({label: {'$aeq': (label)}}).address;
+        this.disconnect();
+        
+        
+        var cnf=this.db_wallet.get_config_values();
+        
+        var new_height=(complete_resync ? 0 : (cnf.sync_height-100));
+        new_height=(new_height<0 ? 0 : new_height);
+        if(complete_resync){
+        this.db_wallet.update_config({aliwa_server_address_label:label,aliwa_server_address:server_address,sync_height:new_height,last_rewind:{time:0,block_height:0}});}
+        else{
+        this.db_wallet.update_config({aliwa_server_address_label:label,aliwa_server_address:server_address,sync_height:new_height});}
+        //rewind -100 in case other server has lower sync_height / different orphans
+        this.db_wallet.delete_orphans(new_height);
+       
+        
+        
+        this.connect_to_server();
+        
+        this.save_wallet(null);
+        
+    }
+     
     
 }
 exports.aliwa_wallet = aliwa_wallet;

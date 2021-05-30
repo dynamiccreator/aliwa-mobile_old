@@ -5,7 +5,7 @@
         <i class="shield alternate icon" style="float:left;margin:0 0.5rem 0 -0.7rem"></i>
         <span style="display: inline-block">Security Settings</span>
     </div>
-    <a class="teal item">
+    <a id="settings_backup" class="teal item">
         <span style="display: inline-block">Back up Wallet</span>
         <i class="inverted white chevron right icon Medium"></i>
         <i class="inverted red exclamation circle icon large" style="padding-top:0"></i>            
@@ -24,10 +24,10 @@
        <i class="sliders horizontal icon" style="float:left;margin:0 0.5rem 0 -0.7rem"></i>
        <span style="display: inline-block">Miscellaneous Settings</span>
     </div>
-    <a class="teal item">
+    <a id="settings_native_currency" class="teal item">
         <span style="display: inline-block">Native Currency</span>
         <i class="inverted white chevron right icon Medium"></i>  
-        <span style="float:right">USD</span>
+        <span id="settings_native_currency_value" style="float:right">USD</span>
     </a>
     <a class="teal item disabled">
         <span style="display: inline-block">Language</span>
@@ -35,11 +35,18 @@
         <span style="float:right">english</span>
         
     </a>
-    <a class="teal item">
+    <a id="Settings_notifications_enabled" class="teal item">
+        <span style="display: inline-block">Notifications</span>
+        <div class="ui toggle checkbox inverted" style="float:right;">
+            <input class="aliwa_toggle_checkbox_input" type="checkbox" name="public">
+            <label class="aliwa_toggle_checkbox_label" style="color:#fff;">OFF</label>
+        </div>                
+    </a>
+    <a id="settings_custom_server" class="teal item">
         <span style="display: inline-block">Custom Server</span>
         <i class="inverted white chevron right icon Medium"></i>                  
     </a>
-    <a class="teal item">
+    <a id="settings_about" class="teal item">
         <span style="display: inline-block">About</span>
         <i class="inverted white chevron right icon Medium"></i>                  
     </a>

@@ -1,0 +1,333 @@
+<div id="view_backup_segment" class="ui segment" style="background: #594663;margin: auto;width:95%;max-width: 50rem;margin-top:6rem;text-align: center;">
+ <!--   <div class="ui ordered steps large fluid">
+        <div id="view_backup_first_step" class="completed step">
+            <div class="content">
+                <div class="title">Info</div>
+                <div class="description">Why do I need a backup?</div>
+            </div>
+        </div>
+        <div id="view_backup_second_step" class="active step">
+            <div class="content">
+                <div class="title">Show Backup Phrase</div>
+                <div class="description">Write down Backup phrase.</div>
+            </div>
+        </div>
+        <div id="view_backup_third_step" class="disabled step">
+            <div class="content">
+                <div class="title">Confirm Backup Phrase</div>
+                <div class="description">Verify your backup.</div>
+            </div>
+        </div>
+    </div>  -->
+ 
+  <div id="view_backup_page_info_methods">
+        <div  class="ui info message huge">
+            <i class="wallet icon"></i>
+            <div class="header">
+                Your wallet was created successfully!
+            </div>
+            Please Choose your Backup method.<br>
+            Your wallet will be stored on this device and only you can controll the private keys.<br>
+            Therefore you should make a backup to not loose your funds over a data loss or loosing this device.<br><br>
+            
+            You can choose between three methods. You can always add one of these later if you want to.<br><br>
+            
+            <b>1.Write down Backup Phrase (recommended)<br>
+            
+            2.Save encrypted full wallet backup file (incl. Addressbook and Settings)<br>
+            
+            3.Encrypted Seed File</b>
+
+        </div>
+
+        <div class="ui segment" style="background: #382b3f;margin: auto;width:95%;max-width: 50rem;margin-top:1rem;text-align: left;">
+            <div class="ui checkbox inverted huge">
+                <input type="checkbox" name="view_backup_am_private">
+                <label>No one is looking - It is safe to proceed</label>
+            </div>        
+        </div>
+        
+        <br>
+        
+        <button id="view_start_backup_button" class="ui icon button alias_orange_button2 huge" style="margin-top: 1.5rem;">
+            <i class="white seedling icon"></i> Start Backup
+        </button>
+             
+       <div id="view_start_backup_button_skip"> <button class="ui right icon button huge white" style="background: #fff;margin-top: 1.5rem;">
+                  <i class="white forward icon"></i>  Not now - Take me to my wallet
+        </button></div>  
+        
+        <div id="view_start_backup_button_skip"> <button class="ui right icon button huge white" style="background: #fff;margin-top: 1.5rem;">
+                  <i class="white times icon"></i>  Abort
+        </button></div>  
+        
+        
+        
+        <br><br>
+        
+        
+    </div>
+ 
+ 
+ 
+    
+    <div id="view_backup_page_start_up_info">
+        <div  id="view_backup_page_start_up_info_message_record_your_backup" class="ui warning message huge">
+            <i class="exclamation circle icon"></i>
+            <div class="header">
+                Record your backup phrase
+            </div>
+            With your backup phrase you can always restore your wallet.<br>
+            It consists of <b><u>24 words AND a seed-password</u></b> (only if set).<br><br>
+            
+
+            Write your backup phrase down and keep it secret! Anyone who knows it can send away your funds!
+
+        </div>
+
+        <div id="view_backup_it_is_safe" class="ui segment" style="background: #382b3f;margin: auto;width:95%;max-width: 50rem;margin-top:1rem;text-align: left;cursor:pointer;">
+            <div class="ui checkbox inverted huge" style="cursor:pointer;">
+                <input id="view_backup_it_is_safe_checkbox" type="checkbox" name="view_backup_am_private">
+                <label  style="cursor:pointer;">No one is looking - It is safe to proceed</label>
+            </div>        
+        </div>
+        
+        <br>
+        
+        <button id="view_start_backup_button" class="ui icon button alias_orange_button2 huge" style="margin-top: 1.5rem;">
+            <i class="white seedling icon"></i> Start Backup
+        </button>
+        
+        <button id="view_savebackup_file_button" class="ui icon button alias_orange_button2 huge" style="margin-top: 1.5rem;">
+            <i class="white save icon"></i> Save Backup File
+        </button>
+             
+       <div id="view_start_backup_button_skip"> <button class="ui right icon button huge white" style="background: #fff;margin-top: 1.5rem;">
+                  <i class="white forward icon"></i>  Not now - Take me to my wallet
+        </button></div>  
+        
+        <div id="view_start_backup_button_abort"> <button class="ui right icon button huge white" style="background: #fff;margin-top: 1.5rem;">
+                  <i class="white times icon"></i>  Abort
+        </button></div>  
+        
+        
+        
+        <br><br>
+        
+        
+    </div>
+ 
+ <div id="view_backup_page_words_1">
+     <div  class="ui info message huge">
+         <i class="pencil icon"></i>
+         <div class="header">
+             Record your backup phrase
+         </div>
+         6/24 Words<br>
+         You should store this Backup Phrase in a safe place.
+         Ideally write it on a piece of paper.
+     </div>
+
+     <div class="ui segment seed_words_list_element" style="background: #382b3f;margin: auto;width:95%;max-width: 50rem;margin-top:1rem;text-align: left;">
+
+         <h2 class="ui header" style="color:#fff;"><span style="opacity: 0.5;">1.</span>&nbsp; abcdefghijklmnhb</h2>
+         <h2 class="ui header" style="color:#fff;"><span style="opacity: 0.5;">2.</span>&nbsp; WORD</h2>
+         <h2 class="ui header" style="color:#fff;" ><span style="opacity: 0.5;">3.</span>&nbsp; WORD</h2>
+         <h2 class="ui header" style="color:#fff;"><span style="opacity: 0.5;">4.</span>&nbsp; WORD</h2>
+          <h2 class="ui header" style="color:#fff;"><span style="opacity: 0.5;">5.</span>&nbsp; abcdefghijklmnhb</h2>
+         <h2 class="ui header" style="color:#fff;"><span style="opacity: 0.5;">6.</span>&nbsp; WORD</h2>
+
+     </div>
+
+     <br>
+     
+     <button id="view_backup_go_back" class="ui icon button alias_orange_button2 huge">
+         <i class="white arrow left icon"></i> Back
+     </button>
+
+     <button id="view_backup_next_words" class="ui icon button alias_orange_button2 huge">
+         <i class="white arrow right icon"></i> Next 6 Words
+     </button>
+     <br><br>
+ </div> 
+ 
+ 
+ <!--page words more-->
+ <div id="view_backup_page_words_more">
+     <div  class="ui info message huge">
+         <i class="pencil icon"></i>
+         <div class="header">        
+         </div>
+         <span id="view_backup_page_words_more_progress">12/24 Words</span>
+     </div>
+
+     <div class="ui segment seed_words_list_element" style="background: #382b3f;margin: auto;width:95%;max-width: 50rem;margin-top:1rem;text-align: left;">
+
+         <h2 class="ui header" style="color:#fff;"><span style="opacity: 0.5;">7.</span>&nbsp; abcdefghijklmnhb</h2>
+         <h2 class="ui header" style="color:#fff;"><span style="opacity: 0.5;">8.</span>&nbsp; WORD</h2>
+         <h2 class="ui header" style="color:#fff;" ><span style="opacity: 0.5;">9.</span>&nbsp; WORD</h2>
+         <h2 class="ui header" style="color:#fff;"><span style="opacity: 0.5;">10.</span>&nbsp; WORD</h2>
+          <h2 class="ui header" style="color:#fff;"><span style="opacity: 0.5;">11.</span>&nbsp; abcdefghijklmnhb</h2>
+         <h2 class="ui header" style="color:#fff;"><span style="opacity: 0.5;">12.</span>&nbsp; WORD</h2>
+
+     </div>
+
+     <br>
+     
+     <button id="view_backup_go_back" class="ui icon button alias_orange_button2 huge">
+         <i class="white arrow left icon"></i> Back
+     </button>
+
+     <button id="view_backup_next_words" class="ui icon button alias_orange_button2 huge">
+         <i class="white arrow right icon"></i> Next 6 Words
+     </button>
+     <br><br>
+ </div> 
+ 
+<!--seed password --> 
+  <div id="view_backup_page_seed_password_define">
+     <div  class="ui info message huge">
+         <i class="lock icon"></i>
+         <div class="header"> 
+             Define a seed-password (optional)
+         </div>
+         If you have the feeling that your backup written on a paper could be discovered by someone else, you can additionally define a <b>seed-password to enhance security.</b><br>
+         An attacker would then need both <b>seed words</b> and the <b>seed-password</b> to get access to your funds.<br><br>
+         
+         If you don't like to set a seed-password just leave this form empty.
+     </div>
+
+     <div class="ui segment" style="background: #382b3f;margin: auto;width:95%;max-width: 50rem;margin-top:1rem;text-align: left;">
+
+          <span class="aliwa_input_label aliwa_input_label_distance">Seed-Password</span> <br>
+        <div class="ui input large fluid" style="margin-top:0.5rem;">
+            <i id="view_backup_seed_password_eye" class=" eye slash link icon white inverted large" style="margin-top: 0.5rem;margin-right:1rem;"></i>
+            <input id="view_backup_seed_password" type="password" value="" class="aliwa_input_field" placeholder="seed-password">
+            <i id="view_backup_seed_password_clear" class="times link icon white inverted large" style="margin-top: 0.5rem"></i>
+        </div>
+        
+    <!--    <span class="aliwa_input_label aliwa_input_label_distance">Confirm Seed-Password</span> <br>   
+       <div class="ui input large fluid" style="margin-top:0.5rem;">
+            <i id="view_backup_seed_password_confirm_eye" class=" eye slash link icon white inverted large" style="margin-top: 0.5rem;margin-right:1rem;"></i>
+            <input id="view_backup_seed_password_confirm" type="password" value="" class="aliwa_input_field" placeholder="seed-password">
+            <i id="view_backup_seed_password_confirm_clear" class="times link icon white inverted large" style="margin-top: 0.5rem"></i>
+        </div>  --> 
+
+     </div>
+
+     <br>
+     
+     <button id="view_backup_go_back" class="ui icon button alias_orange_button2 huge">
+         <i class="white arrow left icon"></i> Back
+     </button>
+
+     <button id="view_backup_next_words" class="ui icon button alias_orange_button2 huge">
+         <i class="white arrow right icon"></i> Proceed
+     </button>
+     <br><br>
+ </div> 
+
+<div id="view_backup_page_seed_password_no_backup">
+     <div  class="ui info message huge">
+         <i class="lock icon"></i>
+         <div class="header"> 
+             Define a seed-password (optional)
+         </div>
+         This will be additionally applied to your seed words. You can view and back up this later.
+         
+         If you don't like to set a seed-password just leave this form empty.
+     </div>
+
+     <div class="ui segment" style="background: #382b3f;margin: auto;width:95%;max-width: 50rem;margin-top:1rem;text-align: left;">
+
+          <span class="aliwa_input_label aliwa_input_label_distance">Seed-Password</span> <br>
+        <div class="ui input large fluid" style="margin-top:0.5rem;">
+            <i id="view_backup_seed_password_eye" class=" eye slash link icon white inverted large" style="margin-top: 0.5rem;margin-right:1rem;"></i>
+            <input id="view_backup_seed_password" type="password" value="" class="aliwa_input_field" placeholder="seed-password">
+            <i id="view_backup_seed_password_clear" class="times link icon white inverted large" style="margin-top: 0.5rem"></i>
+        </div>
+        
+        <span class="aliwa_input_label aliwa_input_label_distance">Confirm Seed-Password</span> <br>   
+       <div class="ui input large fluid" style="margin-top:0.5rem;">
+            <i id="view_backup_seed_password_confirm_eye" class=" eye slash link icon white inverted large" style="margin-top: 0.5rem;margin-right:1rem;"></i>
+            <input id="view_backup_seed_password_confirm" type="password" value="" class="aliwa_input_field" placeholder="seed-password">
+            <i id="view_backup_seed_password_confirm_clear" class="times link icon white inverted large" style="margin-top: 0.5rem"></i>
+        </div>
+
+     </div>
+
+     <br>
+     
+     <button id="view_backup_go_back" class="ui icon button alias_orange_button2 huge">
+         <i class="white arrow left icon"></i> Back
+     </button>
+
+     <button id="view_backup_next_words" class="ui icon button alias_orange_button2 huge">
+         <i class="white arrow right icon"></i> Create Wallet Now
+     </button>
+     <br><br>
+ </div> 
+
+
+<div id="view_backup_page_seed_password_show_only">
+     <div  class="ui info message huge">
+         <i class="lock icon"></i>
+         <div class="header"> 
+             Your seed-password
+         </div>       
+     </div>
+
+     <div class="ui segment" style="background: #382b3f;margin: auto;width:95%;max-width: 50rem;margin-top:1rem;text-align: left;">
+
+         <h2 id="view_backup_seed_password_view_only" class="ui header" style="color:#fff;"><span style="opacity: 0.5;">Seed Password: </span>&nbsp; abcdefghijklmnhb</h2>
+        
+    <!--    <span class="aliwa_input_label aliwa_input_label_distance">Confirm Seed-Password</span> <br>   
+       <div class="ui input large fluid" style="margin-top:0.5rem;">
+            <i id="view_backup_seed_password_confirm_eye" class=" eye slash link icon white inverted large" style="margin-top: 0.5rem;margin-right:1rem;"></i>
+            <input id="view_backup_seed_password_confirm" type="password" value="" class="aliwa_input_field" placeholder="seed-password">
+            <i id="view_backup_seed_password_confirm_clear" class="times link icon white inverted large" style="margin-top: 0.5rem"></i>
+        </div>  --> 
+
+     </div>
+
+     <br>
+     
+     <button id="view_backup_go_back" class="ui icon button alias_orange_button2 huge">
+         <i class="white arrow left icon"></i> Back
+     </button>
+
+     <button id="view_backup_next_words" class="ui icon button alias_orange_button2 huge">
+         <i class="white arrow right icon"></i> Proceed
+     </button>
+     <br><br>
+ </div> 
+ 
+
+<!--PAGE VERIFY -->
+  <div id="view_backup_page_verify">
+     <div  class="ui info message huge">
+         <i class="check icon"></i>
+         <div class="header"> 
+             Verify your Backup Phrase
+         </div>
+         Fill in the form to prove that you have written down everything correctly.
+     </div>
+
+     <div id="view_back_input_fields" class="ui segment" style="background: #382b3f;margin: auto;width:95%;max-width: 50rem;margin-top:1rem;text-align: left;">
+      
+     </div>
+
+     <br>
+     
+     <button id="view_backup_go_back" class="ui icon button alias_orange_button2 huge" style="margin-top: 1.5rem;">
+         <i class="white arrow left icon"></i> Back
+     </button>
+
+     <button id="view_backup_confirm_backup" class="ui icon button alias_orange_button2 huge" style="margin-top: 1.5rem;">
+         <i class="white check icon"></i> Confirm Backup Phrase
+     </button>
+     <br><br>
+ </div> 
+
+
+</div>
