@@ -19,10 +19,10 @@ myShellScript.stderr.on('data', (data)=>{
     
 }
 
-setTimeout(function(){
+/*setTimeout(function(){
     require(path.join(__dirname,"./ipc_communications"))();
-},500);
-
+},500);*/
+require(path.join(__dirname,"./ipc_communications"))();
 
 app.commandLine.appendSwitch("use-cmd-decoder","validating") //prevent graphical glitches (hopefully)
 app.commandLine.appendSwitch("use-gl","desktop"); //prevent graphical glitches (hopefully)
@@ -53,8 +53,10 @@ function createWindow () {
 
  
 app.whenReady().then(createWindow);
-
-app.on('window-all-closed', () => {
+ 
+app.on('window-all-closed', async() => {    
+     save_on_exit();
+     
   if (process.platform !== 'darwin') {
     app.quit();
   }

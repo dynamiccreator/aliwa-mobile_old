@@ -1,9 +1,26 @@
 <div class="ui segment" style="background: #594663;margin: auto;width:95%;max-width: 50rem;margin-top:6rem">
-    <div style="margin: auto;text-align: center;">
+    <div style="margin: auto;text-align: center;">             
         <div style="text-align: left">
+           <!-- <div  style="font-size: 1.5rem;color:#f38320;">To recover your wallet you need both <b style="color:#fff;">Seed Words</b> and <b style="color:#fff;">Seed Password</b> (only if you have defined one)<br><br>
+                Keep both safe! Everyone who knows it can move your coins to any address!
+            </div><br><br>-->
 
-            <div id="view_backup_phrase_phrase" style="font-size: 1.5rem;color:#fff;"></div>
+
+            <div class="ui icon info message huge">
+                <i class="seedling icon"></i>
+       <!--         <div class="header">
+                    Was this what you wanted?
+                </div>-->
+                To recover your wallet you need both SEED WORDS and SEED PASSWORD (only if you have defined one)<br><br>
+                Keep both secret! Everyone who knows these credentials can move your coins to any address!
+            </div>
+
+
+            <div id="view_backup_phrase_phrase" style="font-size: 1.5rem;color:#fff;letter-spacing: 0.2rem;line-height: 2rem;"></div>
 
         </div>
+        <button id="unhide_backupphrase" class="ui icon button alias_orange_button2 huge">
+            <i class="white eye icon"></i> No one looks - show it
+        </button>
     </div>
 </div>

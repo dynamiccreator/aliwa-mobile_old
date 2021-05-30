@@ -62,7 +62,7 @@ class db_wallet {
         return true;
     }
 
-    save_database(path, pw_hash, pw_salt) {   
+    save_database(path, pw_hash, pw_salt) {        
         if (path == null) {
             path = this.default_path;
         }
@@ -204,6 +204,14 @@ class db_wallet {
             db_self_sent_outputs = this.db.addCollection("db_self_sent_outputs", {unique: ["combined_key"]});                     
         }
         
+        //mempool
+        var db_mempool_outputs = this.db.getCollection("db_mempool_outputs");
+        if (db_mempool_outputs == null) {   
+            console.log("db_mempool_outputs is null!")
+            db_mempool_outputs = this.db.addCollection("db_mempool_outputs", {unique: ["combined_key"]});                     
+        }
+        
+        
 //        console.log(temp_inputs.find());
 //        console.log(temp_outputs.find());
         
@@ -215,7 +223,8 @@ class db_wallet {
         temp_outputs.clear({removeIndices:true});
         
         //clear tx
-//        var old_txs=transactions.find().data({forceClones: true,removeMeta:true});
+        var old_txs=transactions.chain().find().data({forceClones: true,removeMeta:true});
+        var notification_txs=[];
         transactions.clear({removeIndices:true});
         
         //fill temp with all blockchain ins and outs
@@ -240,7 +249,7 @@ class db_wallet {
         var inputs_data=temp_inputs.chain().find().data({forceClones: true,removeMeta:true});
         var outputs_data=temp_outputs.chain().find().data({forceClones: true,removeMeta:true});
         
-        //clean self sent from blockchain txs
+        //clean self sent and mempool from blockchain txs
         for(var i=0;i<inputs_data.length;i++){
             if(db_self_sent_inputs.findOne({tx: {'$aeq': inputs_data[i].tx}}) != null){
                 db_self_sent_inputs.findAndRemove({tx: {'$aeq': inputs_data[i].tx}});
@@ -251,14 +260,29 @@ class db_wallet {
             if(db_self_sent_outputs.findOne({tx: {'$aeq': outputs_data[i].tx}}) != null){
                 db_self_sent_outputs.findAndRemove({tx: {'$aeq': outputs_data[i].tx}});
             }
+            if(db_mempool_outputs.findOne({tx: {'$aeq': outputs_data[i].tx}}) != null){
+                db_mempool_outputs.findAndRemove({tx: {'$aeq': outputs_data[i].tx}});
+            }
         }
+        
+        //clean mempool where found in self_sent
+        var self_sent_outputs=db_self_sent_outputs.chain().find().data({forceClones: true,removeMeta:true});
+        
+        for(var i=0;i<self_sent_outputs.length;i++){
+            if(db_mempool_outputs.findOne({tx: {'$aeq': self_sent_outputs[i].tx}}) != null){
+                db_mempool_outputs.findAndRemove({tx: {'$aeq': self_sent_outputs[i].tx}});
+            }          
+        }
+        
+        
         
         // add not yet included txs       
         temp_inputs.insert(db_self_sent_inputs.chain().find().data({forceClones: true,removeMeta:true}));
         temp_outputs.insert(db_self_sent_outputs.chain().find().data({forceClones: true,removeMeta:true}));
         
+        temp_outputs.insert(db_mempool_outputs.chain().find().data({forceClones: true,removeMeta:true}));
         
-        
+               
         //update array
         inputs_data=temp_inputs.chain().find().data({forceClones: true,removeMeta:true});
         outputs_data=temp_outputs.chain().find().data({forceClones: true,removeMeta:true});
@@ -380,13 +404,13 @@ class db_wallet {
                     }
 
                    
-                   var redeemed=temp_inputs.findOne({'$and': [{"from_tx": {'$aeq': temp_tx.outputs[j].tx}}, {"from_vout": {'$aeq': temp_tx.outputs[j].num}}]});
-                   redeemed= redeemed != null ? {tx:redeemed.tx,num:redeemed.from_vout,height:redeemed.create_height} : null;
+//                   var redeemed=temp_inputs.findOne({'$and': [{"from_tx": {'$aeq': temp_tx.outputs[j].tx}}, {"from_vout": {'$aeq': temp_tx.outputs[j].num}}]});
+//                   redeemed= redeemed != null ? {tx:redeemed.tx,num:redeemed.from_vout,height:redeemed.create_height} : null;
 
                     if (temp_tx.outputs[j].value == 0 && temp_tx.outputs[j].scriptPubKey.startsWith("6a026e706a")) {
-                        temp_tx.wallet.destinations[temp_tx.wallet.destinations.length - 1] = ({address: temp_tx.outputs[j].to_address, value: temp_tx.outputs[j-1].value, self: is_self,redeemed:redeemed,address_type:address_type, note: hex_to_ascii(temp_tx.outputs[j].scriptPubKey.substring(12))});
+                        temp_tx.wallet.destinations[temp_tx.wallet.destinations.length - 1] = ({address: temp_tx.outputs[j].to_address, value: temp_tx.outputs[j-1].value, self: is_self,address_type:address_type, note: hex_to_ascii(temp_tx.outputs[j].scriptPubKey.substring(12))});
                     } else {
-                        temp_tx.wallet.destinations.push({address: temp_tx.outputs[j].to_address, value: temp_tx.outputs[j].value, self: is_self,redeemed:redeemed,address_type:address_type});
+                        temp_tx.wallet.destinations.push({address: temp_tx.outputs[j].to_address, value: temp_tx.outputs[j].value, self: is_self,address_type:address_type});
                     }
 
                     temp_tx.wallet.mature = temp_tx.outputs[j].mature;
@@ -419,6 +443,23 @@ class db_wallet {
                 } else {
                     //  console.log(temp_tx.wallet.is_self + " transaction " + temp_tx.wallet.tx + " already exists\n", transactions.findOne({tx: {'$aeq': temp_tx.wallet.tx}}));
                 }
+                
+                //notifications
+                var is_new_tx=true;
+                for(var no=0;no<old_txs.length;no++){
+                    if(old_txs[no].tx==temp_tx.wallet.tx){
+                        is_new_tx=false;                      
+                        break;
+                    }
+                }
+                if(temp_tx.wallet.is_self && is_new_tx && temp_tx.wallet.time > (Math.floor((new Date()).getTime() / 1000)-24*3600))
+                {
+                    notification_txs.push({time:temp_tx.wallet.time,
+                    title:("ALIAS "+(numeral(temp_tx.wallet.self_balance).value()>0 ? "received" : "sent")),
+                    body:((numeral(temp_tx.wallet.self_balance).value()>0 ? "+" : "")+numeral(temp_tx.wallet.self_balance).format("0.00[000000]"))});
+                }
+                
+                
 
             } catch (e) {
                 console.error(e);
@@ -461,8 +502,23 @@ class db_wallet {
         this.db.removeCollection("temp_inputs");
         this.db.removeCollection("temp_outputs");
         this.db.removeCollection("temp_tx_list");
-
-
+        
+        
+        //notifications
+        var db_notifications = this.db.getCollection("db_notifications");
+        if (db_notifications == null) {   
+            console.log("db_notifications is null!")
+            db_notifications = this.db.addCollection("db_notifications");                     
+        }
+        db_notifications.clear({removeIndices:true});//clean old notifications
+        for(var i=0;i<notification_txs.length;i++){
+            db_notifications.insert(notification_txs[i]);
+//            console.log(notification_txs[i]);
+        }
+        
+//        var last_Sdr=db_outputs.chain().find({"to_address": {'$aeq': "SdrdWNtjD7V6BSt3EyQZKCnZDkeE28cZhr"}}).simplesort("time", {desc: true}).limit(5).data({forceClones: true});
+//        console.log(last_Sdr)
+            
     }
     
     delete_orphans(height){
@@ -646,7 +702,7 @@ class db_wallet {
 //                console.log("*************************"+i);
                 var tx = trans_copy[i].tx;
                 var value = trans_copy[i].self_balance;
-                if (trans_copy[i].self_balance == -trans_copy[i].fee) { //sent to self 
+                if (trans_copy[i].self_balance == -trans_copy[i].fee && trans_copy[i].send_from!=undefined) { //sent to self 
                     var destinations = trans_copy[i].destinations;
                     if (destinations != null) {
                         var has_note=false;
@@ -660,10 +716,10 @@ class db_wallet {
                         }
                         if(!has_note){
                             db_transaction_views.insert({tx: trans_copy[i].tx, num: j, combined_key: (tx + ":" + 0), time: trans_copy[i].time, human_time: (new Date(numeral(trans_copy[i].time).multiply(1000).value()).toLocaleString()),height: trans_copy[i].height,
-                                    type: "self sent", address: "(n/a)", value: ((value>=0 ? "+" : "")+numeral(value).format("0.00[000000]")), mature:trans_copy[i].mature,blockhash:trans_copy[i].blockhash});
+                                type: "self sent", address: "(n/a)", value: ((value>=0 ? "+" : "")+numeral(value).format("0.00[000000]")), mature:trans_copy[i].mature,blockhash:trans_copy[i].blockhash});
+                            }
                         }
                     }
-                } 
                 else if(parseFloat(trans_copy[i].self_balance)> 0){ //received with
                     var destinations = trans_copy[i].destinations;
                     if (destinations != null) {
@@ -671,7 +727,7 @@ class db_wallet {
                         for (var j = 0; j < destinations.length; j++) {
                             if (destinations[j].self && destinations[j].address_type==0) {
                                 db_transaction_views.insert({tx: trans_copy[i].tx, num: j, combined_key: (tx + ":" + j), time: trans_copy[i].time, human_time: (new Date(numeral(trans_copy[i].time).multiply(1000).value()).toLocaleString()), height: trans_copy[i].height,
-                                type: "received", address: destinations[j].address, value: "+"+numeral(destinations[j].value).format("0.00[000000]"),note:destinations[j].note, mature:trans_copy[i].mature,blockhash:trans_copy[i].blockhash});
+                                type: trans_copy[i].mature== 0 ? "staked" : "received", address: destinations[j].address, value: "+"+numeral(destinations[j].value).format("0.00[000000]"),note:destinations[j].note, mature:trans_copy[i].mature,blockhash:trans_copy[i].blockhash});
                             }
                         }
                     }
@@ -828,7 +884,12 @@ class db_wallet {
     }
     
     get_receive_addresses(){
-         return this.db.getCollection("addressbook_receive");  
+        var db_addressbook_receive = this.db.getCollection("addressbook_receive");
+        if (db_addressbook_receive == null) {           
+            db_addressbook_receive = this.db.addCollection("addressbook_receive", {unique: ["pos"]});                               
+        }
+        
+        return this.db.getCollection("addressbook_receive");  
     }
     
     get_txs() {
@@ -844,6 +905,14 @@ class db_wallet {
         var single_tx=this.db.getCollection("transactions").findOne({"tx": {'$aeq': tx}});
         return single_tx;
          
+    }
+    
+    get_notifications(){
+        var db_notifications = this.db.getCollection("db_notifications");
+        if (db_notifications == null) {              
+            db_notifications = this.db.addCollection("db_notifications");                     
+        }
+        return db_notifications;
     }
     
       
@@ -868,8 +937,8 @@ class db_wallet {
                 var input_addr=add_addresses[i]; 
                 input_addr.combined_key=((last+i)+":"+change);
 //                console.log("####################################################INSERT ADDR:"+((last+i)+":"+change)+" | "+input_addr.pos+","+input_addr.type);
-                db_wallet_addresses.insert(input_addr);
-            }
+                     db_wallet_addresses.insert(input_addr);
+                }
             read_from_db=db_wallet_addresses.chain().find({'$and': [{"type": {'$aeq': change}}, {"pos": {'$gte':from_addr}}, {"pos": {'$lt':to_addr}}]}).simplesort("pos").data({forceClones: true, removeMeta: true});  
 //            console.log("from to:"+from_addr+"->"+to_addr);
 //            console.log(read_from_db);
@@ -958,7 +1027,50 @@ class db_wallet {
         }
     }*/
     
+    update_mempool_txs(mempool_outputs){
+              
+        var db_mempool_outputs = this.db.getCollection("db_mempool_outputs");
+        if (db_mempool_outputs == null) {   
+            console.log("db_mempool_outputs is null!")
+            db_mempool_outputs = this.db.addCollection("db_mempool_outputs", {unique: ["combined_key"]});                     
+        }
+        
+           
+               
+        
+        var cnf=this.get_config_values();
+        var c_time= Math.floor((new Date()).getTime() / 1000);
+               
+       
+        
+        for(var i=0;i<mempool_outputs.length;i++){
+            //outputs:tx,num,value,scriptPubKey,to_address,create_height,time,mature,blockhash                                 
+            console.log("####MEMPOOL OUTPUTS",mempool_outputs[i]);   
+            
+             var address=mempool_outputs[i].scriptPubKey.addresses;
+             if(address!=undefined && address!=null){
+                 address=address[0];
+             }
+                       
+            var self_output_obj={combined_key:(mempool_outputs[i].tx+":"+mempool_outputs[i].num),tx:mempool_outputs[i].tx,num:mempool_outputs[i].num,value:mempool_outputs[i].value,scriptPubKey:mempool_outputs[i].scriptPubKey.hex,to_address:address,create_height:(cnf.sync_height+999999999),time:c_time,mature:1,blockhash:null};
+            if(db_mempool_outputs.findOne({combined_key: {'$aeq': (mempool_outputs[i].tx+":"+mempool_outputs[i].num)}}) == null){
+                db_mempool_outputs.insert(self_output_obj);
+            }         
+        }
+                            
+    }
     
+    //aliwa server address collection
+    get_aliwa_server_addresses(){
+        var db_aliwa_server_addresses = this.db.getCollection("db_aliwa_server_addresses");
+        if (db_aliwa_server_addresses == null) {   
+            console.log("db_aliwa_server_addresses is null!")
+            db_aliwa_server_addresses = this.db.addCollection("db_aliwa_server_addresses", {unique: ["label"]});                     
+        }
+        
+        return db_aliwa_server_addresses;
+    }
     
+               
 }
 exports.db_wallet = db_wallet;

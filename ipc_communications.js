@@ -1,13 +1,13 @@
 module.exports = function () {
    const aliwa= require("./logic/wallet");      
-   const {ipcMain, Notification} =require ("electron");
-   const path = require('path');
+   const {ipcMain, Notification,dialog} =require ("electron");
+//   const path = require('path');
    
    var wallet=null;
    var syncing_loop_timeout=null;
    
-   
-   
+  
+         
    //STARTUP************************************************************
     function syncing_loop(time){
         syncing_loop_timeout = setTimeout(async function(){
@@ -31,17 +31,17 @@ module.exports = function () {
     else{ return true;}
    });
    
-   ipcMain.handle('create_wallet', async (event, seed_words,seed_pw,wallet_pw) => {
+   ipcMain.handle('create_wallet', async (event, seed_words,seed_pw,wallet_pw,has_backup) => {
     if(wallet!=null){
         wallet.disconnect();
         delete wallet;
         wallet=null;
     }   
     var wal = new aliwa.aliwa_wallet();
-    await wal.create_wallet(seed_words,seed_pw,wallet_pw);
+    await wal.create_wallet(seed_words,seed_pw,wallet_pw,has_backup);
     //inital update for address gen
     await wal.db_wallet.update_addressbook_receive(-1);
-    await wal.save_wallet(null);
+    await wal.save_wallet(null,true);
     var data = wal.read_wallet_DB();
     if (data == false) {return false;}
     else{ return true;}
@@ -55,15 +55,11 @@ module.exports = function () {
    
    ipcMain.handle('get_new_seed', async (event) => {
        var wal = new aliwa.aliwa_wallet();
-       var seed=wal.wallet_functions.get_new_seed_words();
+       var seed={seed_words:wal.wallet_functions.get_new_seed_words(),seed_pw:null};
        return seed;
    });
    
    //SETTINGS*************************************************************
-   ipcMain.handle('get_new_seed_words', async (event) => {
-    var wal = new aliwa.aliwa_wallet();
-    return await wal.wallet_functions.get_new_seed_words();   
-   });
    
     ipcMain.handle('set_password', async (event,pw) => {
         return await wallet.set_wallet_pw(pw);       
@@ -71,6 +67,17 @@ module.exports = function () {
    
    ipcMain.handle('compare_password', async (event,pw) => {
         return await wallet.compare_pw(pw);       
+   });
+   
+   ipcMain.handle('has_backup', async (event) => {
+       if(wallet!=null){
+        return await wallet.has_backup(); 
+        }
+        else{return false;}
+   });
+   
+   ipcMain.handle('set_backup', async (event) => {
+        return await wallet.set_backup();       
    });
    
    //OVERVIEW*************************************************************  
@@ -217,36 +224,100 @@ module.exports = function () {
    ipcMain.handle('set_address_label_contact_or_receive', async (event,address,label) => {
         return wallet.set_label_contact_or_receive(address,label);       
    });
-  
+   
+   //NOTIFICATIONS************************************************
+   ipcMain.handle('get_notifications', async (event) => {
+        return wallet.get_and_remove_notifications();       
+   });
    
    
+   ipcMain.handle('is_notifications_enabled', async (event) => {
+        return wallet.is_notifications_enabled();       
+   });
+   
+   ipcMain.handle('set_notifications_enabled', async (event,value) => {
+        return wallet.set_notifications_enabled(value);       
+   });
    
    
-    
+    //CURRENCIES************************************************
+   ipcMain.handle('get_alias_prices', async (event) => {
+        return wallet.get_alias_prices();       
+   });
+   
+   ipcMain.handle('set_selected_currency', async (event,currency) => {
+        return wallet.set_selected_currency(currency);       
+   });
+   
+   ipcMain.handle('get_selected_currency', async (event) => {
+        return wallet.get_selected_currency();       
+   });
+   
+   //CUSTOM SERVER ADDRESSES************************************
+   ipcMain.handle('list_server_aliwa_addresses', async (event) => {
+        return wallet.list_server_aliwa_addresses();       
+   });
    
    
+   ipcMain.handle('add_aliwa_server_address', async (event,label,address,type) => {
+        return wallet.add_aliwa_server_address(label,address,type);       
+   });
    
    
+   ipcMain.handle('edit_aliwa_server_address', async (event,label,address) => {
+        return wallet.edit_aliwa_server_address(label,address);       
+   });
    
+   ipcMain.handle('delete_aliwa_server_address', async (event,label) => {
+        return wallet.delete_aliwa_server_address(label);       
+   });
    
- /* ipcMain.handle('test', async (event, someArgument) => {
-  console.log(event);
-  console.log(someArgument);
-  console.log("test to the main!");
-  
-  if(Notification.isSupported()){
-       await  new Notification({
-        icon: path.join(__dirname,'/view_resources/img/aliwa_light.png'),
-        title:"ALIAS RECEIVED",
-        body: '20.25 received'
-      }).show();
-  }
-   // require("electron").shell.openExternal("https://chainz.cryptoid.info/alias/");
-  return "give back";
+   ipcMain.handle('switch_to_aliwa_server_address', async (event,label,complete_resync) => {
+        return wallet.switch_to_aliwa_server_address(label,complete_resync);       
+   });
+   
+   //save and import dialogue
+   ipcMain.handle('save_as_dialogue', async (event) => {
+       var filename = await dialog.showSaveDialog({title:"Save Backup File",defaultPath:"light_wallet.dat",buttonLabel:"Save Backup File"});
+       console.log(filename);
+       if(!filename.canceled){
+           wallet.save_wallet(filename.filePath,true);
+           return true;
+       }
+       return false;
+   });
+   
+   ipcMain.handle('import_file_dialogue', async (event) => {
+       var filename = await dialog.showOpenDialog({title:"Import Backup File",buttonLabel:"Import Backup File"});
+       console.log(filename);
+       if(!filename.canceled){
+           var wal = new aliwa.aliwa_wallet();
+           var data = wal.read_wallet_DB(filename.filePaths[0]);
+           if (data == false) {console.log("nothing to read");return false;}
+           else{ 
+                try {
+                    fs.writeFileSync(wal.db_wallet.default_path, data);
+                    console.log("FILE WRITTEN")
+                } catch (err) {
+                    console.error(err);
+                    return false;
+                }
+                return true;
+            
+            }                                             
+       }
+       return false;
+   });
+   
+   //save on exit test
+//   ipcMain.handle('wallet_save_on_exit', async (event) => {
+//         console.log("save_on_exit");       
+//   });
 
-//myNotification.onclick = () => {
-//  console.log('Notification clicked')
-//}
-  
-});*/
+    save_on_exit= async function (){
+        if(wallet!=null){
+            await wallet.save_wallet(null,true);
+        }
+    }
+             
 };
