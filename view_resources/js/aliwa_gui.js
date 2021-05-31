@@ -375,6 +375,7 @@ async function set_balance() {
         else{selected="usd"}
         var calc_total=numeral(global_balance.total).multiply(alias_prices[selected]).value();
         var format_l=Math.ceil((Math.log(calc_total)/Math.log(9.99999)*-1))+2;
+        format_l= format_l > 8 ? 8 : format_l; //infinity memory error !!!!!!!!!!!!!!!!!!!!!!!!!       
         format_l=format_l<2 ? 2 : format_l;
         var f_string="";
         for(var i=0;i<format_l;i++){
@@ -547,7 +548,7 @@ function view_send(user_inputs){
      
      set_view_send_currency();
      $("#view_send_input_amount").trigger("change");
-     
+     if(typeof selected_currency!="string"){selected_currency="USD"}
      $("#send_currency_label").text(selected_currency);
      
      //show available balance
@@ -692,11 +693,11 @@ function set_view_send_currency(){
         }
         
         input_clear_button_func("#view_send_input_amount","#view_send_input_amount_clear");
-        if(typeof selected_currency=="string"){
+        if(typeof selected_currency!="string"){selected_currency="USD"}
         var amount=($("#view_send_input_amount").val()=="" ? "0" : $("#view_send_input_amount").val()); 
         amount=amount.replace(",",".");  
         
-        $("#send_currency_value").text(numeral((isNaN(amount) ? 0 : amount)).multiply(alias_prices[selected_currency.toString().toLowerCase()]).format("0.00000000"));}
+        $("#send_currency_value").text(numeral((isNaN(amount) ? 0 : amount)).multiply(alias_prices[selected_currency.toString().toLowerCase()]).format("0.00000000"));
          
      });
 }
@@ -1617,7 +1618,7 @@ async function address_book_receive_pagination(){
     j_clone.find("#view_address_book_receive_pagination_container_page_fifth").text(page_max+1)
     if(page>=page_max){ j_clone.find("#view_address_book_receive_pagination_container_page_fifth").hide();}
      
-    console.log("j_clone of address_book_receive_pagination: ",j_clone.html());
+//    console.log("j_clone of address_book_receive_pagination: ",j_clone.html());
     return j_clone;                   
 }
 
@@ -3462,7 +3463,7 @@ function view_backup_page_verify(startup,segment,seed_words){
             }
         }
         
-        if(!found_wrong_word || true){
+        if(!found_wrong_word){
             fill_backup_seed_pw=null;
             fill_backup_seed_words=[];         
             if (startup) {

@@ -40,8 +40,8 @@ module.exports = function () {
     var wal = new aliwa.aliwa_wallet();
     await wal.create_wallet(seed_words,seed_pw,wallet_pw,has_backup);
     //inital update for address gen
-    await wal.db_wallet.update_addressbook_receive(-1);
-    await wal.save_wallet(null,true);
+    await wal.db_wallet.update_addressbook_receive(-1);   
+    await wal.save_wallet(null,true,true);  
     var data = wal.read_wallet_DB();
     if (data == false) {return false;}
     else{ return true;}
