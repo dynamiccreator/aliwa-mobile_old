@@ -391,6 +391,6 @@ function show_dialogue_input(templ_loads,title,text,input_name,input_type,yes_ti
 }
 
 function alias_address_check(address){
-    if(address.replace(/[a-km-zA-HJ-NP-Z1-9]/g,"").length>0 || address[0]!="S" || address.length!=34){return false;}
+    if(address.replace(/[a-km-zA-HJ-NP-Z1-9]/g,"").length>0 || address[0]!="t" || address.length!=34){return false;}
     return true;
 }

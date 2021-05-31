@@ -27,7 +27,7 @@ class wallet_functions {
 
         for (var i = from; i < to; i++) {
 
-            const addrnode = root.derive("m/44'/213'/0'/" + change + "/" + i); //mainnet =213 ; testnet = 0 //=>>"m/44'/213'/0'/" + change + "/" + i
+            const addrnode = root.derive("m/44'/0'/0'/" + change + "/" + i); //mainnet =213 ; testnet = 0 //=>>"m/44'/213'/0'/" + change + "/" + i
 
 //            console.log(i + ". private: " + addrnode.privateKey.toString('hex'));
 //            console.log(i + ". public: " + addrnode._publicKey.toString('hex'));
@@ -37,7 +37,7 @@ class wallet_functions {
             const step2 = createHash('sha256').update(step1).digest();
             const step3 = createHash('ripemd160').update(step2).digest();
             var step4 = Buffer.allocUnsafe(21);
-            step4.writeUInt8(0x3f, 0); //mainnet = 0x3f ; testnet = 0x7f
+            step4.writeUInt8(0x7f, 0); //mainnet = 0x3f ; testnet = 0x7f
             step3.copy(step4, 1); //step4 now holds the extended RIPMD-160 result
             const step9 = bs58check.encode(step4);
 //            console.log(i + '. Adress: ' + step9 + " | " + step9.length);
