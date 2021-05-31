@@ -97,9 +97,9 @@ class aliwa_wallet{
     }
     
  
-    save_wallet(path,force=false){
+    save_wallet(path,force=false,save_created=false){
         //save_database
-        if(!this.db_wallet.wallet_loaded){return;}
+        if(!this.db_wallet.wallet_loaded && !save_created){return;}
         console.error("SAVING WAS CALLED");       
         this.gui_was_updated=false;
         if(force || this.last_save < (new Date().getTime()-(1000*60*5))){
@@ -107,7 +107,7 @@ class aliwa_wallet{
             var obj=this.db_wallet.get_config_values();
             this.db_wallet.save_database(path,obj.wallet_pw,obj.wallet_pw_salt);
             console.error("SAVING EXECUTED");       
-        }
+        }       
     }
     
     //connect with server
@@ -228,7 +228,7 @@ class aliwa_wallet{
             return;
         }
         this.sync_state="syncing";
-        var cnf=this.db_wallet.get_config_values();   
+        var cnf=this.db_wallet.get_config_values();         
 //         console.log("syncing "+(cnf.used_pos.standard+20)+"| "+(cnf.used_pos.change+20));
         this.addr_stan_pos=(cnf.used_pos.standard+25);
         this.addr_change_pos=(cnf.used_pos.change+25);
@@ -244,7 +244,7 @@ class aliwa_wallet{
         for(var i=(ch_start!=undefined ? ch_start : 0),len=private_change_address_list.length;i<len;i++){
             addresses.push(private_change_address_list[i].address);
         }
-//        console.log("addresses | "+addresses.length);
+        console.log("addresses | "+addresses.length);
 //        console.log(addresses);
 //    console.log('sync_from '+cnf.sync_height+"\n",cnf.last_rewind);
         
