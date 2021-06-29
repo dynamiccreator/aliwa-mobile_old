@@ -1,5 +1,5 @@
-module.exports = function () {
-var EC = require("elliptic").ec;
+//var EC = require("elliptic").ec;
+
     get_DER_sig = function (hash, priv_key) {
         var ec = new EC("secp256k1");
         var mySign = ec.sign(Buffer.from(hash, "hex"), Buffer.from(priv_key, "hex"), {canonical: true});
@@ -113,6 +113,3 @@ var EC = require("elliptic").ec;
         }
         return out;
     }
-
-};
-

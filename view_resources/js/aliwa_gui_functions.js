@@ -77,15 +77,15 @@ function show_dialogue_address(current_line,templ_loads,type){
                      $("#dialogues_"+type+"_label").text($("#dialogues_"+type+"_edit_input").val());
                      current_line.children(':nth-child(2)').text($("#dialogues_"+type+"_edit_input").val());
                      
-                    var res=await window.electron.ipcRenderer_invoke("change_receive_address_label",(parseInt(current_line.children(':nth-child(1)').text())-1),$("#dialogues_"+type+"_edit_input").val());
+                    var res=await my_invoke("change_receive_address_label",(parseInt(current_line.children(':nth-child(1)').text())-1),$("#dialogues_"+type+"_edit_input").val());
                     if(res=="duplicated"){
                         show_popup_action(templ_loads,"error","Label is duplicated!");
                         return;
                     }                   
-                    await window.electron.ipcRenderer_invoke("save_wallet",null);
+                    await my_invoke("save_wallet",null);
                 }
                 if(type=="contacts"){
-                    var res=await window.electron.ipcRenderer_invoke("change_contact_address",(parseInt(current_line.children(':nth-child(1)').text())-1),$("#dialogues_"+type+"_edit_input").val());
+                    var res=await my_invoke("change_contact_address",(parseInt(current_line.children(':nth-child(1)').text())-1),$("#dialogues_"+type+"_edit_input").val());
                     if(res=="duplicated label"){
                         show_popup_action(templ_loads,"error","Label is duplicated!"); 
                         return;
@@ -98,7 +98,7 @@ function show_dialogue_address(current_line,templ_loads,type){
                     //change label and hide
                     $("#dialogues_"+type+"_label").text($("#dialogues_"+type+"_edit_input").val());
                     current_line.children(':nth-child(2)').text($("#dialogues_"+type+"_edit_input").val());
-                    await window.electron.ipcRenderer_invoke("save_wallet",null);
+                    await my_invoke("save_wallet",null);
                 }
 //                
                 $("#dialogues_"+type+"_edit_popup").hide();
@@ -119,10 +119,10 @@ function show_dialogue_address(current_line,templ_loads,type){
             
             $("#dialogues_contacts_delete_popup_confirm").off("click").on("click", async function () {
                              
-                var res=await window.electron.ipcRenderer_invoke("delete_contact_address",(parseInt(current_line.children(':nth-child(1)').text())-1));
+                var res=await my_invoke("delete_contact_address",(parseInt(current_line.children(':nth-child(1)').text())-1));
                 if(res==false){ show_popup_action(templ_loads,"error","Basic Contacts are immutable!"); return;}
                 $('.ui.modal').modal("hide");
-                await window.electron.ipcRenderer_invoke("save_wallet",null);
+                await my_invoke("save_wallet",null);
                 
                 show_popup_action(templ_loads,"info","Contact deleted!");
                 var j_clone=await address_book_contacts_pagination();
@@ -290,7 +290,7 @@ function show_dialogue_modal(templ_loads,title,text,yes_title,no_title,data,yes,
         $(".dialogue_link").off("click").on("click", async function () {
             var link=$(this).attr("href");
             var conf=window.confirm("Open external link in default browser?");//, "Are you sure you want to open "+link+" in your browser?");
-            if(conf){ await window.electron.ipcRenderer_invoke("open_tx_link", link);}          
+            if(conf){ await my_invoke("open_tx_link", link);}          
         });
         
         if(inside_f!=undefined){

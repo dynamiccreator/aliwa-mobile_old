@@ -3,17 +3,17 @@ class db_wallet {
         this.wallet_loaded=false;
         this.db = new loki("no_path.db");
            
-       const wallet_functions_r=require("./wallet_functions");
-       this.wallet_functions=new wallet_functions_r.wallet_functions();
+      // const wallet_functions_r=wallet_functions;
+       this.wallet_functions=new wallet_functions();
        
        
-       var sep_linux = process.cwd().indexOf("/") > -1;
-       var sep = sep_linux ? "/" : "\\";
-       this.default_path = process.cwd() + sep + "aliwa_dat" + sep + "light_wallet.dat";
+//       var sep_linux = process.cwd().indexOf("/") > -1;
+//       var sep = sep_linux ? "/" : "\\";
+       this.default_path = ""//process.cwd() + sep + "aliwa_dat" + sep + "light_wallet.dat";
        
-        if (!fs.existsSync(process.cwd() + sep + "aliwa_dat")) {
-            fs.mkdirSync(process.cwd() + sep + "aliwa_dat");
-        }
+//        if (!fs.existsSync(process.cwd() + sep + "aliwa_dat")) {
+//            fs.mkdirSync(process.cwd() + sep + "aliwa_dat");
+//        }
        
     }
 
@@ -24,7 +24,7 @@ class db_wallet {
 
 
         try {
-            var database_string = fs.readFileSync(path).toString();
+            var database_string = {};//fs.readFileSync(path).toString();
         } catch (err) {
             console.error(err);
             return "file not found";
@@ -75,7 +75,7 @@ class db_wallet {
         }
 
         try {
-            fs.writeFileSync(path, database_string);
+          //  fs.writeFileSync(path, database_string);
         } catch (err) {
             console.error(err);
             return false;
@@ -88,12 +88,23 @@ class db_wallet {
         if (salt == null) {
             salt = crypto.randomBytes(64).toString('hex');
         }
-        salt = Buffer.from(salt, "hex");
+        salt =Buffer.from(salt, "hex");
         try {
-            var hash = await argon2.hash(pw, {salt: salt, timeCost: "12", memoryCost: "24000", type: argon2.argon2id, version: 0x13, raw: true});
+//              var hash = await argon2.hash(pw, {salt: salt, timeCost: "12", memoryCost: "24000", type: argon2.argon2id, version: 0x13, raw: true});
+              var hash=await argon2.hash({ //argon-browser ~7x slower
+                // required
+                pass: pw,
+                salt: salt,
+                // optional
+                time: 12, // the number of iterations
+                mem: 24000, // used memory, in KiB
+                hashLen: 32, // desired hash length
+                parallelism: 1, // desired parallelism (it won't be computed in parallel, however)
+                type: argon2.ArgonType.Argon2id});  
+            
 //            console.log("get_argon2_password_data:--------------------");
 //            console.log(hash.toString("hex") + " | " + salt.toString("hex"));
-            hash = hash.toString("hex");
+            hash = hash.hashHex;//hash.toString("hex");
             salt = salt.toString("hex");
             return {hash: hash, salt: salt};
 
@@ -1073,4 +1084,3 @@ class db_wallet {
     
                
 }
-exports.db_wallet = db_wallet;

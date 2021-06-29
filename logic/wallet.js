@@ -1,23 +1,6 @@
-loki = require("lokijs");
-fs = require('fs');
-aes256 = require("aes256");
-
-crypto = require('crypto');
-argon2 = require('argon2');
-
-numeral = require('numeral');
-
-io = require('socket.io-client');
-
-bip39 = require("bip39");
-hdkey = require("hdkey");
-createHash = require("create-hash");
-bs58check = require("bs58check");
-bs58_2 = require("bs58");
-
-
 //intial states & data
 //  ->serverlist
+
 var aliwa_serverlist=[{label:"Default Server (onion)",address:"ws://aliwa5ld6pm66lbwb2kfyzvqzco24ihnmzoknvaqg4uqhpdtelnfa4id.onion:3000"},
                       {label:"localhost",address:"ws://localhost:3000"},
                       {label:"ssl example",address:"wss://example.com:port"}];
@@ -42,10 +25,10 @@ class aliwa_wallet{
      
      this.socket=null;
                                  
-       const db_wallet_r=require("./db_wallet");
-       this.db_wallet=new db_wallet_r.db_wallet();
-       const wallet_functions_r=require("./wallet_functions");
-       this.wallet_functions=new wallet_functions_r.wallet_functions();
+      // const db_wallet_r=require("./db_wallet");
+       this.db_wallet=new db_wallet();
+//       const wallet_functions_r=require("./wallet_functions");
+       this.wallet_functions=new wallet_functions();
     }
     
        
@@ -485,7 +468,7 @@ class aliwa_wallet{
     
     get_highest_unused_receive_address(){
         var receive_addresses=this.db_wallet.get_receive_addresses();
-        var latest_addr=receive_addresses.chain().find().simplesort("pos", {desc: true}).data({forceClones: true, removeMeta: true})[0];      
+        var latest_addr=receive_addresses.chain().find().simplesort("pos", {desc: true}).data({forceClones: true, removeMeta: true})[0];  
         return latest_addr;
     }
     
@@ -945,4 +928,3 @@ class aliwa_wallet{
      
     
 }
-exports.aliwa_wallet = aliwa_wallet;

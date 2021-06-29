@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>ALiWa (alpha v0.0.3) - Alias Light Wallet TESTNET</title>
+    <link rel="shortcut icon" href="view_resources/img/aliwa_icon_256.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="aliwa_current_site" content="null">
     <!-- You MUST include jQuery before Fomantic -->
     <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
+        <script src="cordova.js"></script>
         <script src="view_resources/js/jquery.min.js"></script>
         <script src="view_resources/js/jquery-ui.min.js"></script>
            
@@ -14,12 +16,29 @@
         <script src="fomantic/semantic.min.js"></script>   
         <link rel="stylesheet" type="text/css" href="view_resources/css/custom.css">
         <script src="view_resources/js/qrcode.min.js"></script>
-        <script src="view_resources/js/numeral.min.js"></script>
+      <!--  <script src="view_resources/js/numeral.min.js"></script>-->
         
         <script src="view_resources/js/aliwa_gui_functions.js"></script>
         <script src="view_resources/js/logic_functions.js"></script>
         
         <script src="view_resources/js/aliwa_gui.js"></script>
+        
+        <script src="logic/browserify_bundle.js"></script>
+        <script src="logic/browserify_buffer.js"></script>
+      
+        
+        <script src="logic/argon2-bundled.min.js"></script>
+        <script src="logic/helper_functions.js"></script>
+        <script src="logic/wallet_functions.js"></script>
+        <script src="logic/db_wallet.js"></script>
+        <script src="logic/wallet.js"></script>
+         <script src="logic/my_event_handler.js"></script>
+        <script src="ipc_communications.js"></script>   
+       
+            
+        
+        
+        
 </head>
 <body style="background:#382b3f;height: auto"></body>
 </html>

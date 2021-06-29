@@ -27,6 +27,9 @@ event_reg.push(reg);
 	
 }
 
+
+//example
+/*
 my_handle("test",async (a,b) => {
     const delay = ms => new Promise(res => setTimeout(res, ms))
     await delay(2000)
@@ -43,3 +46,5 @@ console.log(res);
 //console.log(res);
 }
 main();
+ * 
+ */
