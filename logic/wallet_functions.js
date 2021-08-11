@@ -26,7 +26,7 @@ class wallet_functions {
 
         for (var i = from; i < to; i++) {
 
-            const addrnode = root.derive("m/44'/0'/0'/" + change + "/" + i); //mainnet =213 ; testnet = 0 //=>>"m/44'/213'/0'/" + change + "/" + i
+            const addrnode = root.derive("m/44'/1'/0'/" + change + "/" + i); //mainnet =213 ; testnet = 1 //=>>"m/44'/213'/0'/" + change + "/" + i
 
 //            console.log(i + ". private: " + addrnode.privateKey.toString('hex'));
 //            console.log(i + ". public: " + addrnode._publicKey.toString('hex'));
@@ -47,7 +47,7 @@ class wallet_functions {
     }
 
     build_hex_transaction(tx_input_data)
-    {
+    {       
 
 //count narrations
         var narr_count = 0;
@@ -100,9 +100,9 @@ class wallet_functions {
                 prepare_sig += int_toVarint_byte(tx_input_data.inputs[j].input_index, 4); // output index -> new input index
 
                 // only sign itself not other tx inputs
-                if (i == j) {
+                if (i == j) {                                              
                     prepare_sig += int_toVarint_byte((parseInt(Math.floor(tx_input_data.inputs[j].script_pubkey.length/2))), 1); // length of script_pubkey
-                    prepare_sig += tx_input_data.inputs[j].script_pubkey;   // script_pubkey                       
+                    prepare_sig += tx_input_data.inputs[j].script_pubkey;   // script_pubkey
                 } else {
                     prepare_sig += "00";// nothing to sign 
                 }
@@ -123,7 +123,12 @@ class wallet_functions {
 
             var pure_sig = get_DER_sig(prepare_hash, tx_input_data.inputs[i].private_key);
             // length of signature,signature,hashcode type,public key length,public key
-            signatures[signatures.length] = int_toVarint_byte((pure_sig.length / 2) + 1, 1) + pure_sig + "01" + int_toVarint_byte((tx_input_data.inputs[i].public_key.length / 2), 1) + tx_input_data.inputs[i].public_key;
+            if(tx_input_data.inputs[i].script_pubkey.length==70){ //STAKED OUTPUT -> only needs 1 argument    
+                signatures[signatures.length] = int_toVarint_byte((pure_sig.length / 2) + 1, 1) + pure_sig + "01";
+            }
+            else{
+                signatures[signatures.length] = int_toVarint_byte((pure_sig.length / 2) + 1, 1) + pure_sig + "01" + int_toVarint_byte((tx_input_data.inputs[i].public_key.length / 2), 1) + tx_input_data.inputs[i].public_key;
+            }
         }
 
 //put everything together to get the final raw transaction

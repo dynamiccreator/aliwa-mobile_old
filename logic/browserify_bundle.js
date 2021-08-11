@@ -227,7 +227,7 @@ EncoderBuffer.prototype.join = function join(out, offset) {
   return out;
 };
 
-},{"../base/reporter":7,"inherits":137,"safer-buffer":167}],5:[function(require,module,exports){
+},{"../base/reporter":7,"inherits":137,"safer-buffer":172}],5:[function(require,module,exports){
 'use strict';
 
 const base = exports;
@@ -1483,7 +1483,7 @@ PEMDecoder.prototype.decode = function decode(data, options) {
   return DERDecoder.prototype.decode.call(this, input, options);
 };
 
-},{"./der":10,"inherits":137,"safer-buffer":167}],13:[function(require,module,exports){
+},{"./der":10,"inherits":137,"safer-buffer":172}],13:[function(require,module,exports){
 'use strict';
 
 const inherits = require('inherits');
@@ -1780,7 +1780,7 @@ function encodeTag(tag, primitive, cls, reporter) {
   return res;
 }
 
-},{"../base/node":6,"../constants/der":8,"inherits":137,"safer-buffer":167}],14:[function(require,module,exports){
+},{"../base/node":6,"../constants/der":8,"inherits":137,"safer-buffer":172}],14:[function(require,module,exports){
 'use strict';
 
 const encoders = exports;
@@ -6393,7 +6393,7 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":19,"_process":155,"inherits":18}],21:[function(require,module,exports){
+},{"./support/isBuffer":19,"_process":156,"inherits":18}],21:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -10393,7 +10393,7 @@ AES.prototype.scrub = function () {
 
 module.exports.AES = AES
 
-},{"safe-buffer":166}],26:[function(require,module,exports){
+},{"safe-buffer":171}],26:[function(require,module,exports){
 var aes = require('./aes')
 var Buffer = require('safe-buffer').Buffer
 var Transform = require('cipher-base')
@@ -10512,7 +10512,7 @@ StreamCipher.prototype.setAAD = function setAAD (buf) {
 
 module.exports = StreamCipher
 
-},{"./aes":25,"./ghash":30,"./incr32":31,"buffer-xor":67,"cipher-base":69,"inherits":137,"safe-buffer":166}],27:[function(require,module,exports){
+},{"./aes":25,"./ghash":30,"./incr32":31,"buffer-xor":67,"cipher-base":69,"inherits":137,"safe-buffer":171}],27:[function(require,module,exports){
 var ciphers = require('./encrypter')
 var deciphers = require('./decrypter')
 var modes = require('./modes/list.json')
@@ -10653,7 +10653,7 @@ function createDecipher (suite, password) {
 exports.createDecipher = createDecipher
 exports.createDecipheriv = createDecipheriv
 
-},{"./aes":25,"./authCipher":26,"./modes":38,"./streamCipher":41,"cipher-base":69,"evp_bytestokey":106,"inherits":137,"safe-buffer":166}],29:[function(require,module,exports){
+},{"./aes":25,"./authCipher":26,"./modes":38,"./streamCipher":41,"cipher-base":69,"evp_bytestokey":106,"inherits":137,"safe-buffer":171}],29:[function(require,module,exports){
 var MODES = require('./modes')
 var AuthCipher = require('./authCipher')
 var Buffer = require('safe-buffer').Buffer
@@ -10769,7 +10769,7 @@ function createCipher (suite, password) {
 exports.createCipheriv = createCipheriv
 exports.createCipher = createCipher
 
-},{"./aes":25,"./authCipher":26,"./modes":38,"./streamCipher":41,"cipher-base":69,"evp_bytestokey":106,"inherits":137,"safe-buffer":166}],30:[function(require,module,exports){
+},{"./aes":25,"./authCipher":26,"./modes":38,"./streamCipher":41,"cipher-base":69,"evp_bytestokey":106,"inherits":137,"safe-buffer":171}],30:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 var ZEROES = Buffer.alloc(16, 0)
 
@@ -10860,7 +10860,7 @@ GHASH.prototype.final = function (abl, bl) {
 
 module.exports = GHASH
 
-},{"safe-buffer":166}],31:[function(require,module,exports){
+},{"safe-buffer":171}],31:[function(require,module,exports){
 function incr32 (iv) {
   var len = iv.length
   var item
@@ -10931,7 +10931,7 @@ exports.encrypt = function (self, data, decrypt) {
   return out
 }
 
-},{"buffer-xor":67,"safe-buffer":166}],34:[function(require,module,exports){
+},{"buffer-xor":67,"safe-buffer":171}],34:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 
 function encryptByte (self, byteParam, decrypt) {
@@ -10975,7 +10975,7 @@ exports.encrypt = function (self, chunk, decrypt) {
   return out
 }
 
-},{"safe-buffer":166}],35:[function(require,module,exports){
+},{"safe-buffer":171}],35:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 
 function encryptByte (self, byteParam, decrypt) {
@@ -11002,7 +11002,7 @@ exports.encrypt = function (self, chunk, decrypt) {
   return out
 }
 
-},{"safe-buffer":166}],36:[function(require,module,exports){
+},{"safe-buffer":171}],36:[function(require,module,exports){
 var xor = require('buffer-xor')
 var Buffer = require('safe-buffer').Buffer
 var incr32 = require('../incr32')
@@ -11034,7 +11034,7 @@ exports.encrypt = function (self, chunk) {
   return xor(chunk, pad)
 }
 
-},{"../incr32":31,"buffer-xor":67,"safe-buffer":166}],37:[function(require,module,exports){
+},{"../incr32":31,"buffer-xor":67,"safe-buffer":171}],37:[function(require,module,exports){
 exports.encrypt = function (self, block) {
   return self._cipher.encryptBlock(block)
 }
@@ -11305,7 +11305,7 @@ StreamCipher.prototype._final = function () {
 
 module.exports = StreamCipher
 
-},{"./aes":25,"cipher-base":69,"inherits":137,"safe-buffer":166}],42:[function(require,module,exports){
+},{"./aes":25,"cipher-base":69,"inherits":137,"safe-buffer":171}],42:[function(require,module,exports){
 var DES = require('browserify-des')
 var aes = require('browserify-aes/browser')
 var aesModes = require('browserify-aes/modes')
@@ -11426,7 +11426,7 @@ DES.prototype._final = function () {
   return Buffer.from(this._des.final())
 }
 
-},{"cipher-base":69,"des.js":77,"inherits":137,"safe-buffer":166}],44:[function(require,module,exports){
+},{"cipher-base":69,"des.js":77,"inherits":137,"safe-buffer":171}],44:[function(require,module,exports){
 exports['des-ecb'] = {
   key: 8,
   iv: 0
@@ -11491,7 +11491,7 @@ crt.getr = getr
 module.exports = crt
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"bn.js":22,"buffer":68,"randombytes":163}],46:[function(require,module,exports){
+},{"bn.js":22,"buffer":68,"randombytes":168}],46:[function(require,module,exports){
 module.exports = require('./browser/algorithms.json')
 
 },{"./browser/algorithms.json":47}],47:[function(require,module,exports){
@@ -11752,7 +11752,7 @@ module.exports = {
   createVerify: createVerify
 }
 
-},{"./algorithms.json":47,"./sign":50,"./verify":51,"create-hash":72,"inherits":137,"readable-stream":66,"safe-buffer":166}],50:[function(require,module,exports){
+},{"./algorithms.json":47,"./sign":50,"./verify":51,"create-hash":72,"inherits":137,"readable-stream":66,"safe-buffer":171}],50:[function(require,module,exports){
 // much of this based on https://github.com/indutny/self-signed/blob/gh-pages/lib/rsa.js
 var Buffer = require('safe-buffer').Buffer
 var createHmac = require('create-hmac')
@@ -11897,7 +11897,7 @@ module.exports = sign
 module.exports.getKey = getKey
 module.exports.makeKey = makeKey
 
-},{"./curves.json":48,"bn.js":22,"browserify-rsa":45,"create-hmac":74,"elliptic":88,"parse-asn1":148,"safe-buffer":166}],51:[function(require,module,exports){
+},{"./curves.json":48,"bn.js":22,"browserify-rsa":45,"create-hmac":74,"elliptic":88,"parse-asn1":149,"safe-buffer":171}],51:[function(require,module,exports){
 // much of this based on https://github.com/indutny/self-signed/blob/gh-pages/lib/rsa.js
 var Buffer = require('safe-buffer').Buffer
 var BN = require('bn.js')
@@ -11983,7 +11983,7 @@ function checkValue (b, q) {
 
 module.exports = verify
 
-},{"./curves.json":48,"bn.js":22,"elliptic":88,"parse-asn1":148,"safe-buffer":166}],52:[function(require,module,exports){
+},{"./curves.json":48,"bn.js":22,"elliptic":88,"parse-asn1":149,"safe-buffer":171}],52:[function(require,module,exports){
 'use strict';
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -12254,7 +12254,7 @@ Object.defineProperty(Duplex.prototype, 'destroyed', {
   }
 });
 }).call(this)}).call(this,require('_process'))
-},{"./_stream_readable":55,"./_stream_writable":57,"_process":155,"inherits":137}],54:[function(require,module,exports){
+},{"./_stream_readable":55,"./_stream_writable":57,"_process":156,"inherits":137}],54:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -13421,7 +13421,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../errors":52,"./_stream_duplex":53,"./internal/streams/async_iterator":58,"./internal/streams/buffer_list":59,"./internal/streams/destroy":60,"./internal/streams/from":62,"./internal/streams/state":64,"./internal/streams/stream":65,"_process":155,"buffer":68,"events":105,"inherits":137,"string_decoder/":191,"util":24}],56:[function(require,module,exports){
+},{"../errors":52,"./_stream_duplex":53,"./internal/streams/async_iterator":58,"./internal/streams/buffer_list":59,"./internal/streams/destroy":60,"./internal/streams/from":62,"./internal/streams/state":64,"./internal/streams/stream":65,"_process":156,"buffer":68,"events":105,"inherits":137,"string_decoder/":196,"util":24}],56:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -14323,7 +14323,7 @@ Writable.prototype._destroy = function (err, cb) {
   cb(err);
 };
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../errors":52,"./_stream_duplex":53,"./internal/streams/destroy":60,"./internal/streams/state":64,"./internal/streams/stream":65,"_process":155,"buffer":68,"inherits":137,"util-deprecate":192}],58:[function(require,module,exports){
+},{"../errors":52,"./_stream_duplex":53,"./internal/streams/destroy":60,"./internal/streams/state":64,"./internal/streams/stream":65,"_process":156,"buffer":68,"inherits":137,"util-deprecate":200}],58:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -14533,7 +14533,7 @@ var createReadableStreamAsyncIterator = function createReadableStreamAsyncIterat
 
 module.exports = createReadableStreamAsyncIterator;
 }).call(this)}).call(this,require('_process'))
-},{"./end-of-stream":61,"_process":155}],59:[function(require,module,exports){
+},{"./end-of-stream":61,"_process":156}],59:[function(require,module,exports){
 'use strict';
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -14852,7 +14852,7 @@ module.exports = {
   errorOrDestroy: errorOrDestroy
 };
 }).call(this)}).call(this,require('_process'))
-},{"_process":155}],61:[function(require,module,exports){
+},{"_process":156}],61:[function(require,module,exports){
 // Ported from https://github.com/mafintosh/end-of-stream with
 // permission from the author, Mathias Buus (@mafintosh).
 'use strict';
@@ -16998,7 +16998,7 @@ CipherBase.prototype._toString = function (value, enc, fin) {
 
 module.exports = CipherBase
 
-},{"inherits":137,"safe-buffer":166,"stream":176,"string_decoder":191}],70:[function(require,module,exports){
+},{"inherits":137,"safe-buffer":171,"stream":181,"string_decoder":196}],70:[function(require,module,exports){
 (function (Buffer){(function (){
 var elliptic = require('elliptic')
 var BN = require('bn.js')
@@ -17160,7 +17160,7 @@ module.exports = function createHash (alg) {
   return new Hash(sha(alg))
 }
 
-},{"cipher-base":69,"inherits":137,"md5.js":138,"ripemd160":165,"sha.js":169}],73:[function(require,module,exports){
+},{"cipher-base":69,"inherits":137,"md5.js":138,"ripemd160":170,"sha.js":174}],73:[function(require,module,exports){
 var MD5 = require('md5.js')
 
 module.exports = function (buffer) {
@@ -17231,7 +17231,7 @@ module.exports = function createHmac (alg, key) {
   return new Hmac(alg, key)
 }
 
-},{"./legacy":75,"cipher-base":69,"create-hash/md5":73,"inherits":137,"ripemd160":165,"safe-buffer":166,"sha.js":169}],75:[function(require,module,exports){
+},{"./legacy":75,"cipher-base":69,"create-hash/md5":73,"inherits":137,"ripemd160":170,"safe-buffer":171,"sha.js":174}],75:[function(require,module,exports){
 'use strict'
 var inherits = require('inherits')
 var Buffer = require('safe-buffer').Buffer
@@ -17279,7 +17279,7 @@ Hmac.prototype._final = function () {
 }
 module.exports = Hmac
 
-},{"cipher-base":69,"inherits":137,"safe-buffer":166}],76:[function(require,module,exports){
+},{"cipher-base":69,"inherits":137,"safe-buffer":171}],76:[function(require,module,exports){
 'use strict'
 
 exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = require('randombytes')
@@ -17378,7 +17378,7 @@ exports.constants = {
   'POINT_CONVERSION_HYBRID': 6
 }
 
-},{"browserify-cipher":42,"browserify-sign":49,"browserify-sign/algos":46,"create-ecdh":70,"create-hash":72,"create-hmac":74,"diffie-hellman":83,"pbkdf2":149,"public-encrypt":156,"randombytes":163,"randomfill":164}],77:[function(require,module,exports){
+},{"browserify-cipher":42,"browserify-sign":49,"browserify-sign/algos":46,"create-ecdh":70,"create-hash":72,"create-hmac":74,"diffie-hellman":83,"pbkdf2":150,"public-encrypt":157,"randombytes":168,"randomfill":169}],77:[function(require,module,exports){
 'use strict';
 
 exports.utils = require('./des/utils');
@@ -18269,7 +18269,7 @@ function formatReturnValue(bn, enc) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./generatePrime":85,"bn.js":87,"buffer":68,"miller-rabin":139,"randombytes":163}],85:[function(require,module,exports){
+},{"./generatePrime":85,"bn.js":87,"buffer":68,"miller-rabin":139,"randombytes":168}],85:[function(require,module,exports){
 var randomBytes = require('randombytes');
 module.exports = findPrime;
 findPrime.simpleSieve = simpleSieve;
@@ -18376,7 +18376,7 @@ function findPrime(bits, gen) {
 
 }
 
-},{"bn.js":87,"miller-rabin":139,"randombytes":163}],86:[function(require,module,exports){
+},{"bn.js":87,"miller-rabin":139,"randombytes":168}],86:[function(require,module,exports){
 module.exports={
     "modp1": {
         "gen": "02",
@@ -22944,7 +22944,7 @@ function EVP_BytesToKey (password, salt, keyBits, ivLen) {
 
 module.exports = EVP_BytesToKey
 
-},{"md5.js":138,"safe-buffer":166}],107:[function(require,module,exports){
+},{"md5.js":138,"safe-buffer":171}],107:[function(require,module,exports){
 'use strict'
 var Buffer = require('safe-buffer').Buffer
 var Transform = require('readable-stream').Transform
@@ -23041,25 +23041,25 @@ HashBase.prototype._digest = function () {
 
 module.exports = HashBase
 
-},{"inherits":137,"readable-stream":122,"safe-buffer":166}],108:[function(require,module,exports){
+},{"inherits":137,"readable-stream":122,"safe-buffer":171}],108:[function(require,module,exports){
 arguments[4][52][0].apply(exports,arguments)
 },{"dup":52}],109:[function(require,module,exports){
 arguments[4][53][0].apply(exports,arguments)
-},{"./_stream_readable":111,"./_stream_writable":113,"_process":155,"dup":53,"inherits":137}],110:[function(require,module,exports){
+},{"./_stream_readable":111,"./_stream_writable":113,"_process":156,"dup":53,"inherits":137}],110:[function(require,module,exports){
 arguments[4][54][0].apply(exports,arguments)
 },{"./_stream_transform":112,"dup":54,"inherits":137}],111:[function(require,module,exports){
 arguments[4][55][0].apply(exports,arguments)
-},{"../errors":108,"./_stream_duplex":109,"./internal/streams/async_iterator":114,"./internal/streams/buffer_list":115,"./internal/streams/destroy":116,"./internal/streams/from":118,"./internal/streams/state":120,"./internal/streams/stream":121,"_process":155,"buffer":68,"dup":55,"events":105,"inherits":137,"string_decoder/":191,"util":24}],112:[function(require,module,exports){
+},{"../errors":108,"./_stream_duplex":109,"./internal/streams/async_iterator":114,"./internal/streams/buffer_list":115,"./internal/streams/destroy":116,"./internal/streams/from":118,"./internal/streams/state":120,"./internal/streams/stream":121,"_process":156,"buffer":68,"dup":55,"events":105,"inherits":137,"string_decoder/":196,"util":24}],112:[function(require,module,exports){
 arguments[4][56][0].apply(exports,arguments)
 },{"../errors":108,"./_stream_duplex":109,"dup":56,"inherits":137}],113:[function(require,module,exports){
 arguments[4][57][0].apply(exports,arguments)
-},{"../errors":108,"./_stream_duplex":109,"./internal/streams/destroy":116,"./internal/streams/state":120,"./internal/streams/stream":121,"_process":155,"buffer":68,"dup":57,"inherits":137,"util-deprecate":192}],114:[function(require,module,exports){
+},{"../errors":108,"./_stream_duplex":109,"./internal/streams/destroy":116,"./internal/streams/state":120,"./internal/streams/stream":121,"_process":156,"buffer":68,"dup":57,"inherits":137,"util-deprecate":200}],114:[function(require,module,exports){
 arguments[4][58][0].apply(exports,arguments)
-},{"./end-of-stream":117,"_process":155,"dup":58}],115:[function(require,module,exports){
+},{"./end-of-stream":117,"_process":156,"dup":58}],115:[function(require,module,exports){
 arguments[4][59][0].apply(exports,arguments)
 },{"buffer":68,"dup":59,"util":24}],116:[function(require,module,exports){
 arguments[4][60][0].apply(exports,arguments)
-},{"_process":155,"dup":60}],117:[function(require,module,exports){
+},{"_process":156,"dup":60}],117:[function(require,module,exports){
 arguments[4][61][0].apply(exports,arguments)
 },{"../../../errors":108,"dup":61}],118:[function(require,module,exports){
 arguments[4][62][0].apply(exports,arguments)
@@ -24682,7 +24682,7 @@ function fnI (a, b, c, d, m, k, s) {
 
 module.exports = MD5
 
-},{"hash-base":107,"inherits":137,"safe-buffer":166}],139:[function(require,module,exports){
+},{"hash-base":107,"inherits":137,"safe-buffer":171}],139:[function(require,module,exports){
 var bn = require('bn.js');
 var brorand = require('brorand');
 
@@ -24967,6 +24967,57 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 };
 
 },{}],144:[function(require,module,exports){
+exports.endianness = function () { return 'LE' };
+
+exports.hostname = function () {
+    if (typeof location !== 'undefined') {
+        return location.hostname
+    }
+    else return '';
+};
+
+exports.loadavg = function () { return [] };
+
+exports.uptime = function () { return 0 };
+
+exports.freemem = function () {
+    return Number.MAX_VALUE;
+};
+
+exports.totalmem = function () {
+    return Number.MAX_VALUE;
+};
+
+exports.cpus = function () { return [] };
+
+exports.type = function () { return 'Browser' };
+
+exports.release = function () {
+    if (typeof navigator !== 'undefined') {
+        return navigator.appVersion;
+    }
+    return '';
+};
+
+exports.networkInterfaces
+= exports.getNetworkInterfaces
+= function () { return {} };
+
+exports.arch = function () { return 'javascript' };
+
+exports.platform = function () { return 'browser' };
+
+exports.tmpdir = exports.tmpDir = function () {
+    return '/tmp';
+};
+
+exports.EOL = '\n';
+
+exports.homedir = function () {
+	return '/'
+};
+
+},{}],145:[function(require,module,exports){
 module.exports={"2.16.840.1.101.3.4.1.1": "aes-128-ecb",
 "2.16.840.1.101.3.4.1.2": "aes-128-cbc",
 "2.16.840.1.101.3.4.1.3": "aes-128-ofb",
@@ -24980,7 +25031,7 @@ module.exports={"2.16.840.1.101.3.4.1.1": "aes-128-ecb",
 "2.16.840.1.101.3.4.1.43": "aes-256-ofb",
 "2.16.840.1.101.3.4.1.44": "aes-256-cfb"
 }
-},{}],145:[function(require,module,exports){
+},{}],146:[function(require,module,exports){
 // from https://github.com/indutny/self-signed/blob/gh-pages/lib/asn1.js
 // Fedor, you are amazing.
 'use strict'
@@ -25104,7 +25155,7 @@ exports.signature = asn1.define('signature', function () {
   )
 })
 
-},{"./certificate":146,"asn1.js":2}],146:[function(require,module,exports){
+},{"./certificate":147,"asn1.js":2}],147:[function(require,module,exports){
 // from https://github.com/Rantanen/node-dtls/blob/25a7dc861bda38cfeac93a723500eea4f0ac2e86/Certificate.js
 // thanks to @Rantanen
 
@@ -25195,7 +25246,7 @@ var X509Certificate = asn.define('X509Certificate', function () {
 
 module.exports = X509Certificate
 
-},{"asn1.js":2}],147:[function(require,module,exports){
+},{"asn1.js":2}],148:[function(require,module,exports){
 // adapted from https://github.com/apatil/pemstrip
 var findProc = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r+/=]+)[\n\r]+/m
 var startRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m
@@ -25228,7 +25279,7 @@ module.exports = function (okey, password) {
   }
 }
 
-},{"browserify-aes":27,"evp_bytestokey":106,"safe-buffer":166}],148:[function(require,module,exports){
+},{"browserify-aes":27,"evp_bytestokey":106,"safe-buffer":171}],149:[function(require,module,exports){
 var asn1 = require('./asn1')
 var aesid = require('./aesid.json')
 var fixProc = require('./fixProc')
@@ -25337,11 +25388,11 @@ function decrypt (data, password) {
   return Buffer.concat(out)
 }
 
-},{"./aesid.json":144,"./asn1":145,"./fixProc":147,"browserify-aes":27,"pbkdf2":149,"safe-buffer":166}],149:[function(require,module,exports){
+},{"./aesid.json":145,"./asn1":146,"./fixProc":148,"browserify-aes":27,"pbkdf2":150,"safe-buffer":171}],150:[function(require,module,exports){
 exports.pbkdf2 = require('./lib/async')
 exports.pbkdf2Sync = require('./lib/sync')
 
-},{"./lib/async":150,"./lib/sync":153}],150:[function(require,module,exports){
+},{"./lib/async":151,"./lib/sync":154}],151:[function(require,module,exports){
 (function (global){(function (){
 var Buffer = require('safe-buffer').Buffer
 
@@ -25463,7 +25514,7 @@ module.exports = function (password, salt, iterations, keylen, digest, callback)
 }
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./default-encoding":151,"./precondition":152,"./sync":153,"./to-buffer":154,"safe-buffer":166}],151:[function(require,module,exports){
+},{"./default-encoding":152,"./precondition":153,"./sync":154,"./to-buffer":155,"safe-buffer":171}],152:[function(require,module,exports){
 (function (process,global){(function (){
 var defaultEncoding
 /* istanbul ignore next */
@@ -25479,7 +25530,7 @@ if (global.process && global.process.browser) {
 module.exports = defaultEncoding
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":155}],152:[function(require,module,exports){
+},{"_process":156}],153:[function(require,module,exports){
 var MAX_ALLOC = Math.pow(2, 30) - 1 // default in iojs
 
 module.exports = function (iterations, keylen) {
@@ -25500,7 +25551,7 @@ module.exports = function (iterations, keylen) {
   }
 }
 
-},{}],153:[function(require,module,exports){
+},{}],154:[function(require,module,exports){
 var md5 = require('create-hash/md5')
 var RIPEMD160 = require('ripemd160')
 var sha = require('sha.js')
@@ -25607,7 +25658,7 @@ function pbkdf2 (password, salt, iterations, keylen, digest) {
 
 module.exports = pbkdf2
 
-},{"./default-encoding":151,"./precondition":152,"./to-buffer":154,"create-hash/md5":73,"ripemd160":165,"safe-buffer":166,"sha.js":169}],154:[function(require,module,exports){
+},{"./default-encoding":152,"./precondition":153,"./to-buffer":155,"create-hash/md5":73,"ripemd160":170,"safe-buffer":171,"sha.js":174}],155:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 
 module.exports = function (thing, encoding, name) {
@@ -25622,7 +25673,7 @@ module.exports = function (thing, encoding, name) {
   }
 }
 
-},{"safe-buffer":166}],155:[function(require,module,exports){
+},{"safe-buffer":171}],156:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -25808,7 +25859,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],156:[function(require,module,exports){
+},{}],157:[function(require,module,exports){
 exports.publicEncrypt = require('./publicEncrypt')
 exports.privateDecrypt = require('./privateDecrypt')
 
@@ -25820,7 +25871,7 @@ exports.publicDecrypt = function publicDecrypt (key, buf) {
   return exports.privateDecrypt(key, buf, true)
 }
 
-},{"./privateDecrypt":159,"./publicEncrypt":160}],157:[function(require,module,exports){
+},{"./privateDecrypt":160,"./publicEncrypt":161}],158:[function(require,module,exports){
 var createHash = require('create-hash')
 var Buffer = require('safe-buffer').Buffer
 
@@ -25841,9 +25892,9 @@ function i2ops (c) {
   return out
 }
 
-},{"create-hash":72,"safe-buffer":166}],158:[function(require,module,exports){
+},{"create-hash":72,"safe-buffer":171}],159:[function(require,module,exports){
 arguments[4][16][0].apply(exports,arguments)
-},{"buffer":24,"dup":16}],159:[function(require,module,exports){
+},{"buffer":24,"dup":16}],160:[function(require,module,exports){
 var parseKeys = require('parse-asn1')
 var mgf = require('./mgf')
 var xor = require('./xor')
@@ -25950,7 +26001,7 @@ function compare (a, b) {
   return dif
 }
 
-},{"./mgf":157,"./withPublic":161,"./xor":162,"bn.js":158,"browserify-rsa":45,"create-hash":72,"parse-asn1":148,"safe-buffer":166}],160:[function(require,module,exports){
+},{"./mgf":158,"./withPublic":162,"./xor":163,"bn.js":159,"browserify-rsa":45,"create-hash":72,"parse-asn1":149,"safe-buffer":171}],161:[function(require,module,exports){
 var parseKeys = require('parse-asn1')
 var randomBytes = require('randombytes')
 var createHash = require('create-hash')
@@ -26040,7 +26091,7 @@ function nonZero (len) {
   return out
 }
 
-},{"./mgf":157,"./withPublic":161,"./xor":162,"bn.js":158,"browserify-rsa":45,"create-hash":72,"parse-asn1":148,"randombytes":163,"safe-buffer":166}],161:[function(require,module,exports){
+},{"./mgf":158,"./withPublic":162,"./xor":163,"bn.js":159,"browserify-rsa":45,"create-hash":72,"parse-asn1":149,"randombytes":168,"safe-buffer":171}],162:[function(require,module,exports){
 var BN = require('bn.js')
 var Buffer = require('safe-buffer').Buffer
 
@@ -26054,7 +26105,7 @@ function withPublic (paddedMsg, key) {
 
 module.exports = withPublic
 
-},{"bn.js":158,"safe-buffer":166}],162:[function(require,module,exports){
+},{"bn.js":159,"safe-buffer":171}],163:[function(require,module,exports){
 module.exports = function xor (a, b) {
   var len = a.length
   var i = -1
@@ -26064,7 +26115,723 @@ module.exports = function xor (a, b) {
   return a
 }
 
-},{}],163:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
+(function (global){(function (){
+/*! https://mths.be/punycode v1.4.1 by @mathias */
+;(function(root) {
+
+	/** Detect free variables */
+	var freeExports = typeof exports == 'object' && exports &&
+		!exports.nodeType && exports;
+	var freeModule = typeof module == 'object' && module &&
+		!module.nodeType && module;
+	var freeGlobal = typeof global == 'object' && global;
+	if (
+		freeGlobal.global === freeGlobal ||
+		freeGlobal.window === freeGlobal ||
+		freeGlobal.self === freeGlobal
+	) {
+		root = freeGlobal;
+	}
+
+	/**
+	 * The `punycode` object.
+	 * @name punycode
+	 * @type Object
+	 */
+	var punycode,
+
+	/** Highest positive signed 32-bit float value */
+	maxInt = 2147483647, // aka. 0x7FFFFFFF or 2^31-1
+
+	/** Bootstring parameters */
+	base = 36,
+	tMin = 1,
+	tMax = 26,
+	skew = 38,
+	damp = 700,
+	initialBias = 72,
+	initialN = 128, // 0x80
+	delimiter = '-', // '\x2D'
+
+	/** Regular expressions */
+	regexPunycode = /^xn--/,
+	regexNonASCII = /[^\x20-\x7E]/, // unprintable ASCII chars + non-ASCII chars
+	regexSeparators = /[\x2E\u3002\uFF0E\uFF61]/g, // RFC 3490 separators
+
+	/** Error messages */
+	errors = {
+		'overflow': 'Overflow: input needs wider integers to process',
+		'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
+		'invalid-input': 'Invalid input'
+	},
+
+	/** Convenience shortcuts */
+	baseMinusTMin = base - tMin,
+	floor = Math.floor,
+	stringFromCharCode = String.fromCharCode,
+
+	/** Temporary variable */
+	key;
+
+	/*--------------------------------------------------------------------------*/
+
+	/**
+	 * A generic error utility function.
+	 * @private
+	 * @param {String} type The error type.
+	 * @returns {Error} Throws a `RangeError` with the applicable error message.
+	 */
+	function error(type) {
+		throw new RangeError(errors[type]);
+	}
+
+	/**
+	 * A generic `Array#map` utility function.
+	 * @private
+	 * @param {Array} array The array to iterate over.
+	 * @param {Function} callback The function that gets called for every array
+	 * item.
+	 * @returns {Array} A new array of values returned by the callback function.
+	 */
+	function map(array, fn) {
+		var length = array.length;
+		var result = [];
+		while (length--) {
+			result[length] = fn(array[length]);
+		}
+		return result;
+	}
+
+	/**
+	 * A simple `Array#map`-like wrapper to work with domain name strings or email
+	 * addresses.
+	 * @private
+	 * @param {String} domain The domain name or email address.
+	 * @param {Function} callback The function that gets called for every
+	 * character.
+	 * @returns {Array} A new string of characters returned by the callback
+	 * function.
+	 */
+	function mapDomain(string, fn) {
+		var parts = string.split('@');
+		var result = '';
+		if (parts.length > 1) {
+			// In email addresses, only the domain name should be punycoded. Leave
+			// the local part (i.e. everything up to `@`) intact.
+			result = parts[0] + '@';
+			string = parts[1];
+		}
+		// Avoid `split(regex)` for IE8 compatibility. See #17.
+		string = string.replace(regexSeparators, '\x2E');
+		var labels = string.split('.');
+		var encoded = map(labels, fn).join('.');
+		return result + encoded;
+	}
+
+	/**
+	 * Creates an array containing the numeric code points of each Unicode
+	 * character in the string. While JavaScript uses UCS-2 internally,
+	 * this function will convert a pair of surrogate halves (each of which
+	 * UCS-2 exposes as separate characters) into a single code point,
+	 * matching UTF-16.
+	 * @see `punycode.ucs2.encode`
+	 * @see <https://mathiasbynens.be/notes/javascript-encoding>
+	 * @memberOf punycode.ucs2
+	 * @name decode
+	 * @param {String} string The Unicode input string (UCS-2).
+	 * @returns {Array} The new array of code points.
+	 */
+	function ucs2decode(string) {
+		var output = [],
+		    counter = 0,
+		    length = string.length,
+		    value,
+		    extra;
+		while (counter < length) {
+			value = string.charCodeAt(counter++);
+			if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
+				// high surrogate, and there is a next character
+				extra = string.charCodeAt(counter++);
+				if ((extra & 0xFC00) == 0xDC00) { // low surrogate
+					output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
+				} else {
+					// unmatched surrogate; only append this code unit, in case the next
+					// code unit is the high surrogate of a surrogate pair
+					output.push(value);
+					counter--;
+				}
+			} else {
+				output.push(value);
+			}
+		}
+		return output;
+	}
+
+	/**
+	 * Creates a string based on an array of numeric code points.
+	 * @see `punycode.ucs2.decode`
+	 * @memberOf punycode.ucs2
+	 * @name encode
+	 * @param {Array} codePoints The array of numeric code points.
+	 * @returns {String} The new Unicode string (UCS-2).
+	 */
+	function ucs2encode(array) {
+		return map(array, function(value) {
+			var output = '';
+			if (value > 0xFFFF) {
+				value -= 0x10000;
+				output += stringFromCharCode(value >>> 10 & 0x3FF | 0xD800);
+				value = 0xDC00 | value & 0x3FF;
+			}
+			output += stringFromCharCode(value);
+			return output;
+		}).join('');
+	}
+
+	/**
+	 * Converts a basic code point into a digit/integer.
+	 * @see `digitToBasic()`
+	 * @private
+	 * @param {Number} codePoint The basic numeric code point value.
+	 * @returns {Number} The numeric value of a basic code point (for use in
+	 * representing integers) in the range `0` to `base - 1`, or `base` if
+	 * the code point does not represent a value.
+	 */
+	function basicToDigit(codePoint) {
+		if (codePoint - 48 < 10) {
+			return codePoint - 22;
+		}
+		if (codePoint - 65 < 26) {
+			return codePoint - 65;
+		}
+		if (codePoint - 97 < 26) {
+			return codePoint - 97;
+		}
+		return base;
+	}
+
+	/**
+	 * Converts a digit/integer into a basic code point.
+	 * @see `basicToDigit()`
+	 * @private
+	 * @param {Number} digit The numeric value of a basic code point.
+	 * @returns {Number} The basic code point whose value (when used for
+	 * representing integers) is `digit`, which needs to be in the range
+	 * `0` to `base - 1`. If `flag` is non-zero, the uppercase form is
+	 * used; else, the lowercase form is used. The behavior is undefined
+	 * if `flag` is non-zero and `digit` has no uppercase form.
+	 */
+	function digitToBasic(digit, flag) {
+		//  0..25 map to ASCII a..z or A..Z
+		// 26..35 map to ASCII 0..9
+		return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5);
+	}
+
+	/**
+	 * Bias adaptation function as per section 3.4 of RFC 3492.
+	 * https://tools.ietf.org/html/rfc3492#section-3.4
+	 * @private
+	 */
+	function adapt(delta, numPoints, firstTime) {
+		var k = 0;
+		delta = firstTime ? floor(delta / damp) : delta >> 1;
+		delta += floor(delta / numPoints);
+		for (/* no initialization */; delta > baseMinusTMin * tMax >> 1; k += base) {
+			delta = floor(delta / baseMinusTMin);
+		}
+		return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
+	}
+
+	/**
+	 * Converts a Punycode string of ASCII-only symbols to a string of Unicode
+	 * symbols.
+	 * @memberOf punycode
+	 * @param {String} input The Punycode string of ASCII-only symbols.
+	 * @returns {String} The resulting string of Unicode symbols.
+	 */
+	function decode(input) {
+		// Don't use UCS-2
+		var output = [],
+		    inputLength = input.length,
+		    out,
+		    i = 0,
+		    n = initialN,
+		    bias = initialBias,
+		    basic,
+		    j,
+		    index,
+		    oldi,
+		    w,
+		    k,
+		    digit,
+		    t,
+		    /** Cached calculation results */
+		    baseMinusT;
+
+		// Handle the basic code points: let `basic` be the number of input code
+		// points before the last delimiter, or `0` if there is none, then copy
+		// the first basic code points to the output.
+
+		basic = input.lastIndexOf(delimiter);
+		if (basic < 0) {
+			basic = 0;
+		}
+
+		for (j = 0; j < basic; ++j) {
+			// if it's not a basic code point
+			if (input.charCodeAt(j) >= 0x80) {
+				error('not-basic');
+			}
+			output.push(input.charCodeAt(j));
+		}
+
+		// Main decoding loop: start just after the last delimiter if any basic code
+		// points were copied; start at the beginning otherwise.
+
+		for (index = basic > 0 ? basic + 1 : 0; index < inputLength; /* no final expression */) {
+
+			// `index` is the index of the next character to be consumed.
+			// Decode a generalized variable-length integer into `delta`,
+			// which gets added to `i`. The overflow checking is easier
+			// if we increase `i` as we go, then subtract off its starting
+			// value at the end to obtain `delta`.
+			for (oldi = i, w = 1, k = base; /* no condition */; k += base) {
+
+				if (index >= inputLength) {
+					error('invalid-input');
+				}
+
+				digit = basicToDigit(input.charCodeAt(index++));
+
+				if (digit >= base || digit > floor((maxInt - i) / w)) {
+					error('overflow');
+				}
+
+				i += digit * w;
+				t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
+
+				if (digit < t) {
+					break;
+				}
+
+				baseMinusT = base - t;
+				if (w > floor(maxInt / baseMinusT)) {
+					error('overflow');
+				}
+
+				w *= baseMinusT;
+
+			}
+
+			out = output.length + 1;
+			bias = adapt(i - oldi, out, oldi == 0);
+
+			// `i` was supposed to wrap around from `out` to `0`,
+			// incrementing `n` each time, so we'll fix that now:
+			if (floor(i / out) > maxInt - n) {
+				error('overflow');
+			}
+
+			n += floor(i / out);
+			i %= out;
+
+			// Insert `n` at position `i` of the output
+			output.splice(i++, 0, n);
+
+		}
+
+		return ucs2encode(output);
+	}
+
+	/**
+	 * Converts a string of Unicode symbols (e.g. a domain name label) to a
+	 * Punycode string of ASCII-only symbols.
+	 * @memberOf punycode
+	 * @param {String} input The string of Unicode symbols.
+	 * @returns {String} The resulting Punycode string of ASCII-only symbols.
+	 */
+	function encode(input) {
+		var n,
+		    delta,
+		    handledCPCount,
+		    basicLength,
+		    bias,
+		    j,
+		    m,
+		    q,
+		    k,
+		    t,
+		    currentValue,
+		    output = [],
+		    /** `inputLength` will hold the number of code points in `input`. */
+		    inputLength,
+		    /** Cached calculation results */
+		    handledCPCountPlusOne,
+		    baseMinusT,
+		    qMinusT;
+
+		// Convert the input in UCS-2 to Unicode
+		input = ucs2decode(input);
+
+		// Cache the length
+		inputLength = input.length;
+
+		// Initialize the state
+		n = initialN;
+		delta = 0;
+		bias = initialBias;
+
+		// Handle the basic code points
+		for (j = 0; j < inputLength; ++j) {
+			currentValue = input[j];
+			if (currentValue < 0x80) {
+				output.push(stringFromCharCode(currentValue));
+			}
+		}
+
+		handledCPCount = basicLength = output.length;
+
+		// `handledCPCount` is the number of code points that have been handled;
+		// `basicLength` is the number of basic code points.
+
+		// Finish the basic string - if it is not empty - with a delimiter
+		if (basicLength) {
+			output.push(delimiter);
+		}
+
+		// Main encoding loop:
+		while (handledCPCount < inputLength) {
+
+			// All non-basic code points < n have been handled already. Find the next
+			// larger one:
+			for (m = maxInt, j = 0; j < inputLength; ++j) {
+				currentValue = input[j];
+				if (currentValue >= n && currentValue < m) {
+					m = currentValue;
+				}
+			}
+
+			// Increase `delta` enough to advance the decoder's <n,i> state to <m,0>,
+			// but guard against overflow
+			handledCPCountPlusOne = handledCPCount + 1;
+			if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) {
+				error('overflow');
+			}
+
+			delta += (m - n) * handledCPCountPlusOne;
+			n = m;
+
+			for (j = 0; j < inputLength; ++j) {
+				currentValue = input[j];
+
+				if (currentValue < n && ++delta > maxInt) {
+					error('overflow');
+				}
+
+				if (currentValue == n) {
+					// Represent delta as a generalized variable-length integer
+					for (q = delta, k = base; /* no condition */; k += base) {
+						t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
+						if (q < t) {
+							break;
+						}
+						qMinusT = q - t;
+						baseMinusT = base - t;
+						output.push(
+							stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0))
+						);
+						q = floor(qMinusT / baseMinusT);
+					}
+
+					output.push(stringFromCharCode(digitToBasic(q, 0)));
+					bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
+					delta = 0;
+					++handledCPCount;
+				}
+			}
+
+			++delta;
+			++n;
+
+		}
+		return output.join('');
+	}
+
+	/**
+	 * Converts a Punycode string representing a domain name or an email address
+	 * to Unicode. Only the Punycoded parts of the input will be converted, i.e.
+	 * it doesn't matter if you call it on a string that has already been
+	 * converted to Unicode.
+	 * @memberOf punycode
+	 * @param {String} input The Punycoded domain name or email address to
+	 * convert to Unicode.
+	 * @returns {String} The Unicode representation of the given Punycode
+	 * string.
+	 */
+	function toUnicode(input) {
+		return mapDomain(input, function(string) {
+			return regexPunycode.test(string)
+				? decode(string.slice(4).toLowerCase())
+				: string;
+		});
+	}
+
+	/**
+	 * Converts a Unicode string representing a domain name or an email address to
+	 * Punycode. Only the non-ASCII parts of the domain name will be converted,
+	 * i.e. it doesn't matter if you call it with a domain that's already in
+	 * ASCII.
+	 * @memberOf punycode
+	 * @param {String} input The domain name or email address to convert, as a
+	 * Unicode string.
+	 * @returns {String} The Punycode representation of the given domain name or
+	 * email address.
+	 */
+	function toASCII(input) {
+		return mapDomain(input, function(string) {
+			return regexNonASCII.test(string)
+				? 'xn--' + encode(string)
+				: string;
+		});
+	}
+
+	/*--------------------------------------------------------------------------*/
+
+	/** Define the public API */
+	punycode = {
+		/**
+		 * A string representing the current Punycode.js version number.
+		 * @memberOf punycode
+		 * @type String
+		 */
+		'version': '1.4.1',
+		/**
+		 * An object of methods to convert from JavaScript's internal character
+		 * representation (UCS-2) to Unicode code points, and back.
+		 * @see <https://mathiasbynens.be/notes/javascript-encoding>
+		 * @memberOf punycode
+		 * @type Object
+		 */
+		'ucs2': {
+			'decode': ucs2decode,
+			'encode': ucs2encode
+		},
+		'decode': decode,
+		'encode': encode,
+		'toASCII': toASCII,
+		'toUnicode': toUnicode
+	};
+
+	/** Expose `punycode` */
+	// Some AMD build optimizers, like r.js, check for specific condition patterns
+	// like the following:
+	if (
+		typeof define == 'function' &&
+		typeof define.amd == 'object' &&
+		define.amd
+	) {
+		define('punycode', function() {
+			return punycode;
+		});
+	} else if (freeExports && freeModule) {
+		if (module.exports == freeExports) {
+			// in Node.js, io.js, or RingoJS v0.8.0+
+			freeModule.exports = punycode;
+		} else {
+			// in Narwhal or RingoJS v0.7.0-
+			for (key in punycode) {
+				punycode.hasOwnProperty(key) && (freeExports[key] = punycode[key]);
+			}
+		}
+	} else {
+		// in Rhino or a web browser
+		root.punycode = punycode;
+	}
+
+}(this));
+
+}).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],165:[function(require,module,exports){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+'use strict';
+
+// If obj.hasOwnProperty has been overridden, then calling
+// obj.hasOwnProperty(prop) will break.
+// See: https://github.com/joyent/node/issues/1707
+function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+module.exports = function(qs, sep, eq, options) {
+  sep = sep || '&';
+  eq = eq || '=';
+  var obj = {};
+
+  if (typeof qs !== 'string' || qs.length === 0) {
+    return obj;
+  }
+
+  var regexp = /\+/g;
+  qs = qs.split(sep);
+
+  var maxKeys = 1000;
+  if (options && typeof options.maxKeys === 'number') {
+    maxKeys = options.maxKeys;
+  }
+
+  var len = qs.length;
+  // maxKeys <= 0 means that we should not limit keys count
+  if (maxKeys > 0 && len > maxKeys) {
+    len = maxKeys;
+  }
+
+  for (var i = 0; i < len; ++i) {
+    var x = qs[i].replace(regexp, '%20'),
+        idx = x.indexOf(eq),
+        kstr, vstr, k, v;
+
+    if (idx >= 0) {
+      kstr = x.substr(0, idx);
+      vstr = x.substr(idx + 1);
+    } else {
+      kstr = x;
+      vstr = '';
+    }
+
+    k = decodeURIComponent(kstr);
+    v = decodeURIComponent(vstr);
+
+    if (!hasOwnProperty(obj, k)) {
+      obj[k] = v;
+    } else if (isArray(obj[k])) {
+      obj[k].push(v);
+    } else {
+      obj[k] = [obj[k], v];
+    }
+  }
+
+  return obj;
+};
+
+var isArray = Array.isArray || function (xs) {
+  return Object.prototype.toString.call(xs) === '[object Array]';
+};
+
+},{}],166:[function(require,module,exports){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+'use strict';
+
+var stringifyPrimitive = function(v) {
+  switch (typeof v) {
+    case 'string':
+      return v;
+
+    case 'boolean':
+      return v ? 'true' : 'false';
+
+    case 'number':
+      return isFinite(v) ? v : '';
+
+    default:
+      return '';
+  }
+};
+
+module.exports = function(obj, sep, eq, name) {
+  sep = sep || '&';
+  eq = eq || '=';
+  if (obj === null) {
+    obj = undefined;
+  }
+
+  if (typeof obj === 'object') {
+    return map(objectKeys(obj), function(k) {
+      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
+      if (isArray(obj[k])) {
+        return map(obj[k], function(v) {
+          return ks + encodeURIComponent(stringifyPrimitive(v));
+        }).join(sep);
+      } else {
+        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+      }
+    }).join(sep);
+
+  }
+
+  if (!name) return '';
+  return encodeURIComponent(stringifyPrimitive(name)) + eq +
+         encodeURIComponent(stringifyPrimitive(obj));
+};
+
+var isArray = Array.isArray || function (xs) {
+  return Object.prototype.toString.call(xs) === '[object Array]';
+};
+
+function map (xs, f) {
+  if (xs.map) return xs.map(f);
+  var res = [];
+  for (var i = 0; i < xs.length; i++) {
+    res.push(f(xs[i], i));
+  }
+  return res;
+}
+
+var objectKeys = Object.keys || function (obj) {
+  var res = [];
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) res.push(key);
+  }
+  return res;
+};
+
+},{}],167:[function(require,module,exports){
+'use strict';
+
+exports.decode = exports.parse = require('./decode');
+exports.encode = exports.stringify = require('./encode');
+
+},{"./decode":165,"./encode":166}],168:[function(require,module,exports){
 (function (process,global){(function (){
 'use strict'
 
@@ -26118,7 +26885,7 @@ function randomBytes (size, cb) {
 }
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":155,"safe-buffer":166}],164:[function(require,module,exports){
+},{"_process":156,"safe-buffer":171}],169:[function(require,module,exports){
 (function (process,global){(function (){
 'use strict'
 
@@ -26230,7 +26997,7 @@ function randomFillSync (buf, offset, size) {
 }
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":155,"randombytes":163,"safe-buffer":166}],165:[function(require,module,exports){
+},{"_process":156,"randombytes":168,"safe-buffer":171}],170:[function(require,module,exports){
 'use strict'
 var Buffer = require('buffer').Buffer
 var inherits = require('inherits')
@@ -26395,7 +27162,7 @@ function fn5 (a, b, c, d, e, m, k, s) {
 
 module.exports = RIPEMD160
 
-},{"buffer":68,"hash-base":107,"inherits":137}],166:[function(require,module,exports){
+},{"buffer":68,"hash-base":107,"inherits":137}],171:[function(require,module,exports){
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 /* eslint-disable node/no-deprecated-api */
 var buffer = require('buffer')
@@ -26462,7 +27229,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":68}],167:[function(require,module,exports){
+},{"buffer":68}],172:[function(require,module,exports){
 (function (process){(function (){
 /* eslint-disable node/no-deprecated-api */
 
@@ -26543,7 +27310,7 @@ if (!safer.constants) {
 module.exports = safer
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":155,"buffer":68}],168:[function(require,module,exports){
+},{"_process":156,"buffer":68}],173:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 
 // prototype class for hash functions
@@ -26626,7 +27393,7 @@ Hash.prototype._update = function () {
 
 module.exports = Hash
 
-},{"safe-buffer":166}],169:[function(require,module,exports){
+},{"safe-buffer":171}],174:[function(require,module,exports){
 var exports = module.exports = function SHA (algorithm) {
   algorithm = algorithm.toLowerCase()
 
@@ -26643,7 +27410,7 @@ exports.sha256 = require('./sha256')
 exports.sha384 = require('./sha384')
 exports.sha512 = require('./sha512')
 
-},{"./sha":170,"./sha1":171,"./sha224":172,"./sha256":173,"./sha384":174,"./sha512":175}],170:[function(require,module,exports){
+},{"./sha":175,"./sha1":176,"./sha224":177,"./sha256":178,"./sha384":179,"./sha512":180}],175:[function(require,module,exports){
 /*
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-0, as defined
  * in FIPS PUB 180-1
@@ -26739,7 +27506,7 @@ Sha.prototype._hash = function () {
 
 module.exports = Sha
 
-},{"./hash":168,"inherits":137,"safe-buffer":166}],171:[function(require,module,exports){
+},{"./hash":173,"inherits":137,"safe-buffer":171}],176:[function(require,module,exports){
 /*
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-1, as defined
  * in FIPS PUB 180-1
@@ -26840,7 +27607,7 @@ Sha1.prototype._hash = function () {
 
 module.exports = Sha1
 
-},{"./hash":168,"inherits":137,"safe-buffer":166}],172:[function(require,module,exports){
+},{"./hash":173,"inherits":137,"safe-buffer":171}],177:[function(require,module,exports){
 /**
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-256, as defined
  * in FIPS 180-2
@@ -26895,7 +27662,7 @@ Sha224.prototype._hash = function () {
 
 module.exports = Sha224
 
-},{"./hash":168,"./sha256":173,"inherits":137,"safe-buffer":166}],173:[function(require,module,exports){
+},{"./hash":173,"./sha256":178,"inherits":137,"safe-buffer":171}],178:[function(require,module,exports){
 /**
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-256, as defined
  * in FIPS 180-2
@@ -27032,7 +27799,7 @@ Sha256.prototype._hash = function () {
 
 module.exports = Sha256
 
-},{"./hash":168,"inherits":137,"safe-buffer":166}],174:[function(require,module,exports){
+},{"./hash":173,"inherits":137,"safe-buffer":171}],179:[function(require,module,exports){
 var inherits = require('inherits')
 var SHA512 = require('./sha512')
 var Hash = require('./hash')
@@ -27091,7 +27858,7 @@ Sha384.prototype._hash = function () {
 
 module.exports = Sha384
 
-},{"./hash":168,"./sha512":175,"inherits":137,"safe-buffer":166}],175:[function(require,module,exports){
+},{"./hash":173,"./sha512":180,"inherits":137,"safe-buffer":171}],180:[function(require,module,exports){
 var inherits = require('inherits')
 var Hash = require('./hash')
 var Buffer = require('safe-buffer').Buffer
@@ -27353,7 +28120,7 @@ Sha512.prototype._hash = function () {
 
 module.exports = Sha512
 
-},{"./hash":168,"inherits":137,"safe-buffer":166}],176:[function(require,module,exports){
+},{"./hash":173,"inherits":137,"safe-buffer":171}],181:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -27484,35 +28251,35 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":105,"inherits":137,"readable-stream/lib/_stream_duplex.js":178,"readable-stream/lib/_stream_passthrough.js":179,"readable-stream/lib/_stream_readable.js":180,"readable-stream/lib/_stream_transform.js":181,"readable-stream/lib/_stream_writable.js":182,"readable-stream/lib/internal/streams/end-of-stream.js":186,"readable-stream/lib/internal/streams/pipeline.js":188}],177:[function(require,module,exports){
+},{"events":105,"inherits":137,"readable-stream/lib/_stream_duplex.js":183,"readable-stream/lib/_stream_passthrough.js":184,"readable-stream/lib/_stream_readable.js":185,"readable-stream/lib/_stream_transform.js":186,"readable-stream/lib/_stream_writable.js":187,"readable-stream/lib/internal/streams/end-of-stream.js":191,"readable-stream/lib/internal/streams/pipeline.js":193}],182:[function(require,module,exports){
 arguments[4][52][0].apply(exports,arguments)
-},{"dup":52}],178:[function(require,module,exports){
+},{"dup":52}],183:[function(require,module,exports){
 arguments[4][53][0].apply(exports,arguments)
-},{"./_stream_readable":180,"./_stream_writable":182,"_process":155,"dup":53,"inherits":137}],179:[function(require,module,exports){
+},{"./_stream_readable":185,"./_stream_writable":187,"_process":156,"dup":53,"inherits":137}],184:[function(require,module,exports){
 arguments[4][54][0].apply(exports,arguments)
-},{"./_stream_transform":181,"dup":54,"inherits":137}],180:[function(require,module,exports){
+},{"./_stream_transform":186,"dup":54,"inherits":137}],185:[function(require,module,exports){
 arguments[4][55][0].apply(exports,arguments)
-},{"../errors":177,"./_stream_duplex":178,"./internal/streams/async_iterator":183,"./internal/streams/buffer_list":184,"./internal/streams/destroy":185,"./internal/streams/from":187,"./internal/streams/state":189,"./internal/streams/stream":190,"_process":155,"buffer":68,"dup":55,"events":105,"inherits":137,"string_decoder/":191,"util":24}],181:[function(require,module,exports){
+},{"../errors":182,"./_stream_duplex":183,"./internal/streams/async_iterator":188,"./internal/streams/buffer_list":189,"./internal/streams/destroy":190,"./internal/streams/from":192,"./internal/streams/state":194,"./internal/streams/stream":195,"_process":156,"buffer":68,"dup":55,"events":105,"inherits":137,"string_decoder/":196,"util":24}],186:[function(require,module,exports){
 arguments[4][56][0].apply(exports,arguments)
-},{"../errors":177,"./_stream_duplex":178,"dup":56,"inherits":137}],182:[function(require,module,exports){
+},{"../errors":182,"./_stream_duplex":183,"dup":56,"inherits":137}],187:[function(require,module,exports){
 arguments[4][57][0].apply(exports,arguments)
-},{"../errors":177,"./_stream_duplex":178,"./internal/streams/destroy":185,"./internal/streams/state":189,"./internal/streams/stream":190,"_process":155,"buffer":68,"dup":57,"inherits":137,"util-deprecate":192}],183:[function(require,module,exports){
+},{"../errors":182,"./_stream_duplex":183,"./internal/streams/destroy":190,"./internal/streams/state":194,"./internal/streams/stream":195,"_process":156,"buffer":68,"dup":57,"inherits":137,"util-deprecate":200}],188:[function(require,module,exports){
 arguments[4][58][0].apply(exports,arguments)
-},{"./end-of-stream":186,"_process":155,"dup":58}],184:[function(require,module,exports){
+},{"./end-of-stream":191,"_process":156,"dup":58}],189:[function(require,module,exports){
 arguments[4][59][0].apply(exports,arguments)
-},{"buffer":68,"dup":59,"util":24}],185:[function(require,module,exports){
+},{"buffer":68,"dup":59,"util":24}],190:[function(require,module,exports){
 arguments[4][60][0].apply(exports,arguments)
-},{"_process":155,"dup":60}],186:[function(require,module,exports){
+},{"_process":156,"dup":60}],191:[function(require,module,exports){
 arguments[4][61][0].apply(exports,arguments)
-},{"../../../errors":177,"dup":61}],187:[function(require,module,exports){
+},{"../../../errors":182,"dup":61}],192:[function(require,module,exports){
 arguments[4][62][0].apply(exports,arguments)
-},{"dup":62}],188:[function(require,module,exports){
+},{"dup":62}],193:[function(require,module,exports){
 arguments[4][63][0].apply(exports,arguments)
-},{"../../../errors":177,"./end-of-stream":186,"dup":63}],189:[function(require,module,exports){
+},{"../../../errors":182,"./end-of-stream":191,"dup":63}],194:[function(require,module,exports){
 arguments[4][64][0].apply(exports,arguments)
-},{"../../../errors":177,"dup":64}],190:[function(require,module,exports){
+},{"../../../errors":182,"dup":64}],195:[function(require,module,exports){
 arguments[4][65][0].apply(exports,arguments)
-},{"dup":65,"events":105}],191:[function(require,module,exports){
+},{"dup":65,"events":105}],196:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -27809,7 +28576,838 @@ function simpleWrite(buf) {
 function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : '';
 }
-},{"safe-buffer":166}],192:[function(require,module,exports){
+},{"safe-buffer":171}],197:[function(require,module,exports){
+(function (setImmediate,clearImmediate){(function (){
+var nextTick = require('process/browser.js').nextTick;
+var apply = Function.prototype.apply;
+var slice = Array.prototype.slice;
+var immediateIds = {};
+var nextImmediateId = 0;
+
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) { timeout.close(); };
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(window, this._id);
+};
+
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// That's not how node.js implements it but the exposed api is the same.
+exports.setImmediate = typeof setImmediate === "function" ? setImmediate : function(fn) {
+  var id = nextImmediateId++;
+  var args = arguments.length < 2 ? false : slice.call(arguments, 1);
+
+  immediateIds[id] = true;
+
+  nextTick(function onNextTick() {
+    if (immediateIds[id]) {
+      // fn.call() is faster so we optimize for the common use-case
+      // @see http://jsperf.com/call-apply-segu
+      if (args) {
+        fn.apply(null, args);
+      } else {
+        fn.call(null);
+      }
+      // Prevent ids from leaking
+      exports.clearImmediate(id);
+    }
+  });
+
+  return id;
+};
+
+exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
+  delete immediateIds[id];
+};
+}).call(this)}).call(this,require("timers").setImmediate,require("timers").clearImmediate)
+},{"process/browser.js":156,"timers":197}],198:[function(require,module,exports){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+'use strict';
+
+var punycode = require('punycode');
+var util = require('./util');
+
+exports.parse = urlParse;
+exports.resolve = urlResolve;
+exports.resolveObject = urlResolveObject;
+exports.format = urlFormat;
+
+exports.Url = Url;
+
+function Url() {
+  this.protocol = null;
+  this.slashes = null;
+  this.auth = null;
+  this.host = null;
+  this.port = null;
+  this.hostname = null;
+  this.hash = null;
+  this.search = null;
+  this.query = null;
+  this.pathname = null;
+  this.path = null;
+  this.href = null;
+}
+
+// Reference: RFC 3986, RFC 1808, RFC 2396
+
+// define these here so at least they only have to be
+// compiled once on the first module load.
+var protocolPattern = /^([a-z0-9.+-]+:)/i,
+    portPattern = /:[0-9]*$/,
+
+    // Special case for a simple path URL
+    simplePathPattern = /^(\/\/?(?!\/)[^\?\s]*)(\?[^\s]*)?$/,
+
+    // RFC 2396: characters reserved for delimiting URLs.
+    // We actually just auto-escape these.
+    delims = ['<', '>', '"', '`', ' ', '\r', '\n', '\t'],
+
+    // RFC 2396: characters not allowed for various reasons.
+    unwise = ['{', '}', '|', '\\', '^', '`'].concat(delims),
+
+    // Allowed by RFCs, but cause of XSS attacks.  Always escape these.
+    autoEscape = ['\''].concat(unwise),
+    // Characters that are never ever allowed in a hostname.
+    // Note that any invalid chars are also handled, but these
+    // are the ones that are *expected* to be seen, so we fast-path
+    // them.
+    nonHostChars = ['%', '/', '?', ';', '#'].concat(autoEscape),
+    hostEndingChars = ['/', '?', '#'],
+    hostnameMaxLen = 255,
+    hostnamePartPattern = /^[+a-z0-9A-Z_-]{0,63}$/,
+    hostnamePartStart = /^([+a-z0-9A-Z_-]{0,63})(.*)$/,
+    // protocols that can allow "unsafe" and "unwise" chars.
+    unsafeProtocol = {
+      'javascript': true,
+      'javascript:': true
+    },
+    // protocols that never have a hostname.
+    hostlessProtocol = {
+      'javascript': true,
+      'javascript:': true
+    },
+    // protocols that always contain a // bit.
+    slashedProtocol = {
+      'http': true,
+      'https': true,
+      'ftp': true,
+      'gopher': true,
+      'file': true,
+      'http:': true,
+      'https:': true,
+      'ftp:': true,
+      'gopher:': true,
+      'file:': true
+    },
+    querystring = require('querystring');
+
+function urlParse(url, parseQueryString, slashesDenoteHost) {
+  if (url && util.isObject(url) && url instanceof Url) return url;
+
+  var u = new Url;
+  u.parse(url, parseQueryString, slashesDenoteHost);
+  return u;
+}
+
+Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
+  if (!util.isString(url)) {
+    throw new TypeError("Parameter 'url' must be a string, not " + typeof url);
+  }
+
+  // Copy chrome, IE, opera backslash-handling behavior.
+  // Back slashes before the query string get converted to forward slashes
+  // See: https://code.google.com/p/chromium/issues/detail?id=25916
+  var queryIndex = url.indexOf('?'),
+      splitter =
+          (queryIndex !== -1 && queryIndex < url.indexOf('#')) ? '?' : '#',
+      uSplit = url.split(splitter),
+      slashRegex = /\\/g;
+  uSplit[0] = uSplit[0].replace(slashRegex, '/');
+  url = uSplit.join(splitter);
+
+  var rest = url;
+
+  // trim before proceeding.
+  // This is to support parse stuff like "  http://foo.com  \n"
+  rest = rest.trim();
+
+  if (!slashesDenoteHost && url.split('#').length === 1) {
+    // Try fast path regexp
+    var simplePath = simplePathPattern.exec(rest);
+    if (simplePath) {
+      this.path = rest;
+      this.href = rest;
+      this.pathname = simplePath[1];
+      if (simplePath[2]) {
+        this.search = simplePath[2];
+        if (parseQueryString) {
+          this.query = querystring.parse(this.search.substr(1));
+        } else {
+          this.query = this.search.substr(1);
+        }
+      } else if (parseQueryString) {
+        this.search = '';
+        this.query = {};
+      }
+      return this;
+    }
+  }
+
+  var proto = protocolPattern.exec(rest);
+  if (proto) {
+    proto = proto[0];
+    var lowerProto = proto.toLowerCase();
+    this.protocol = lowerProto;
+    rest = rest.substr(proto.length);
+  }
+
+  // figure out if it's got a host
+  // user@server is *always* interpreted as a hostname, and url
+  // resolution will treat //foo/bar as host=foo,path=bar because that's
+  // how the browser resolves relative URLs.
+  if (slashesDenoteHost || proto || rest.match(/^\/\/[^@\/]+@[^@\/]+/)) {
+    var slashes = rest.substr(0, 2) === '//';
+    if (slashes && !(proto && hostlessProtocol[proto])) {
+      rest = rest.substr(2);
+      this.slashes = true;
+    }
+  }
+
+  if (!hostlessProtocol[proto] &&
+      (slashes || (proto && !slashedProtocol[proto]))) {
+
+    // there's a hostname.
+    // the first instance of /, ?, ;, or # ends the host.
+    //
+    // If there is an @ in the hostname, then non-host chars *are* allowed
+    // to the left of the last @ sign, unless some host-ending character
+    // comes *before* the @-sign.
+    // URLs are obnoxious.
+    //
+    // ex:
+    // http://a@b@c/ => user:a@b host:c
+    // http://a@b?@c => user:a host:c path:/?@c
+
+    // v0.12 TODO(isaacs): This is not quite how Chrome does things.
+    // Review our test case against browsers more comprehensively.
+
+    // find the first instance of any hostEndingChars
+    var hostEnd = -1;
+    for (var i = 0; i < hostEndingChars.length; i++) {
+      var hec = rest.indexOf(hostEndingChars[i]);
+      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd))
+        hostEnd = hec;
+    }
+
+    // at this point, either we have an explicit point where the
+    // auth portion cannot go past, or the last @ char is the decider.
+    var auth, atSign;
+    if (hostEnd === -1) {
+      // atSign can be anywhere.
+      atSign = rest.lastIndexOf('@');
+    } else {
+      // atSign must be in auth portion.
+      // http://a@b/c@d => host:b auth:a path:/c@d
+      atSign = rest.lastIndexOf('@', hostEnd);
+    }
+
+    // Now we have a portion which is definitely the auth.
+    // Pull that off.
+    if (atSign !== -1) {
+      auth = rest.slice(0, atSign);
+      rest = rest.slice(atSign + 1);
+      this.auth = decodeURIComponent(auth);
+    }
+
+    // the host is the remaining to the left of the first non-host char
+    hostEnd = -1;
+    for (var i = 0; i < nonHostChars.length; i++) {
+      var hec = rest.indexOf(nonHostChars[i]);
+      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd))
+        hostEnd = hec;
+    }
+    // if we still have not hit it, then the entire thing is a host.
+    if (hostEnd === -1)
+      hostEnd = rest.length;
+
+    this.host = rest.slice(0, hostEnd);
+    rest = rest.slice(hostEnd);
+
+    // pull out port.
+    this.parseHost();
+
+    // we've indicated that there is a hostname,
+    // so even if it's empty, it has to be present.
+    this.hostname = this.hostname || '';
+
+    // if hostname begins with [ and ends with ]
+    // assume that it's an IPv6 address.
+    var ipv6Hostname = this.hostname[0] === '[' &&
+        this.hostname[this.hostname.length - 1] === ']';
+
+    // validate a little.
+    if (!ipv6Hostname) {
+      var hostparts = this.hostname.split(/\./);
+      for (var i = 0, l = hostparts.length; i < l; i++) {
+        var part = hostparts[i];
+        if (!part) continue;
+        if (!part.match(hostnamePartPattern)) {
+          var newpart = '';
+          for (var j = 0, k = part.length; j < k; j++) {
+            if (part.charCodeAt(j) > 127) {
+              // we replace non-ASCII char with a temporary placeholder
+              // we need this to make sure size of hostname is not
+              // broken by replacing non-ASCII by nothing
+              newpart += 'x';
+            } else {
+              newpart += part[j];
+            }
+          }
+          // we test again with ASCII char only
+          if (!newpart.match(hostnamePartPattern)) {
+            var validParts = hostparts.slice(0, i);
+            var notHost = hostparts.slice(i + 1);
+            var bit = part.match(hostnamePartStart);
+            if (bit) {
+              validParts.push(bit[1]);
+              notHost.unshift(bit[2]);
+            }
+            if (notHost.length) {
+              rest = '/' + notHost.join('.') + rest;
+            }
+            this.hostname = validParts.join('.');
+            break;
+          }
+        }
+      }
+    }
+
+    if (this.hostname.length > hostnameMaxLen) {
+      this.hostname = '';
+    } else {
+      // hostnames are always lower case.
+      this.hostname = this.hostname.toLowerCase();
+    }
+
+    if (!ipv6Hostname) {
+      // IDNA Support: Returns a punycoded representation of "domain".
+      // It only converts parts of the domain name that
+      // have non-ASCII characters, i.e. it doesn't matter if
+      // you call it with a domain that already is ASCII-only.
+      this.hostname = punycode.toASCII(this.hostname);
+    }
+
+    var p = this.port ? ':' + this.port : '';
+    var h = this.hostname || '';
+    this.host = h + p;
+    this.href += this.host;
+
+    // strip [ and ] from the hostname
+    // the host field still retains them, though
+    if (ipv6Hostname) {
+      this.hostname = this.hostname.substr(1, this.hostname.length - 2);
+      if (rest[0] !== '/') {
+        rest = '/' + rest;
+      }
+    }
+  }
+
+  // now rest is set to the post-host stuff.
+  // chop off any delim chars.
+  if (!unsafeProtocol[lowerProto]) {
+
+    // First, make 100% sure that any "autoEscape" chars get
+    // escaped, even if encodeURIComponent doesn't think they
+    // need to be.
+    for (var i = 0, l = autoEscape.length; i < l; i++) {
+      var ae = autoEscape[i];
+      if (rest.indexOf(ae) === -1)
+        continue;
+      var esc = encodeURIComponent(ae);
+      if (esc === ae) {
+        esc = escape(ae);
+      }
+      rest = rest.split(ae).join(esc);
+    }
+  }
+
+
+  // chop off from the tail first.
+  var hash = rest.indexOf('#');
+  if (hash !== -1) {
+    // got a fragment string.
+    this.hash = rest.substr(hash);
+    rest = rest.slice(0, hash);
+  }
+  var qm = rest.indexOf('?');
+  if (qm !== -1) {
+    this.search = rest.substr(qm);
+    this.query = rest.substr(qm + 1);
+    if (parseQueryString) {
+      this.query = querystring.parse(this.query);
+    }
+    rest = rest.slice(0, qm);
+  } else if (parseQueryString) {
+    // no query string, but parseQueryString still requested
+    this.search = '';
+    this.query = {};
+  }
+  if (rest) this.pathname = rest;
+  if (slashedProtocol[lowerProto] &&
+      this.hostname && !this.pathname) {
+    this.pathname = '/';
+  }
+
+  //to support http.request
+  if (this.pathname || this.search) {
+    var p = this.pathname || '';
+    var s = this.search || '';
+    this.path = p + s;
+  }
+
+  // finally, reconstruct the href based on what has been validated.
+  this.href = this.format();
+  return this;
+};
+
+// format a parsed object into a url string
+function urlFormat(obj) {
+  // ensure it's an object, and not a string url.
+  // If it's an obj, this is a no-op.
+  // this way, you can call url_format() on strings
+  // to clean up potentially wonky urls.
+  if (util.isString(obj)) obj = urlParse(obj);
+  if (!(obj instanceof Url)) return Url.prototype.format.call(obj);
+  return obj.format();
+}
+
+Url.prototype.format = function() {
+  var auth = this.auth || '';
+  if (auth) {
+    auth = encodeURIComponent(auth);
+    auth = auth.replace(/%3A/i, ':');
+    auth += '@';
+  }
+
+  var protocol = this.protocol || '',
+      pathname = this.pathname || '',
+      hash = this.hash || '',
+      host = false,
+      query = '';
+
+  if (this.host) {
+    host = auth + this.host;
+  } else if (this.hostname) {
+    host = auth + (this.hostname.indexOf(':') === -1 ?
+        this.hostname :
+        '[' + this.hostname + ']');
+    if (this.port) {
+      host += ':' + this.port;
+    }
+  }
+
+  if (this.query &&
+      util.isObject(this.query) &&
+      Object.keys(this.query).length) {
+    query = querystring.stringify(this.query);
+  }
+
+  var search = this.search || (query && ('?' + query)) || '';
+
+  if (protocol && protocol.substr(-1) !== ':') protocol += ':';
+
+  // only the slashedProtocols get the //.  Not mailto:, xmpp:, etc.
+  // unless they had them to begin with.
+  if (this.slashes ||
+      (!protocol || slashedProtocol[protocol]) && host !== false) {
+    host = '//' + (host || '');
+    if (pathname && pathname.charAt(0) !== '/') pathname = '/' + pathname;
+  } else if (!host) {
+    host = '';
+  }
+
+  if (hash && hash.charAt(0) !== '#') hash = '#' + hash;
+  if (search && search.charAt(0) !== '?') search = '?' + search;
+
+  pathname = pathname.replace(/[?#]/g, function(match) {
+    return encodeURIComponent(match);
+  });
+  search = search.replace('#', '%23');
+
+  return protocol + host + pathname + search + hash;
+};
+
+function urlResolve(source, relative) {
+  return urlParse(source, false, true).resolve(relative);
+}
+
+Url.prototype.resolve = function(relative) {
+  return this.resolveObject(urlParse(relative, false, true)).format();
+};
+
+function urlResolveObject(source, relative) {
+  if (!source) return relative;
+  return urlParse(source, false, true).resolveObject(relative);
+}
+
+Url.prototype.resolveObject = function(relative) {
+  if (util.isString(relative)) {
+    var rel = new Url();
+    rel.parse(relative, false, true);
+    relative = rel;
+  }
+
+  var result = new Url();
+  var tkeys = Object.keys(this);
+  for (var tk = 0; tk < tkeys.length; tk++) {
+    var tkey = tkeys[tk];
+    result[tkey] = this[tkey];
+  }
+
+  // hash is always overridden, no matter what.
+  // even href="" will remove it.
+  result.hash = relative.hash;
+
+  // if the relative url is empty, then there's nothing left to do here.
+  if (relative.href === '') {
+    result.href = result.format();
+    return result;
+  }
+
+  // hrefs like //foo/bar always cut to the protocol.
+  if (relative.slashes && !relative.protocol) {
+    // take everything except the protocol from relative
+    var rkeys = Object.keys(relative);
+    for (var rk = 0; rk < rkeys.length; rk++) {
+      var rkey = rkeys[rk];
+      if (rkey !== 'protocol')
+        result[rkey] = relative[rkey];
+    }
+
+    //urlParse appends trailing / to urls like http://www.example.com
+    if (slashedProtocol[result.protocol] &&
+        result.hostname && !result.pathname) {
+      result.path = result.pathname = '/';
+    }
+
+    result.href = result.format();
+    return result;
+  }
+
+  if (relative.protocol && relative.protocol !== result.protocol) {
+    // if it's a known url protocol, then changing
+    // the protocol does weird things
+    // first, if it's not file:, then we MUST have a host,
+    // and if there was a path
+    // to begin with, then we MUST have a path.
+    // if it is file:, then the host is dropped,
+    // because that's known to be hostless.
+    // anything else is assumed to be absolute.
+    if (!slashedProtocol[relative.protocol]) {
+      var keys = Object.keys(relative);
+      for (var v = 0; v < keys.length; v++) {
+        var k = keys[v];
+        result[k] = relative[k];
+      }
+      result.href = result.format();
+      return result;
+    }
+
+    result.protocol = relative.protocol;
+    if (!relative.host && !hostlessProtocol[relative.protocol]) {
+      var relPath = (relative.pathname || '').split('/');
+      while (relPath.length && !(relative.host = relPath.shift()));
+      if (!relative.host) relative.host = '';
+      if (!relative.hostname) relative.hostname = '';
+      if (relPath[0] !== '') relPath.unshift('');
+      if (relPath.length < 2) relPath.unshift('');
+      result.pathname = relPath.join('/');
+    } else {
+      result.pathname = relative.pathname;
+    }
+    result.search = relative.search;
+    result.query = relative.query;
+    result.host = relative.host || '';
+    result.auth = relative.auth;
+    result.hostname = relative.hostname || relative.host;
+    result.port = relative.port;
+    // to support http.request
+    if (result.pathname || result.search) {
+      var p = result.pathname || '';
+      var s = result.search || '';
+      result.path = p + s;
+    }
+    result.slashes = result.slashes || relative.slashes;
+    result.href = result.format();
+    return result;
+  }
+
+  var isSourceAbs = (result.pathname && result.pathname.charAt(0) === '/'),
+      isRelAbs = (
+          relative.host ||
+          relative.pathname && relative.pathname.charAt(0) === '/'
+      ),
+      mustEndAbs = (isRelAbs || isSourceAbs ||
+                    (result.host && relative.pathname)),
+      removeAllDots = mustEndAbs,
+      srcPath = result.pathname && result.pathname.split('/') || [],
+      relPath = relative.pathname && relative.pathname.split('/') || [],
+      psychotic = result.protocol && !slashedProtocol[result.protocol];
+
+  // if the url is a non-slashed url, then relative
+  // links like ../.. should be able
+  // to crawl up to the hostname, as well.  This is strange.
+  // result.protocol has already been set by now.
+  // Later on, put the first path part into the host field.
+  if (psychotic) {
+    result.hostname = '';
+    result.port = null;
+    if (result.host) {
+      if (srcPath[0] === '') srcPath[0] = result.host;
+      else srcPath.unshift(result.host);
+    }
+    result.host = '';
+    if (relative.protocol) {
+      relative.hostname = null;
+      relative.port = null;
+      if (relative.host) {
+        if (relPath[0] === '') relPath[0] = relative.host;
+        else relPath.unshift(relative.host);
+      }
+      relative.host = null;
+    }
+    mustEndAbs = mustEndAbs && (relPath[0] === '' || srcPath[0] === '');
+  }
+
+  if (isRelAbs) {
+    // it's absolute.
+    result.host = (relative.host || relative.host === '') ?
+                  relative.host : result.host;
+    result.hostname = (relative.hostname || relative.hostname === '') ?
+                      relative.hostname : result.hostname;
+    result.search = relative.search;
+    result.query = relative.query;
+    srcPath = relPath;
+    // fall through to the dot-handling below.
+  } else if (relPath.length) {
+    // it's relative
+    // throw away the existing file, and take the new path instead.
+    if (!srcPath) srcPath = [];
+    srcPath.pop();
+    srcPath = srcPath.concat(relPath);
+    result.search = relative.search;
+    result.query = relative.query;
+  } else if (!util.isNullOrUndefined(relative.search)) {
+    // just pull out the search.
+    // like href='?foo'.
+    // Put this after the other two cases because it simplifies the booleans
+    if (psychotic) {
+      result.hostname = result.host = srcPath.shift();
+      //occationaly the auth can get stuck only in host
+      //this especially happens in cases like
+      //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
+      var authInHost = result.host && result.host.indexOf('@') > 0 ?
+                       result.host.split('@') : false;
+      if (authInHost) {
+        result.auth = authInHost.shift();
+        result.host = result.hostname = authInHost.shift();
+      }
+    }
+    result.search = relative.search;
+    result.query = relative.query;
+    //to support http.request
+    if (!util.isNull(result.pathname) || !util.isNull(result.search)) {
+      result.path = (result.pathname ? result.pathname : '') +
+                    (result.search ? result.search : '');
+    }
+    result.href = result.format();
+    return result;
+  }
+
+  if (!srcPath.length) {
+    // no path at all.  easy.
+    // we've already handled the other stuff above.
+    result.pathname = null;
+    //to support http.request
+    if (result.search) {
+      result.path = '/' + result.search;
+    } else {
+      result.path = null;
+    }
+    result.href = result.format();
+    return result;
+  }
+
+  // if a url ENDs in . or .., then it must get a trailing slash.
+  // however, if it ends in anything else non-slashy,
+  // then it must NOT get a trailing slash.
+  var last = srcPath.slice(-1)[0];
+  var hasTrailingSlash = (
+      (result.host || relative.host || srcPath.length > 1) &&
+      (last === '.' || last === '..') || last === '');
+
+  // strip single dots, resolve double dots to parent dir
+  // if the path tries to go above the root, `up` ends up > 0
+  var up = 0;
+  for (var i = srcPath.length; i >= 0; i--) {
+    last = srcPath[i];
+    if (last === '.') {
+      srcPath.splice(i, 1);
+    } else if (last === '..') {
+      srcPath.splice(i, 1);
+      up++;
+    } else if (up) {
+      srcPath.splice(i, 1);
+      up--;
+    }
+  }
+
+  // if the path is allowed to go above the root, restore leading ..s
+  if (!mustEndAbs && !removeAllDots) {
+    for (; up--; up) {
+      srcPath.unshift('..');
+    }
+  }
+
+  if (mustEndAbs && srcPath[0] !== '' &&
+      (!srcPath[0] || srcPath[0].charAt(0) !== '/')) {
+    srcPath.unshift('');
+  }
+
+  if (hasTrailingSlash && (srcPath.join('/').substr(-1) !== '/')) {
+    srcPath.push('');
+  }
+
+  var isAbsolute = srcPath[0] === '' ||
+      (srcPath[0] && srcPath[0].charAt(0) === '/');
+
+  // put the host back
+  if (psychotic) {
+    result.hostname = result.host = isAbsolute ? '' :
+                                    srcPath.length ? srcPath.shift() : '';
+    //occationaly the auth can get stuck only in host
+    //this especially happens in cases like
+    //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
+    var authInHost = result.host && result.host.indexOf('@') > 0 ?
+                     result.host.split('@') : false;
+    if (authInHost) {
+      result.auth = authInHost.shift();
+      result.host = result.hostname = authInHost.shift();
+    }
+  }
+
+  mustEndAbs = mustEndAbs || (result.host && srcPath.length);
+
+  if (mustEndAbs && !isAbsolute) {
+    srcPath.unshift('');
+  }
+
+  if (!srcPath.length) {
+    result.pathname = null;
+    result.path = null;
+  } else {
+    result.pathname = srcPath.join('/');
+  }
+
+  //to support request.http
+  if (!util.isNull(result.pathname) || !util.isNull(result.search)) {
+    result.path = (result.pathname ? result.pathname : '') +
+                  (result.search ? result.search : '');
+  }
+  result.auth = relative.auth || result.auth;
+  result.slashes = result.slashes || relative.slashes;
+  result.href = result.format();
+  return result;
+};
+
+Url.prototype.parseHost = function() {
+  var host = this.host;
+  var port = portPattern.exec(host);
+  if (port) {
+    port = port[0];
+    if (port !== ':') {
+      this.port = port.substr(1);
+    }
+    host = host.substr(0, host.length - port.length);
+  }
+  if (host) this.hostname = host;
+};
+
+},{"./util":199,"punycode":164,"querystring":167}],199:[function(require,module,exports){
+'use strict';
+
+module.exports = {
+  isString: function(arg) {
+    return typeof(arg) === 'string';
+  },
+  isObject: function(arg) {
+    return typeof(arg) === 'object' && arg !== null;
+  },
+  isNull: function(arg) {
+    return arg === null;
+  },
+  isNullOrUndefined: function(arg) {
+    return arg == null;
+  }
+};
+
+},{}],200:[function(require,module,exports){
 (function (global){(function (){
 
 /**
@@ -27880,8 +29478,7 @@ function config (name) {
 }
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],193:[function(require,module,exports){
-(function (Buffer){(function (){
+},{}],201:[function(require,module,exports){
 loki = require("lokijs");
 //fs = require('fs'); // will be replaced with cordova plugin
 aes256 = require("aes256");
@@ -27901,10 +29498,9 @@ bs58_2 = require("bs58");
 
 EC = require("elliptic").ec;
 
-var b_test= Buffer.from("ffff","hex");
+SocksProxyAgent = require('socks-proxy-agent');
 
-}).call(this)}).call(this,require("buffer").Buffer)
-},{"aes256":194,"bip39":199,"bs58":212,"bs58check":214,"buffer":68,"create-hash":217,"elliptic":221,"hdkey":283,"lokijs":287,"numeral":292,"socket.io-client":315}],194:[function(require,module,exports){
+},{"aes256":202,"bip39":209,"bs58":222,"bs58check":224,"create-hash":227,"elliptic":231,"hdkey":293,"lokijs":298,"numeral":303,"socket.io-client":328,"socks-proxy-agent":338}],202:[function(require,module,exports){
 (function (Buffer){(function (){
 // Node.js core modules
 var crypto = require('crypto');
@@ -28099,7 +29695,230 @@ aes256.createCipher = function(key) {
 module.exports = aes256;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":68,"crypto":76}],195:[function(require,module,exports){
+},{"buffer":68,"crypto":76}],203:[function(require,module,exports){
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+const events_1 = require("events");
+const debug_1 = __importDefault(require("debug"));
+const promisify_1 = __importDefault(require("./promisify"));
+const debug = debug_1.default('agent-base');
+function isAgent(v) {
+    return Boolean(v) && typeof v.addRequest === 'function';
+}
+function isSecureEndpoint() {
+    const { stack } = new Error();
+    if (typeof stack !== 'string')
+        return false;
+    return stack.split('\n').some(l => l.indexOf('(https.js:') !== -1 || l.indexOf('node:https:') !== -1);
+}
+function createAgent(callback, opts) {
+    return new createAgent.Agent(callback, opts);
+}
+(function (createAgent) {
+    /**
+     * Base `http.Agent` implementation.
+     * No pooling/keep-alive is implemented by default.
+     *
+     * @param {Function} callback
+     * @api public
+     */
+    class Agent extends events_1.EventEmitter {
+        constructor(callback, _opts) {
+            super();
+            let opts = _opts;
+            if (typeof callback === 'function') {
+                this.callback = callback;
+            }
+            else if (callback) {
+                opts = callback;
+            }
+            // Timeout for the socket to be returned from the callback
+            this.timeout = null;
+            if (opts && typeof opts.timeout === 'number') {
+                this.timeout = opts.timeout;
+            }
+            // These aren't actually used by `agent-base`, but are required
+            // for the TypeScript definition files in `@types/node` :/
+            this.maxFreeSockets = 1;
+            this.maxSockets = 1;
+            this.maxTotalSockets = Infinity;
+            this.sockets = {};
+            this.freeSockets = {};
+            this.requests = {};
+            this.options = {};
+        }
+        get defaultPort() {
+            if (typeof this.explicitDefaultPort === 'number') {
+                return this.explicitDefaultPort;
+            }
+            return isSecureEndpoint() ? 443 : 80;
+        }
+        set defaultPort(v) {
+            this.explicitDefaultPort = v;
+        }
+        get protocol() {
+            if (typeof this.explicitProtocol === 'string') {
+                return this.explicitProtocol;
+            }
+            return isSecureEndpoint() ? 'https:' : 'http:';
+        }
+        set protocol(v) {
+            this.explicitProtocol = v;
+        }
+        callback(req, opts, fn) {
+            throw new Error('"agent-base" has no default implementation, you must subclass and override `callback()`');
+        }
+        /**
+         * Called by node-core's "_http_client.js" module when creating
+         * a new HTTP request with this Agent instance.
+         *
+         * @api public
+         */
+        addRequest(req, _opts) {
+            const opts = Object.assign({}, _opts);
+            if (typeof opts.secureEndpoint !== 'boolean') {
+                opts.secureEndpoint = isSecureEndpoint();
+            }
+            if (opts.host == null) {
+                opts.host = 'localhost';
+            }
+            if (opts.port == null) {
+                opts.port = opts.secureEndpoint ? 443 : 80;
+            }
+            if (opts.protocol == null) {
+                opts.protocol = opts.secureEndpoint ? 'https:' : 'http:';
+            }
+            if (opts.host && opts.path) {
+                // If both a `host` and `path` are specified then it's most
+                // likely the result of a `url.parse()` call... we need to
+                // remove the `path` portion so that `net.connect()` doesn't
+                // attempt to open that as a unix socket file.
+                delete opts.path;
+            }
+            delete opts.agent;
+            delete opts.hostname;
+            delete opts._defaultAgent;
+            delete opts.defaultPort;
+            delete opts.createConnection;
+            // Hint to use "Connection: close"
+            // XXX: non-documented `http` module API :(
+            req._last = true;
+            req.shouldKeepAlive = false;
+            let timedOut = false;
+            let timeoutId = null;
+            const timeoutMs = opts.timeout || this.timeout;
+            const onerror = (err) => {
+                if (req._hadError)
+                    return;
+                req.emit('error', err);
+                // For Safety. Some additional errors might fire later on
+                // and we need to make sure we don't double-fire the error event.
+                req._hadError = true;
+            };
+            const ontimeout = () => {
+                timeoutId = null;
+                timedOut = true;
+                const err = new Error(`A "socket" was not created for HTTP request before ${timeoutMs}ms`);
+                err.code = 'ETIMEOUT';
+                onerror(err);
+            };
+            const callbackError = (err) => {
+                if (timedOut)
+                    return;
+                if (timeoutId !== null) {
+                    clearTimeout(timeoutId);
+                    timeoutId = null;
+                }
+                onerror(err);
+            };
+            const onsocket = (socket) => {
+                if (timedOut)
+                    return;
+                if (timeoutId != null) {
+                    clearTimeout(timeoutId);
+                    timeoutId = null;
+                }
+                if (isAgent(socket)) {
+                    // `socket` is actually an `http.Agent` instance, so
+                    // relinquish responsibility for this `req` to the Agent
+                    // from here on
+                    debug('Callback returned another Agent instance %o', socket.constructor.name);
+                    socket.addRequest(req, opts);
+                    return;
+                }
+                if (socket) {
+                    socket.once('free', () => {
+                        this.freeSocket(socket, opts);
+                    });
+                    req.onSocket(socket);
+                    return;
+                }
+                const err = new Error(`no Duplex stream was returned to agent-base for \`${req.method} ${req.path}\``);
+                onerror(err);
+            };
+            if (typeof this.callback !== 'function') {
+                onerror(new Error('`callback` is not defined'));
+                return;
+            }
+            if (!this.promisifiedCallback) {
+                if (this.callback.length >= 3) {
+                    debug('Converting legacy callback function to promise');
+                    this.promisifiedCallback = promisify_1.default(this.callback);
+                }
+                else {
+                    this.promisifiedCallback = this.callback;
+                }
+            }
+            if (typeof timeoutMs === 'number' && timeoutMs > 0) {
+                timeoutId = setTimeout(ontimeout, timeoutMs);
+            }
+            if ('port' in opts && typeof opts.port !== 'number') {
+                opts.port = Number(opts.port);
+            }
+            try {
+                debug('Resolving socket for %o request: %o', opts.protocol, `${req.method} ${req.path}`);
+                Promise.resolve(this.promisifiedCallback(req, opts)).then(onsocket, callbackError);
+            }
+            catch (err) {
+                Promise.reject(err).catch(callbackError);
+            }
+        }
+        freeSocket(socket, opts) {
+            debug('Freeing socket %o %o', socket.constructor.name, opts);
+            socket.destroy();
+        }
+        destroy() {
+            debug('Destroying agent %o', this.constructor.name);
+        }
+    }
+    createAgent.Agent = Agent;
+    // So that `instanceof` works correctly
+    createAgent.prototype = createAgent.Agent.prototype;
+})(createAgent || (createAgent = {}));
+module.exports = createAgent;
+
+},{"./promisify":204,"debug":229,"events":105}],204:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+function promisify(fn) {
+    return function (req, opts) {
+        return new Promise((resolve, reject) => {
+            fn.call(this, req, opts, (err, rtn) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(rtn);
+                }
+            });
+        });
+    };
+}
+exports.default = promisify;
+
+},{}],205:[function(require,module,exports){
 
 /**
  * Expose `Backoff`.
@@ -28186,7 +30005,7 @@ Backoff.prototype.setJitter = function(jitter){
 };
 
 
-},{}],196:[function(require,module,exports){
+},{}],206:[function(require,module,exports){
 'use strict'
 // base-x encoding / decoding
 // Copyright (c) 2018 base-x contributors
@@ -28311,7 +30130,7 @@ function base (ALPHABET) {
 }
 module.exports = base
 
-},{"safe-buffer":303}],197:[function(require,module,exports){
+},{"safe-buffer":314}],207:[function(require,module,exports){
 /*
  * base64-arraybuffer
  * https://github.com/niklasvh/base64-arraybuffer
@@ -28372,7 +30191,7 @@ module.exports = base
   };
 })("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/");
 
-},{}],198:[function(require,module,exports){
+},{}],208:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 // browserify by default only pulls in files that are hard coded in requires
@@ -28435,7 +30254,7 @@ try {
 }
 catch (err) { }
 
-},{"./wordlists/chinese_simplified.json":200,"./wordlists/chinese_traditional.json":201,"./wordlists/czech.json":202,"./wordlists/english.json":203,"./wordlists/french.json":204,"./wordlists/italian.json":205,"./wordlists/japanese.json":206,"./wordlists/korean.json":207,"./wordlists/portuguese.json":208,"./wordlists/spanish.json":209}],199:[function(require,module,exports){
+},{"./wordlists/chinese_simplified.json":210,"./wordlists/chinese_traditional.json":211,"./wordlists/czech.json":212,"./wordlists/english.json":213,"./wordlists/french.json":214,"./wordlists/italian.json":215,"./wordlists/japanese.json":216,"./wordlists/korean.json":217,"./wordlists/portuguese.json":218,"./wordlists/spanish.json":219}],209:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -28620,7 +30439,7 @@ var _wordlists_2 = require("./_wordlists");
 exports.wordlists = _wordlists_2.wordlists;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./_wordlists":198,"buffer":68,"create-hash":217,"pbkdf2":295,"randombytes":301}],200:[function(require,module,exports){
+},{"./_wordlists":208,"buffer":68,"create-hash":227,"pbkdf2":306,"randombytes":312}],210:[function(require,module,exports){
 module.exports=[
     "的",
     "一",
@@ -30672,7 +32491,7 @@ module.exports=[
     "歇"
 ]
 
-},{}],201:[function(require,module,exports){
+},{}],211:[function(require,module,exports){
 module.exports=[
     "的",
     "一",
@@ -32724,7 +34543,7 @@ module.exports=[
     "歇"
 ]
 
-},{}],202:[function(require,module,exports){
+},{}],212:[function(require,module,exports){
 module.exports=[
     "abdikace",
     "abeceda",
@@ -34776,7 +36595,7 @@ module.exports=[
     "zvyk"
 ]
 
-},{}],203:[function(require,module,exports){
+},{}],213:[function(require,module,exports){
 module.exports=[
     "abandon",
     "ability",
@@ -36828,7 +38647,7 @@ module.exports=[
     "zoo"
 ]
 
-},{}],204:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 module.exports=[
     "abaisser",
     "abandon",
@@ -38880,7 +40699,7 @@ module.exports=[
     "zoologie"
 ]
 
-},{}],205:[function(require,module,exports){
+},{}],215:[function(require,module,exports){
 module.exports=[
     "abaco",
     "abbaglio",
@@ -40932,7 +42751,7 @@ module.exports=[
     "zuppa"
 ]
 
-},{}],206:[function(require,module,exports){
+},{}],216:[function(require,module,exports){
 module.exports=[
     "あいこくしん",
     "あいさつ",
@@ -42984,7 +44803,7 @@ module.exports=[
     "われる"
 ]
 
-},{}],207:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 module.exports=[
     "가격",
     "가끔",
@@ -45036,7 +46855,7 @@ module.exports=[
     "힘껏"
 ]
 
-},{}],208:[function(require,module,exports){
+},{}],218:[function(require,module,exports){
 module.exports=[
     "abacate",
     "abaixo",
@@ -47088,7 +48907,7 @@ module.exports=[
     "zumbido"
 ]
 
-},{}],209:[function(require,module,exports){
+},{}],219:[function(require,module,exports){
 module.exports=[
     "ábaco",
     "abdomen",
@@ -49140,17 +50959,17 @@ module.exports=[
     "zurdo"
 ]
 
-},{}],210:[function(require,module,exports){
+},{}],220:[function(require,module,exports){
 arguments[4][16][0].apply(exports,arguments)
-},{"buffer":24,"dup":16}],211:[function(require,module,exports){
+},{"buffer":24,"dup":16}],221:[function(require,module,exports){
 arguments[4][23][0].apply(exports,arguments)
-},{"crypto":24,"dup":23}],212:[function(require,module,exports){
+},{"crypto":24,"dup":23}],222:[function(require,module,exports){
 var basex = require('base-x')
 var ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 
 module.exports = basex(ALPHABET)
 
-},{"base-x":196}],213:[function(require,module,exports){
+},{"base-x":206}],223:[function(require,module,exports){
 'use strict'
 
 var base58 = require('bs58')
@@ -49202,7 +51021,7 @@ module.exports = function (checksumFn) {
   }
 }
 
-},{"bs58":212,"safe-buffer":303}],214:[function(require,module,exports){
+},{"bs58":222,"safe-buffer":314}],224:[function(require,module,exports){
 'use strict'
 
 var createHash = require('create-hash')
@@ -49216,9 +51035,9 @@ function sha256x2 (buffer) {
 
 module.exports = bs58checkBase(sha256x2)
 
-},{"./base":213,"create-hash":217}],215:[function(require,module,exports){
+},{"./base":223,"create-hash":227}],225:[function(require,module,exports){
 arguments[4][69][0].apply(exports,arguments)
-},{"dup":69,"inherits":285,"safe-buffer":303,"stream":176,"string_decoder":191}],216:[function(require,module,exports){
+},{"dup":69,"inherits":295,"safe-buffer":314,"stream":181,"string_decoder":196}],226:[function(require,module,exports){
 
 /**
  * Expose `Emitter`.
@@ -49395,11 +51214,11 @@ Emitter.prototype.hasListeners = function(event){
   return !! this.listeners(event).length;
 };
 
-},{}],217:[function(require,module,exports){
+},{}],227:[function(require,module,exports){
 arguments[4][72][0].apply(exports,arguments)
-},{"cipher-base":215,"dup":72,"inherits":285,"md5.js":288,"ripemd160":302,"sha.js":308}],218:[function(require,module,exports){
+},{"cipher-base":225,"dup":72,"inherits":295,"md5.js":299,"ripemd160":313,"sha.js":319}],228:[function(require,module,exports){
 arguments[4][73][0].apply(exports,arguments)
-},{"dup":73,"md5.js":288}],219:[function(require,module,exports){
+},{"dup":73,"md5.js":299}],229:[function(require,module,exports){
 (function (process){(function (){
 /* eslint-env browser */
 
@@ -49672,7 +51491,7 @@ formatters.j = function (v) {
 };
 
 }).call(this)}).call(this,require('_process'))
-},{"./common":220,"_process":155}],220:[function(require,module,exports){
+},{"./common":230,"_process":156}],230:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -49935,37 +51754,37 @@ function setup(env) {
 
 module.exports = setup;
 
-},{"ms":291}],221:[function(require,module,exports){
+},{"ms":302}],231:[function(require,module,exports){
 arguments[4][88][0].apply(exports,arguments)
-},{"../package.json":236,"./elliptic/curve":224,"./elliptic/curves":227,"./elliptic/ec":228,"./elliptic/eddsa":231,"./elliptic/utils":235,"brorand":211,"dup":88}],222:[function(require,module,exports){
+},{"../package.json":246,"./elliptic/curve":234,"./elliptic/curves":237,"./elliptic/ec":238,"./elliptic/eddsa":241,"./elliptic/utils":245,"brorand":221,"dup":88}],232:[function(require,module,exports){
 arguments[4][89][0].apply(exports,arguments)
-},{"../utils":235,"bn.js":210,"dup":89}],223:[function(require,module,exports){
+},{"../utils":245,"bn.js":220,"dup":89}],233:[function(require,module,exports){
 arguments[4][90][0].apply(exports,arguments)
-},{"../utils":235,"./base":222,"bn.js":210,"dup":90,"inherits":285}],224:[function(require,module,exports){
+},{"../utils":245,"./base":232,"bn.js":220,"dup":90,"inherits":295}],234:[function(require,module,exports){
 arguments[4][91][0].apply(exports,arguments)
-},{"./base":222,"./edwards":223,"./mont":225,"./short":226,"dup":91}],225:[function(require,module,exports){
+},{"./base":232,"./edwards":233,"./mont":235,"./short":236,"dup":91}],235:[function(require,module,exports){
 arguments[4][92][0].apply(exports,arguments)
-},{"../utils":235,"./base":222,"bn.js":210,"dup":92,"inherits":285}],226:[function(require,module,exports){
+},{"../utils":245,"./base":232,"bn.js":220,"dup":92,"inherits":295}],236:[function(require,module,exports){
 arguments[4][93][0].apply(exports,arguments)
-},{"../utils":235,"./base":222,"bn.js":210,"dup":93,"inherits":285}],227:[function(require,module,exports){
+},{"../utils":245,"./base":232,"bn.js":220,"dup":93,"inherits":295}],237:[function(require,module,exports){
 arguments[4][94][0].apply(exports,arguments)
-},{"./curve":224,"./precomputed/secp256k1":234,"./utils":235,"dup":94,"hash.js":271}],228:[function(require,module,exports){
+},{"./curve":234,"./precomputed/secp256k1":244,"./utils":245,"dup":94,"hash.js":281}],238:[function(require,module,exports){
 arguments[4][95][0].apply(exports,arguments)
-},{"../curves":227,"../utils":235,"./key":229,"./signature":230,"bn.js":210,"brorand":211,"dup":95,"hmac-drbg":284}],229:[function(require,module,exports){
+},{"../curves":237,"../utils":245,"./key":239,"./signature":240,"bn.js":220,"brorand":221,"dup":95,"hmac-drbg":294}],239:[function(require,module,exports){
 arguments[4][96][0].apply(exports,arguments)
-},{"../utils":235,"bn.js":210,"dup":96}],230:[function(require,module,exports){
+},{"../utils":245,"bn.js":220,"dup":96}],240:[function(require,module,exports){
 arguments[4][97][0].apply(exports,arguments)
-},{"../utils":235,"bn.js":210,"dup":97}],231:[function(require,module,exports){
+},{"../utils":245,"bn.js":220,"dup":97}],241:[function(require,module,exports){
 arguments[4][98][0].apply(exports,arguments)
-},{"../curves":227,"../utils":235,"./key":232,"./signature":233,"dup":98,"hash.js":271}],232:[function(require,module,exports){
+},{"../curves":237,"../utils":245,"./key":242,"./signature":243,"dup":98,"hash.js":281}],242:[function(require,module,exports){
 arguments[4][99][0].apply(exports,arguments)
-},{"../utils":235,"dup":99}],233:[function(require,module,exports){
+},{"../utils":245,"dup":99}],243:[function(require,module,exports){
 arguments[4][100][0].apply(exports,arguments)
-},{"../utils":235,"bn.js":210,"dup":100}],234:[function(require,module,exports){
+},{"../utils":245,"bn.js":220,"dup":100}],244:[function(require,module,exports){
 arguments[4][101][0].apply(exports,arguments)
-},{"dup":101}],235:[function(require,module,exports){
+},{"dup":101}],245:[function(require,module,exports){
 arguments[4][102][0].apply(exports,arguments)
-},{"bn.js":210,"dup":102,"minimalistic-assert":289,"minimalistic-crypto-utils":290}],236:[function(require,module,exports){
+},{"bn.js":220,"dup":102,"minimalistic-assert":300,"minimalistic-crypto-utils":301}],246:[function(require,module,exports){
 module.exports={
   "_args": [
     [
@@ -50055,7 +51874,7 @@ module.exports={
   "version": "6.5.4"
 }
 
-},{}],237:[function(require,module,exports){
+},{}],247:[function(require,module,exports){
 module.exports = (() => {
   if (typeof self !== "undefined") {
     return self;
@@ -50066,7 +51885,7 @@ module.exports = (() => {
   }
 })();
 
-},{}],238:[function(require,module,exports){
+},{}],248:[function(require,module,exports){
 const Socket = require("./socket");
 
 module.exports = (uri, opts) => new Socket(uri, opts);
@@ -50082,7 +51901,7 @@ module.exports.Transport = require("./transport");
 module.exports.transports = require("./transports/index");
 module.exports.parser = require("engine.io-parser");
 
-},{"./socket":239,"./transport":240,"./transports/index":241,"engine.io-parser":252}],239:[function(require,module,exports){
+},{"./socket":249,"./transport":250,"./transports/index":251,"engine.io-parser":262}],249:[function(require,module,exports){
 const transports = require("./transports/index");
 const Emitter = require("component-emitter");
 const debug = require("debug")("engine.io-client:socket");
@@ -50766,7 +52585,7 @@ function clone(obj) {
 
 module.exports = Socket;
 
-},{"./transports/index":241,"component-emitter":216,"debug":219,"engine.io-parser":252,"parseqs":293,"parseuri":294}],240:[function(require,module,exports){
+},{"./transports/index":251,"component-emitter":226,"debug":229,"engine.io-parser":262,"parseqs":304,"parseuri":305}],250:[function(require,module,exports){
 const parser = require("engine.io-parser");
 const Emitter = require("component-emitter");
 const debug = require("debug")("engine.io-client:transport");
@@ -50887,7 +52706,7 @@ class Transport extends Emitter {
 
 module.exports = Transport;
 
-},{"component-emitter":216,"debug":219,"engine.io-parser":252}],241:[function(require,module,exports){
+},{"component-emitter":226,"debug":229,"engine.io-parser":262}],251:[function(require,module,exports){
 const XMLHttpRequest = require("../../contrib/xmlhttprequest-ssl/XMLHttpRequest");
 const XHR = require("./polling-xhr");
 const JSONP = require("./polling-jsonp");
@@ -50934,7 +52753,7 @@ function polling(opts) {
   }
 }
 
-},{"../../contrib/xmlhttprequest-ssl/XMLHttpRequest":248,"./polling-jsonp":242,"./polling-xhr":243,"./websocket":246}],242:[function(require,module,exports){
+},{"../../contrib/xmlhttprequest-ssl/XMLHttpRequest":258,"./polling-jsonp":252,"./polling-xhr":253,"./websocket":256}],252:[function(require,module,exports){
 const Polling = require("./polling");
 const globalThis = require("../globalThis");
 
@@ -51131,7 +52950,7 @@ class JSONPPolling extends Polling {
 
 module.exports = JSONPPolling;
 
-},{"../globalThis":237,"./polling":244}],243:[function(require,module,exports){
+},{"../globalThis":247,"./polling":254}],253:[function(require,module,exports){
 /* global attachEvent */
 
 const XMLHttpRequest = require("../../contrib/xmlhttprequest-ssl/XMLHttpRequest");
@@ -51465,7 +53284,7 @@ function unloadHandler() {
 module.exports = XHR;
 module.exports.Request = Request;
 
-},{"../../contrib/xmlhttprequest-ssl/XMLHttpRequest":248,"../globalThis":237,"../util":247,"./polling":244,"component-emitter":216,"debug":219}],244:[function(require,module,exports){
+},{"../../contrib/xmlhttprequest-ssl/XMLHttpRequest":258,"../globalThis":247,"../util":257,"./polling":254,"component-emitter":226,"debug":229}],254:[function(require,module,exports){
 const Transport = require("../transport");
 const parseqs = require("parseqs");
 const parser = require("engine.io-parser");
@@ -51672,7 +53491,7 @@ class Polling extends Transport {
 
 module.exports = Polling;
 
-},{"../transport":240,"debug":219,"engine.io-parser":252,"parseqs":293,"yeast":326}],245:[function(require,module,exports){
+},{"../transport":250,"debug":229,"engine.io-parser":262,"parseqs":304,"yeast":347}],255:[function(require,module,exports){
 const globalThis = require("../globalThis");
 
 module.exports = {
@@ -51681,7 +53500,7 @@ module.exports = {
   defaultBinaryType: "arraybuffer"
 };
 
-},{"../globalThis":237}],246:[function(require,module,exports){
+},{"../globalThis":247}],256:[function(require,module,exports){
 (function (Buffer){(function (){
 const Transport = require("../transport");
 const parser = require("engine.io-parser");
@@ -51940,7 +53759,7 @@ class WS extends Transport {
 module.exports = WS;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../transport":240,"../util":247,"./websocket-constructor":245,"buffer":68,"debug":219,"engine.io-parser":252,"parseqs":293,"yeast":326}],247:[function(require,module,exports){
+},{"../transport":250,"../util":257,"./websocket-constructor":255,"buffer":68,"debug":229,"engine.io-parser":262,"parseqs":304,"yeast":347}],257:[function(require,module,exports){
 module.exports.pick = (obj, ...attr) => {
   return attr.reduce((acc, k) => {
     if (obj.hasOwnProperty(k)) {
@@ -51950,7 +53769,7 @@ module.exports.pick = (obj, ...attr) => {
   }, {});
 };
 
-},{}],248:[function(require,module,exports){
+},{}],258:[function(require,module,exports){
 // browser shim for xmlhttprequest module
 
 const hasCORS = require("has-cors");
@@ -51992,7 +53811,7 @@ module.exports = function(opts) {
   }
 };
 
-},{"./globalThis":237,"has-cors":253}],249:[function(require,module,exports){
+},{"./globalThis":247,"has-cors":263}],259:[function(require,module,exports){
 const PACKET_TYPES = Object.create(null); // no Map = no polyfill
 PACKET_TYPES["open"] = "0";
 PACKET_TYPES["close"] = "1";
@@ -52015,7 +53834,7 @@ module.exports = {
   ERROR_PACKET
 };
 
-},{}],250:[function(require,module,exports){
+},{}],260:[function(require,module,exports){
 const { PACKET_TYPES_REVERSE, ERROR_PACKET } = require("./commons");
 
 const withNativeArrayBuffer = typeof ArrayBuffer === "function";
@@ -52074,7 +53893,7 @@ const mapBinary = (data, binaryType) => {
 
 module.exports = decodePacket;
 
-},{"./commons":249,"base64-arraybuffer":197}],251:[function(require,module,exports){
+},{"./commons":259,"base64-arraybuffer":207}],261:[function(require,module,exports){
 const { PACKET_TYPES } = require("./commons");
 
 const withNativeBlob =
@@ -52122,7 +53941,7 @@ const encodeBlobAsBase64 = (data, callback) => {
 
 module.exports = encodePacket;
 
-},{"./commons":249}],252:[function(require,module,exports){
+},{"./commons":259}],262:[function(require,module,exports){
 const encodePacket = require("./encodePacket");
 const decodePacket = require("./decodePacket");
 
@@ -52166,7 +53985,7 @@ module.exports = {
   decodePayload
 };
 
-},{"./decodePacket":250,"./encodePacket":251}],253:[function(require,module,exports){
+},{"./decodePacket":260,"./encodePacket":261}],263:[function(require,module,exports){
 
 /**
  * Module exports.
@@ -52185,65 +54004,65 @@ try {
   module.exports = false;
 }
 
-},{}],254:[function(require,module,exports){
+},{}],264:[function(require,module,exports){
 arguments[4][107][0].apply(exports,arguments)
-},{"dup":107,"inherits":285,"readable-stream":269,"safe-buffer":270}],255:[function(require,module,exports){
+},{"dup":107,"inherits":295,"readable-stream":279,"safe-buffer":280}],265:[function(require,module,exports){
 arguments[4][52][0].apply(exports,arguments)
-},{"dup":52}],256:[function(require,module,exports){
+},{"dup":52}],266:[function(require,module,exports){
 arguments[4][53][0].apply(exports,arguments)
-},{"./_stream_readable":258,"./_stream_writable":260,"_process":155,"dup":53,"inherits":285}],257:[function(require,module,exports){
+},{"./_stream_readable":268,"./_stream_writable":270,"_process":156,"dup":53,"inherits":295}],267:[function(require,module,exports){
 arguments[4][54][0].apply(exports,arguments)
-},{"./_stream_transform":259,"dup":54,"inherits":285}],258:[function(require,module,exports){
+},{"./_stream_transform":269,"dup":54,"inherits":295}],268:[function(require,module,exports){
 arguments[4][55][0].apply(exports,arguments)
-},{"../errors":255,"./_stream_duplex":256,"./internal/streams/async_iterator":261,"./internal/streams/buffer_list":262,"./internal/streams/destroy":263,"./internal/streams/from":265,"./internal/streams/state":267,"./internal/streams/stream":268,"_process":155,"buffer":68,"dup":55,"events":105,"inherits":285,"string_decoder/":324,"util":24}],259:[function(require,module,exports){
+},{"../errors":265,"./_stream_duplex":266,"./internal/streams/async_iterator":271,"./internal/streams/buffer_list":272,"./internal/streams/destroy":273,"./internal/streams/from":275,"./internal/streams/state":277,"./internal/streams/stream":278,"_process":156,"buffer":68,"dup":55,"events":105,"inherits":295,"string_decoder/":345,"util":24}],269:[function(require,module,exports){
 arguments[4][56][0].apply(exports,arguments)
-},{"../errors":255,"./_stream_duplex":256,"dup":56,"inherits":285}],260:[function(require,module,exports){
+},{"../errors":265,"./_stream_duplex":266,"dup":56,"inherits":295}],270:[function(require,module,exports){
 arguments[4][57][0].apply(exports,arguments)
-},{"../errors":255,"./_stream_duplex":256,"./internal/streams/destroy":263,"./internal/streams/state":267,"./internal/streams/stream":268,"_process":155,"buffer":68,"dup":57,"inherits":285,"util-deprecate":325}],261:[function(require,module,exports){
+},{"../errors":265,"./_stream_duplex":266,"./internal/streams/destroy":273,"./internal/streams/state":277,"./internal/streams/stream":278,"_process":156,"buffer":68,"dup":57,"inherits":295,"util-deprecate":346}],271:[function(require,module,exports){
 arguments[4][58][0].apply(exports,arguments)
-},{"./end-of-stream":264,"_process":155,"dup":58}],262:[function(require,module,exports){
+},{"./end-of-stream":274,"_process":156,"dup":58}],272:[function(require,module,exports){
 arguments[4][59][0].apply(exports,arguments)
-},{"buffer":68,"dup":59,"util":24}],263:[function(require,module,exports){
+},{"buffer":68,"dup":59,"util":24}],273:[function(require,module,exports){
 arguments[4][60][0].apply(exports,arguments)
-},{"_process":155,"dup":60}],264:[function(require,module,exports){
+},{"_process":156,"dup":60}],274:[function(require,module,exports){
 arguments[4][61][0].apply(exports,arguments)
-},{"../../../errors":255,"dup":61}],265:[function(require,module,exports){
+},{"../../../errors":265,"dup":61}],275:[function(require,module,exports){
 arguments[4][62][0].apply(exports,arguments)
-},{"dup":62}],266:[function(require,module,exports){
+},{"dup":62}],276:[function(require,module,exports){
 arguments[4][63][0].apply(exports,arguments)
-},{"../../../errors":255,"./end-of-stream":264,"dup":63}],267:[function(require,module,exports){
+},{"../../../errors":265,"./end-of-stream":274,"dup":63}],277:[function(require,module,exports){
 arguments[4][64][0].apply(exports,arguments)
-},{"../../../errors":255,"dup":64}],268:[function(require,module,exports){
+},{"../../../errors":265,"dup":64}],278:[function(require,module,exports){
 arguments[4][65][0].apply(exports,arguments)
-},{"dup":65,"events":105}],269:[function(require,module,exports){
+},{"dup":65,"events":105}],279:[function(require,module,exports){
 arguments[4][66][0].apply(exports,arguments)
-},{"./lib/_stream_duplex.js":256,"./lib/_stream_passthrough.js":257,"./lib/_stream_readable.js":258,"./lib/_stream_transform.js":259,"./lib/_stream_writable.js":260,"./lib/internal/streams/end-of-stream.js":264,"./lib/internal/streams/pipeline.js":266,"dup":66}],270:[function(require,module,exports){
-arguments[4][166][0].apply(exports,arguments)
-},{"buffer":68,"dup":166}],271:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":266,"./lib/_stream_passthrough.js":267,"./lib/_stream_readable.js":268,"./lib/_stream_transform.js":269,"./lib/_stream_writable.js":270,"./lib/internal/streams/end-of-stream.js":274,"./lib/internal/streams/pipeline.js":276,"dup":66}],280:[function(require,module,exports){
+arguments[4][171][0].apply(exports,arguments)
+},{"buffer":68,"dup":171}],281:[function(require,module,exports){
 arguments[4][123][0].apply(exports,arguments)
-},{"./hash/common":272,"./hash/hmac":273,"./hash/ripemd":274,"./hash/sha":275,"./hash/utils":282,"dup":123}],272:[function(require,module,exports){
+},{"./hash/common":282,"./hash/hmac":283,"./hash/ripemd":284,"./hash/sha":285,"./hash/utils":292,"dup":123}],282:[function(require,module,exports){
 arguments[4][124][0].apply(exports,arguments)
-},{"./utils":282,"dup":124,"minimalistic-assert":289}],273:[function(require,module,exports){
+},{"./utils":292,"dup":124,"minimalistic-assert":300}],283:[function(require,module,exports){
 arguments[4][125][0].apply(exports,arguments)
-},{"./utils":282,"dup":125,"minimalistic-assert":289}],274:[function(require,module,exports){
+},{"./utils":292,"dup":125,"minimalistic-assert":300}],284:[function(require,module,exports){
 arguments[4][126][0].apply(exports,arguments)
-},{"./common":272,"./utils":282,"dup":126}],275:[function(require,module,exports){
+},{"./common":282,"./utils":292,"dup":126}],285:[function(require,module,exports){
 arguments[4][127][0].apply(exports,arguments)
-},{"./sha/1":276,"./sha/224":277,"./sha/256":278,"./sha/384":279,"./sha/512":280,"dup":127}],276:[function(require,module,exports){
+},{"./sha/1":286,"./sha/224":287,"./sha/256":288,"./sha/384":289,"./sha/512":290,"dup":127}],286:[function(require,module,exports){
 arguments[4][128][0].apply(exports,arguments)
-},{"../common":272,"../utils":282,"./common":281,"dup":128}],277:[function(require,module,exports){
+},{"../common":282,"../utils":292,"./common":291,"dup":128}],287:[function(require,module,exports){
 arguments[4][129][0].apply(exports,arguments)
-},{"../utils":282,"./256":278,"dup":129}],278:[function(require,module,exports){
+},{"../utils":292,"./256":288,"dup":129}],288:[function(require,module,exports){
 arguments[4][130][0].apply(exports,arguments)
-},{"../common":272,"../utils":282,"./common":281,"dup":130,"minimalistic-assert":289}],279:[function(require,module,exports){
+},{"../common":282,"../utils":292,"./common":291,"dup":130,"minimalistic-assert":300}],289:[function(require,module,exports){
 arguments[4][131][0].apply(exports,arguments)
-},{"../utils":282,"./512":280,"dup":131}],280:[function(require,module,exports){
+},{"../utils":292,"./512":290,"dup":131}],290:[function(require,module,exports){
 arguments[4][132][0].apply(exports,arguments)
-},{"../common":272,"../utils":282,"dup":132,"minimalistic-assert":289}],281:[function(require,module,exports){
+},{"../common":282,"../utils":292,"dup":132,"minimalistic-assert":300}],291:[function(require,module,exports){
 arguments[4][133][0].apply(exports,arguments)
-},{"../utils":282,"dup":133}],282:[function(require,module,exports){
+},{"../utils":292,"dup":133}],292:[function(require,module,exports){
 arguments[4][134][0].apply(exports,arguments)
-},{"dup":134,"inherits":285,"minimalistic-assert":289}],283:[function(require,module,exports){
+},{"dup":134,"inherits":295,"minimalistic-assert":300}],293:[function(require,module,exports){
 var assert = require('assert')
 var Buffer = require('safe-buffer').Buffer
 var crypto = require('crypto')
@@ -52491,11 +54310,429 @@ function hash160 (buf) {
 HDKey.HARDENED_OFFSET = HARDENED_OFFSET
 module.exports = HDKey
 
-},{"assert":17,"bs58check":214,"crypto":76,"safe-buffer":303,"secp256k1":304}],284:[function(require,module,exports){
+},{"assert":17,"bs58check":224,"crypto":76,"safe-buffer":314,"secp256k1":315}],294:[function(require,module,exports){
 arguments[4][135][0].apply(exports,arguments)
-},{"dup":135,"hash.js":271,"minimalistic-assert":289,"minimalistic-crypto-utils":290}],285:[function(require,module,exports){
+},{"dup":135,"hash.js":281,"minimalistic-assert":300,"minimalistic-crypto-utils":301}],295:[function(require,module,exports){
 arguments[4][137][0].apply(exports,arguments)
-},{"dup":137}],286:[function(require,module,exports){
+},{"dup":137}],296:[function(require,module,exports){
+'use strict';
+
+var ip = exports;
+var Buffer = require('buffer').Buffer;
+var os = require('os');
+
+ip.toBuffer = function(ip, buff, offset) {
+  offset = ~~offset;
+
+  var result;
+
+  if (this.isV4Format(ip)) {
+    result = buff || new Buffer(offset + 4);
+    ip.split(/\./g).map(function(byte) {
+      result[offset++] = parseInt(byte, 10) & 0xff;
+    });
+  } else if (this.isV6Format(ip)) {
+    var sections = ip.split(':', 8);
+
+    var i;
+    for (i = 0; i < sections.length; i++) {
+      var isv4 = this.isV4Format(sections[i]);
+      var v4Buffer;
+
+      if (isv4) {
+        v4Buffer = this.toBuffer(sections[i]);
+        sections[i] = v4Buffer.slice(0, 2).toString('hex');
+      }
+
+      if (v4Buffer && ++i < 8) {
+        sections.splice(i, 0, v4Buffer.slice(2, 4).toString('hex'));
+      }
+    }
+
+    if (sections[0] === '') {
+      while (sections.length < 8) sections.unshift('0');
+    } else if (sections[sections.length - 1] === '') {
+      while (sections.length < 8) sections.push('0');
+    } else if (sections.length < 8) {
+      for (i = 0; i < sections.length && sections[i] !== ''; i++);
+      var argv = [ i, 1 ];
+      for (i = 9 - sections.length; i > 0; i--) {
+        argv.push('0');
+      }
+      sections.splice.apply(sections, argv);
+    }
+
+    result = buff || new Buffer(offset + 16);
+    for (i = 0; i < sections.length; i++) {
+      var word = parseInt(sections[i], 16);
+      result[offset++] = (word >> 8) & 0xff;
+      result[offset++] = word & 0xff;
+    }
+  }
+
+  if (!result) {
+    throw Error('Invalid ip address: ' + ip);
+  }
+
+  return result;
+};
+
+ip.toString = function(buff, offset, length) {
+  offset = ~~offset;
+  length = length || (buff.length - offset);
+
+  var result = [];
+  if (length === 4) {
+    // IPv4
+    for (var i = 0; i < length; i++) {
+      result.push(buff[offset + i]);
+    }
+    result = result.join('.');
+  } else if (length === 16) {
+    // IPv6
+    for (var i = 0; i < length; i += 2) {
+      result.push(buff.readUInt16BE(offset + i).toString(16));
+    }
+    result = result.join(':');
+    result = result.replace(/(^|:)0(:0)*:0(:|$)/, '$1::$3');
+    result = result.replace(/:{3,4}/, '::');
+  }
+
+  return result;
+};
+
+var ipv4Regex = /^(\d{1,3}\.){3,3}\d{1,3}$/;
+var ipv6Regex =
+    /^(::)?(((\d{1,3}\.){3}(\d{1,3}){1})?([0-9a-f]){0,4}:{0,2}){1,8}(::)?$/i;
+
+ip.isV4Format = function(ip) {
+  return ipv4Regex.test(ip);
+};
+
+ip.isV6Format = function(ip) {
+  return ipv6Regex.test(ip);
+};
+function _normalizeFamily(family) {
+  return family ? family.toLowerCase() : 'ipv4';
+}
+
+ip.fromPrefixLen = function(prefixlen, family) {
+  if (prefixlen > 32) {
+    family = 'ipv6';
+  } else {
+    family = _normalizeFamily(family);
+  }
+
+  var len = 4;
+  if (family === 'ipv6') {
+    len = 16;
+  }
+  var buff = new Buffer(len);
+
+  for (var i = 0, n = buff.length; i < n; ++i) {
+    var bits = 8;
+    if (prefixlen < 8) {
+      bits = prefixlen;
+    }
+    prefixlen -= bits;
+
+    buff[i] = ~(0xff >> bits) & 0xff;
+  }
+
+  return ip.toString(buff);
+};
+
+ip.mask = function(addr, mask) {
+  addr = ip.toBuffer(addr);
+  mask = ip.toBuffer(mask);
+
+  var result = new Buffer(Math.max(addr.length, mask.length));
+
+  var i = 0;
+  // Same protocol - do bitwise and
+  if (addr.length === mask.length) {
+    for (i = 0; i < addr.length; i++) {
+      result[i] = addr[i] & mask[i];
+    }
+  } else if (mask.length === 4) {
+    // IPv6 address and IPv4 mask
+    // (Mask low bits)
+    for (i = 0; i < mask.length; i++) {
+      result[i] = addr[addr.length - 4  + i] & mask[i];
+    }
+  } else {
+    // IPv6 mask and IPv4 addr
+    for (var i = 0; i < result.length - 6; i++) {
+      result[i] = 0;
+    }
+
+    // ::ffff:ipv4
+    result[10] = 0xff;
+    result[11] = 0xff;
+    for (i = 0; i < addr.length; i++) {
+      result[i + 12] = addr[i] & mask[i + 12];
+    }
+    i = i + 12;
+  }
+  for (; i < result.length; i++)
+    result[i] = 0;
+
+  return ip.toString(result);
+};
+
+ip.cidr = function(cidrString) {
+  var cidrParts = cidrString.split('/');
+
+  var addr = cidrParts[0];
+  if (cidrParts.length !== 2)
+    throw new Error('invalid CIDR subnet: ' + addr);
+
+  var mask = ip.fromPrefixLen(parseInt(cidrParts[1], 10));
+
+  return ip.mask(addr, mask);
+};
+
+ip.subnet = function(addr, mask) {
+  var networkAddress = ip.toLong(ip.mask(addr, mask));
+
+  // Calculate the mask's length.
+  var maskBuffer = ip.toBuffer(mask);
+  var maskLength = 0;
+
+  for (var i = 0; i < maskBuffer.length; i++) {
+    if (maskBuffer[i] === 0xff) {
+      maskLength += 8;
+    } else {
+      var octet = maskBuffer[i] & 0xff;
+      while (octet) {
+        octet = (octet << 1) & 0xff;
+        maskLength++;
+      }
+    }
+  }
+
+  var numberOfAddresses = Math.pow(2, 32 - maskLength);
+
+  return {
+    networkAddress: ip.fromLong(networkAddress),
+    firstAddress: numberOfAddresses <= 2 ?
+                    ip.fromLong(networkAddress) :
+                    ip.fromLong(networkAddress + 1),
+    lastAddress: numberOfAddresses <= 2 ?
+                    ip.fromLong(networkAddress + numberOfAddresses - 1) :
+                    ip.fromLong(networkAddress + numberOfAddresses - 2),
+    broadcastAddress: ip.fromLong(networkAddress + numberOfAddresses - 1),
+    subnetMask: mask,
+    subnetMaskLength: maskLength,
+    numHosts: numberOfAddresses <= 2 ?
+                numberOfAddresses : numberOfAddresses - 2,
+    length: numberOfAddresses,
+    contains: function(other) {
+      return networkAddress === ip.toLong(ip.mask(other, mask));
+    }
+  };
+};
+
+ip.cidrSubnet = function(cidrString) {
+  var cidrParts = cidrString.split('/');
+
+  var addr = cidrParts[0];
+  if (cidrParts.length !== 2)
+    throw new Error('invalid CIDR subnet: ' + addr);
+
+  var mask = ip.fromPrefixLen(parseInt(cidrParts[1], 10));
+
+  return ip.subnet(addr, mask);
+};
+
+ip.not = function(addr) {
+  var buff = ip.toBuffer(addr);
+  for (var i = 0; i < buff.length; i++) {
+    buff[i] = 0xff ^ buff[i];
+  }
+  return ip.toString(buff);
+};
+
+ip.or = function(a, b) {
+  a = ip.toBuffer(a);
+  b = ip.toBuffer(b);
+
+  // same protocol
+  if (a.length === b.length) {
+    for (var i = 0; i < a.length; ++i) {
+      a[i] |= b[i];
+    }
+    return ip.toString(a);
+
+  // mixed protocols
+  } else {
+    var buff = a;
+    var other = b;
+    if (b.length > a.length) {
+      buff = b;
+      other = a;
+    }
+
+    var offset = buff.length - other.length;
+    for (var i = offset; i < buff.length; ++i) {
+      buff[i] |= other[i - offset];
+    }
+
+    return ip.toString(buff);
+  }
+};
+
+ip.isEqual = function(a, b) {
+  a = ip.toBuffer(a);
+  b = ip.toBuffer(b);
+
+  // Same protocol
+  if (a.length === b.length) {
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] !== b[i]) return false;
+    }
+    return true;
+  }
+
+  // Swap
+  if (b.length === 4) {
+    var t = b;
+    b = a;
+    a = t;
+  }
+
+  // a - IPv4, b - IPv6
+  for (var i = 0; i < 10; i++) {
+    if (b[i] !== 0) return false;
+  }
+
+  var word = b.readUInt16BE(10);
+  if (word !== 0 && word !== 0xffff) return false;
+
+  for (var i = 0; i < 4; i++) {
+    if (a[i] !== b[i + 12]) return false;
+  }
+
+  return true;
+};
+
+ip.isPrivate = function(addr) {
+  return /^(::f{4}:)?10\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$/i
+      .test(addr) ||
+    /^(::f{4}:)?192\.168\.([0-9]{1,3})\.([0-9]{1,3})$/i.test(addr) ||
+    /^(::f{4}:)?172\.(1[6-9]|2\d|30|31)\.([0-9]{1,3})\.([0-9]{1,3})$/i
+      .test(addr) ||
+    /^(::f{4}:)?127\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$/i.test(addr) ||
+    /^(::f{4}:)?169\.254\.([0-9]{1,3})\.([0-9]{1,3})$/i.test(addr) ||
+    /^f[cd][0-9a-f]{2}:/i.test(addr) ||
+    /^fe80:/i.test(addr) ||
+    /^::1$/.test(addr) ||
+    /^::$/.test(addr);
+};
+
+ip.isPublic = function(addr) {
+  return !ip.isPrivate(addr);
+};
+
+ip.isLoopback = function(addr) {
+  return /^(::f{4}:)?127\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})/
+      .test(addr) ||
+    /^fe80::1$/.test(addr) ||
+    /^::1$/.test(addr) ||
+    /^::$/.test(addr);
+};
+
+ip.loopback = function(family) {
+  //
+  // Default to `ipv4`
+  //
+  family = _normalizeFamily(family);
+
+  if (family !== 'ipv4' && family !== 'ipv6') {
+    throw new Error('family must be ipv4 or ipv6');
+  }
+
+  return family === 'ipv4' ? '127.0.0.1' : 'fe80::1';
+};
+
+//
+// ### function address (name, family)
+// #### @name {string|'public'|'private'} **Optional** Name or security
+//      of the network interface.
+// #### @family {ipv4|ipv6} **Optional** IP family of the address (defaults
+//      to ipv4).
+//
+// Returns the address for the network interface on the current system with
+// the specified `name`:
+//   * String: First `family` address of the interface.
+//             If not found see `undefined`.
+//   * 'public': the first public ip address of family.
+//   * 'private': the first private ip address of family.
+//   * undefined: First address with `ipv4` or loopback address `127.0.0.1`.
+//
+ip.address = function(name, family) {
+  var interfaces = os.networkInterfaces();
+  var all;
+
+  //
+  // Default to `ipv4`
+  //
+  family = _normalizeFamily(family);
+
+  //
+  // If a specific network interface has been named,
+  // return the address.
+  //
+  if (name && name !== 'private' && name !== 'public') {
+    var res = interfaces[name].filter(function(details) {
+      var itemFamily = details.family.toLowerCase();
+      return itemFamily === family;
+    });
+    if (res.length === 0)
+      return undefined;
+    return res[0].address;
+  }
+
+  var all = Object.keys(interfaces).map(function (nic) {
+    //
+    // Note: name will only be `public` or `private`
+    // when this is called.
+    //
+    var addresses = interfaces[nic].filter(function (details) {
+      details.family = details.family.toLowerCase();
+      if (details.family !== family || ip.isLoopback(details.address)) {
+        return false;
+      } else if (!name) {
+        return true;
+      }
+
+      return name === 'public' ? ip.isPrivate(details.address) :
+          ip.isPublic(details.address);
+    });
+
+    return addresses.length ? addresses[0].address : undefined;
+  }).filter(Boolean);
+
+  return !all.length ? ip.loopback(family) : all[0];
+};
+
+ip.toLong = function(ip) {
+  var ipl = 0;
+  ip.split('.').forEach(function(octet) {
+    ipl <<= 8;
+    ipl += parseInt(octet);
+  });
+  return(ipl >>> 0);
+};
+
+ip.fromLong = function(ipl) {
+  return ((ipl >>> 24) + '.' +
+      (ipl >> 16 & 255) + '.' +
+      (ipl >> 8 & 255) + '.' +
+      (ipl & 255) );
+};
+
+},{"buffer":68,"os":144}],297:[function(require,module,exports){
 /*
   Loki IndexedDb Adapter (need to include this script to use it)
 
@@ -53129,7 +55366,7 @@ arguments[4][137][0].apply(exports,arguments)
   }());
 }));
 
-},{}],287:[function(require,module,exports){
+},{}],298:[function(require,module,exports){
 (function (process,global){(function (){
 /**
  * LokiJS
@@ -60874,13 +63111,13 @@ arguments[4][137][0].apply(exports,arguments)
 }));
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./loki-indexed-adapter.js":286,"_process":155,"fs":1}],288:[function(require,module,exports){
+},{"./loki-indexed-adapter.js":297,"_process":156,"fs":1}],299:[function(require,module,exports){
 arguments[4][138][0].apply(exports,arguments)
-},{"dup":138,"hash-base":254,"inherits":285,"safe-buffer":303}],289:[function(require,module,exports){
+},{"dup":138,"hash-base":264,"inherits":295,"safe-buffer":314}],300:[function(require,module,exports){
 arguments[4][141][0].apply(exports,arguments)
-},{"dup":141}],290:[function(require,module,exports){
+},{"dup":141}],301:[function(require,module,exports){
 arguments[4][142][0].apply(exports,arguments)
-},{"dup":142}],291:[function(require,module,exports){
+},{"dup":142}],302:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -61044,7 +63281,7 @@ function plural(ms, msAbs, n, name) {
   return Math.round(ms / n) + ' ' + name + (isPlural ? 's' : '');
 }
 
-},{}],292:[function(require,module,exports){
+},{}],303:[function(require,module,exports){
 /*! @preserve
  * numeral.js
  * version : 2.0.6
@@ -62059,7 +64296,7 @@ function plural(ms, msAbs, n, name) {
 return numeral;
 }));
 
-},{}],293:[function(require,module,exports){
+},{}],304:[function(require,module,exports){
 /**
  * Compiles a querystring
  * Returns string representation of the object
@@ -62098,7 +64335,7 @@ exports.decode = function(qs){
   return qry;
 };
 
-},{}],294:[function(require,module,exports){
+},{}],305:[function(require,module,exports){
 /**
  * Parses an URI
  *
@@ -62168,23 +64405,23 @@ function queryKey(uri, query) {
     return data;
 }
 
-},{}],295:[function(require,module,exports){
-arguments[4][149][0].apply(exports,arguments)
-},{"./lib/async":296,"./lib/sync":299,"dup":149}],296:[function(require,module,exports){
+},{}],306:[function(require,module,exports){
 arguments[4][150][0].apply(exports,arguments)
-},{"./default-encoding":297,"./precondition":298,"./sync":299,"./to-buffer":300,"dup":150,"safe-buffer":303}],297:[function(require,module,exports){
+},{"./lib/async":307,"./lib/sync":310,"dup":150}],307:[function(require,module,exports){
 arguments[4][151][0].apply(exports,arguments)
-},{"_process":155,"dup":151}],298:[function(require,module,exports){
+},{"./default-encoding":308,"./precondition":309,"./sync":310,"./to-buffer":311,"dup":151,"safe-buffer":314}],308:[function(require,module,exports){
 arguments[4][152][0].apply(exports,arguments)
-},{"dup":152}],299:[function(require,module,exports){
+},{"_process":156,"dup":152}],309:[function(require,module,exports){
 arguments[4][153][0].apply(exports,arguments)
-},{"./default-encoding":297,"./precondition":298,"./to-buffer":300,"create-hash/md5":218,"dup":153,"ripemd160":302,"safe-buffer":303,"sha.js":308}],300:[function(require,module,exports){
+},{"dup":153}],310:[function(require,module,exports){
 arguments[4][154][0].apply(exports,arguments)
-},{"dup":154,"safe-buffer":303}],301:[function(require,module,exports){
-arguments[4][163][0].apply(exports,arguments)
-},{"_process":155,"dup":163,"safe-buffer":303}],302:[function(require,module,exports){
-arguments[4][165][0].apply(exports,arguments)
-},{"buffer":68,"dup":165,"hash-base":254,"inherits":285}],303:[function(require,module,exports){
+},{"./default-encoding":308,"./precondition":309,"./to-buffer":311,"create-hash/md5":228,"dup":154,"ripemd160":313,"safe-buffer":314,"sha.js":319}],311:[function(require,module,exports){
+arguments[4][155][0].apply(exports,arguments)
+},{"dup":155,"safe-buffer":314}],312:[function(require,module,exports){
+arguments[4][168][0].apply(exports,arguments)
+},{"_process":156,"dup":168,"safe-buffer":314}],313:[function(require,module,exports){
+arguments[4][170][0].apply(exports,arguments)
+},{"buffer":68,"dup":170,"hash-base":264,"inherits":295}],314:[function(require,module,exports){
 /* eslint-disable node/no-deprecated-api */
 var buffer = require('buffer')
 var Buffer = buffer.Buffer
@@ -62248,10 +64485,10 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":68}],304:[function(require,module,exports){
+},{"buffer":68}],315:[function(require,module,exports){
 module.exports = require('./lib')(require('./lib/elliptic'))
 
-},{"./lib":306,"./lib/elliptic":305}],305:[function(require,module,exports){
+},{"./lib":317,"./lib/elliptic":316}],316:[function(require,module,exports){
 const EC = require('elliptic').ec
 
 const ec = new EC('secp256k1')
@@ -62655,7 +64892,7 @@ module.exports = {
   }
 }
 
-},{"elliptic":221}],306:[function(require,module,exports){
+},{"elliptic":231}],317:[function(require,module,exports){
 const errors = {
   IMPOSSIBLE_CASE: 'Impossible case. Please create issue.',
   TWEAK_ADD:
@@ -62993,23 +65230,1368 @@ module.exports = (secp256k1) => {
   }
 }
 
-},{}],307:[function(require,module,exports){
-arguments[4][168][0].apply(exports,arguments)
-},{"dup":168,"safe-buffer":303}],308:[function(require,module,exports){
-arguments[4][169][0].apply(exports,arguments)
-},{"./sha":309,"./sha1":310,"./sha224":311,"./sha256":312,"./sha384":313,"./sha512":314,"dup":169}],309:[function(require,module,exports){
-arguments[4][170][0].apply(exports,arguments)
-},{"./hash":307,"dup":170,"inherits":285,"safe-buffer":303}],310:[function(require,module,exports){
-arguments[4][171][0].apply(exports,arguments)
-},{"./hash":307,"dup":171,"inherits":285,"safe-buffer":303}],311:[function(require,module,exports){
-arguments[4][172][0].apply(exports,arguments)
-},{"./hash":307,"./sha256":312,"dup":172,"inherits":285,"safe-buffer":303}],312:[function(require,module,exports){
+},{}],318:[function(require,module,exports){
 arguments[4][173][0].apply(exports,arguments)
-},{"./hash":307,"dup":173,"inherits":285,"safe-buffer":303}],313:[function(require,module,exports){
+},{"dup":173,"safe-buffer":314}],319:[function(require,module,exports){
 arguments[4][174][0].apply(exports,arguments)
-},{"./hash":307,"./sha512":314,"dup":174,"inherits":285,"safe-buffer":303}],314:[function(require,module,exports){
+},{"./sha":320,"./sha1":321,"./sha224":322,"./sha256":323,"./sha384":324,"./sha512":325,"dup":174}],320:[function(require,module,exports){
 arguments[4][175][0].apply(exports,arguments)
-},{"./hash":307,"dup":175,"inherits":285,"safe-buffer":303}],315:[function(require,module,exports){
+},{"./hash":318,"dup":175,"inherits":295,"safe-buffer":314}],321:[function(require,module,exports){
+arguments[4][176][0].apply(exports,arguments)
+},{"./hash":318,"dup":176,"inherits":295,"safe-buffer":314}],322:[function(require,module,exports){
+arguments[4][177][0].apply(exports,arguments)
+},{"./hash":318,"./sha256":323,"dup":177,"inherits":295,"safe-buffer":314}],323:[function(require,module,exports){
+arguments[4][178][0].apply(exports,arguments)
+},{"./hash":318,"dup":178,"inherits":295,"safe-buffer":314}],324:[function(require,module,exports){
+arguments[4][179][0].apply(exports,arguments)
+},{"./hash":318,"./sha512":325,"dup":179,"inherits":295,"safe-buffer":314}],325:[function(require,module,exports){
+arguments[4][180][0].apply(exports,arguments)
+},{"./hash":318,"dup":180,"inherits":295,"safe-buffer":314}],326:[function(require,module,exports){
+(function (Buffer){(function (){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const utils_1 = require("./utils");
+// The default Buffer size if one is not provided.
+const DEFAULT_SMARTBUFFER_SIZE = 4096;
+// The default string encoding to use for reading/writing strings.
+const DEFAULT_SMARTBUFFER_ENCODING = 'utf8';
+class SmartBuffer {
+    /**
+     * Creates a new SmartBuffer instance.
+     *
+     * @param options { SmartBufferOptions } The SmartBufferOptions to apply to this instance.
+     */
+    constructor(options) {
+        this.length = 0;
+        this._encoding = DEFAULT_SMARTBUFFER_ENCODING;
+        this._writeOffset = 0;
+        this._readOffset = 0;
+        if (SmartBuffer.isSmartBufferOptions(options)) {
+            // Checks for encoding
+            if (options.encoding) {
+                utils_1.checkEncoding(options.encoding);
+                this._encoding = options.encoding;
+            }
+            // Checks for initial size length
+            if (options.size) {
+                if (utils_1.isFiniteInteger(options.size) && options.size > 0) {
+                    this._buff = Buffer.allocUnsafe(options.size);
+                }
+                else {
+                    throw new Error(utils_1.ERRORS.INVALID_SMARTBUFFER_SIZE);
+                }
+                // Check for initial Buffer
+            }
+            else if (options.buff) {
+                if (options.buff instanceof Buffer) {
+                    this._buff = options.buff;
+                    this.length = options.buff.length;
+                }
+                else {
+                    throw new Error(utils_1.ERRORS.INVALID_SMARTBUFFER_BUFFER);
+                }
+            }
+            else {
+                this._buff = Buffer.allocUnsafe(DEFAULT_SMARTBUFFER_SIZE);
+            }
+        }
+        else {
+            // If something was passed but it's not a SmartBufferOptions object
+            if (typeof options !== 'undefined') {
+                throw new Error(utils_1.ERRORS.INVALID_SMARTBUFFER_OBJECT);
+            }
+            // Otherwise default to sane options
+            this._buff = Buffer.allocUnsafe(DEFAULT_SMARTBUFFER_SIZE);
+        }
+    }
+    /**
+     * Creates a new SmartBuffer instance with the provided internal Buffer size and optional encoding.
+     *
+     * @param size { Number } The size of the internal Buffer.
+     * @param encoding { String } The BufferEncoding to use for strings.
+     *
+     * @return { SmartBuffer }
+     */
+    static fromSize(size, encoding) {
+        return new this({
+            size: size,
+            encoding: encoding
+        });
+    }
+    /**
+     * Creates a new SmartBuffer instance with the provided Buffer and optional encoding.
+     *
+     * @param buffer { Buffer } The Buffer to use as the internal Buffer value.
+     * @param encoding { String } The BufferEncoding to use for strings.
+     *
+     * @return { SmartBuffer }
+     */
+    static fromBuffer(buff, encoding) {
+        return new this({
+            buff: buff,
+            encoding: encoding
+        });
+    }
+    /**
+     * Creates a new SmartBuffer instance with the provided SmartBufferOptions options.
+     *
+     * @param options { SmartBufferOptions } The options to use when creating the SmartBuffer instance.
+     */
+    static fromOptions(options) {
+        return new this(options);
+    }
+    /**
+     * Type checking function that determines if an object is a SmartBufferOptions object.
+     */
+    static isSmartBufferOptions(options) {
+        const castOptions = options;
+        return (castOptions &&
+            (castOptions.encoding !== undefined || castOptions.size !== undefined || castOptions.buff !== undefined));
+    }
+    // Signed integers
+    /**
+     * Reads an Int8 value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { Number }
+     */
+    readInt8(offset) {
+        return this._readNumberValue(Buffer.prototype.readInt8, 1, offset);
+    }
+    /**
+     * Reads an Int16BE value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { Number }
+     */
+    readInt16BE(offset) {
+        return this._readNumberValue(Buffer.prototype.readInt16BE, 2, offset);
+    }
+    /**
+     * Reads an Int16LE value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { Number }
+     */
+    readInt16LE(offset) {
+        return this._readNumberValue(Buffer.prototype.readInt16LE, 2, offset);
+    }
+    /**
+     * Reads an Int32BE value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { Number }
+     */
+    readInt32BE(offset) {
+        return this._readNumberValue(Buffer.prototype.readInt32BE, 4, offset);
+    }
+    /**
+     * Reads an Int32LE value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { Number }
+     */
+    readInt32LE(offset) {
+        return this._readNumberValue(Buffer.prototype.readInt32LE, 4, offset);
+    }
+    /**
+     * Reads a BigInt64BE value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { BigInt }
+     */
+    readBigInt64BE(offset) {
+        utils_1.bigIntAndBufferInt64Check('readBigInt64BE');
+        return this._readNumberValue(Buffer.prototype.readBigInt64BE, 8, offset);
+    }
+    /**
+     * Reads a BigInt64LE value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { BigInt }
+     */
+    readBigInt64LE(offset) {
+        utils_1.bigIntAndBufferInt64Check('readBigInt64LE');
+        return this._readNumberValue(Buffer.prototype.readBigInt64LE, 8, offset);
+    }
+    /**
+     * Writes an Int8 value to the current write position (or at optional offset).
+     *
+     * @param value { Number } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeInt8(value, offset) {
+        this._writeNumberValue(Buffer.prototype.writeInt8, 1, value, offset);
+        return this;
+    }
+    /**
+     * Inserts an Int8 value at the given offset value.
+     *
+     * @param value { Number } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertInt8(value, offset) {
+        return this._insertNumberValue(Buffer.prototype.writeInt8, 1, value, offset);
+    }
+    /**
+     * Writes an Int16BE value to the current write position (or at optional offset).
+     *
+     * @param value { Number } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeInt16BE(value, offset) {
+        return this._writeNumberValue(Buffer.prototype.writeInt16BE, 2, value, offset);
+    }
+    /**
+     * Inserts an Int16BE value at the given offset value.
+     *
+     * @param value { Number } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertInt16BE(value, offset) {
+        return this._insertNumberValue(Buffer.prototype.writeInt16BE, 2, value, offset);
+    }
+    /**
+     * Writes an Int16LE value to the current write position (or at optional offset).
+     *
+     * @param value { Number } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeInt16LE(value, offset) {
+        return this._writeNumberValue(Buffer.prototype.writeInt16LE, 2, value, offset);
+    }
+    /**
+     * Inserts an Int16LE value at the given offset value.
+     *
+     * @param value { Number } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertInt16LE(value, offset) {
+        return this._insertNumberValue(Buffer.prototype.writeInt16LE, 2, value, offset);
+    }
+    /**
+     * Writes an Int32BE value to the current write position (or at optional offset).
+     *
+     * @param value { Number } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeInt32BE(value, offset) {
+        return this._writeNumberValue(Buffer.prototype.writeInt32BE, 4, value, offset);
+    }
+    /**
+     * Inserts an Int32BE value at the given offset value.
+     *
+     * @param value { Number } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertInt32BE(value, offset) {
+        return this._insertNumberValue(Buffer.prototype.writeInt32BE, 4, value, offset);
+    }
+    /**
+     * Writes an Int32LE value to the current write position (or at optional offset).
+     *
+     * @param value { Number } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeInt32LE(value, offset) {
+        return this._writeNumberValue(Buffer.prototype.writeInt32LE, 4, value, offset);
+    }
+    /**
+     * Inserts an Int32LE value at the given offset value.
+     *
+     * @param value { Number } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertInt32LE(value, offset) {
+        return this._insertNumberValue(Buffer.prototype.writeInt32LE, 4, value, offset);
+    }
+    /**
+     * Writes a BigInt64BE value to the current write position (or at optional offset).
+     *
+     * @param value { BigInt } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeBigInt64BE(value, offset) {
+        utils_1.bigIntAndBufferInt64Check('writeBigInt64BE');
+        return this._writeNumberValue(Buffer.prototype.writeBigInt64BE, 8, value, offset);
+    }
+    /**
+     * Inserts a BigInt64BE value at the given offset value.
+     *
+     * @param value { BigInt } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertBigInt64BE(value, offset) {
+        utils_1.bigIntAndBufferInt64Check('writeBigInt64BE');
+        return this._insertNumberValue(Buffer.prototype.writeBigInt64BE, 8, value, offset);
+    }
+    /**
+     * Writes a BigInt64LE value to the current write position (or at optional offset).
+     *
+     * @param value { BigInt } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeBigInt64LE(value, offset) {
+        utils_1.bigIntAndBufferInt64Check('writeBigInt64LE');
+        return this._writeNumberValue(Buffer.prototype.writeBigInt64LE, 8, value, offset);
+    }
+    /**
+     * Inserts a Int64LE value at the given offset value.
+     *
+     * @param value { BigInt } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertBigInt64LE(value, offset) {
+        utils_1.bigIntAndBufferInt64Check('writeBigInt64LE');
+        return this._insertNumberValue(Buffer.prototype.writeBigInt64LE, 8, value, offset);
+    }
+    // Unsigned Integers
+    /**
+     * Reads an UInt8 value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { Number }
+     */
+    readUInt8(offset) {
+        return this._readNumberValue(Buffer.prototype.readUInt8, 1, offset);
+    }
+    /**
+     * Reads an UInt16BE value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { Number }
+     */
+    readUInt16BE(offset) {
+        return this._readNumberValue(Buffer.prototype.readUInt16BE, 2, offset);
+    }
+    /**
+     * Reads an UInt16LE value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { Number }
+     */
+    readUInt16LE(offset) {
+        return this._readNumberValue(Buffer.prototype.readUInt16LE, 2, offset);
+    }
+    /**
+     * Reads an UInt32BE value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { Number }
+     */
+    readUInt32BE(offset) {
+        return this._readNumberValue(Buffer.prototype.readUInt32BE, 4, offset);
+    }
+    /**
+     * Reads an UInt32LE value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { Number }
+     */
+    readUInt32LE(offset) {
+        return this._readNumberValue(Buffer.prototype.readUInt32LE, 4, offset);
+    }
+    /**
+     * Reads a BigUInt64BE value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { BigInt }
+     */
+    readBigUInt64BE(offset) {
+        utils_1.bigIntAndBufferInt64Check('readBigUInt64BE');
+        return this._readNumberValue(Buffer.prototype.readBigUInt64BE, 8, offset);
+    }
+    /**
+     * Reads a BigUInt64LE value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { BigInt }
+     */
+    readBigUInt64LE(offset) {
+        utils_1.bigIntAndBufferInt64Check('readBigUInt64LE');
+        return this._readNumberValue(Buffer.prototype.readBigUInt64LE, 8, offset);
+    }
+    /**
+     * Writes an UInt8 value to the current write position (or at optional offset).
+     *
+     * @param value { Number } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeUInt8(value, offset) {
+        return this._writeNumberValue(Buffer.prototype.writeUInt8, 1, value, offset);
+    }
+    /**
+     * Inserts an UInt8 value at the given offset value.
+     *
+     * @param value { Number } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertUInt8(value, offset) {
+        return this._insertNumberValue(Buffer.prototype.writeUInt8, 1, value, offset);
+    }
+    /**
+     * Writes an UInt16BE value to the current write position (or at optional offset).
+     *
+     * @param value { Number } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeUInt16BE(value, offset) {
+        return this._writeNumberValue(Buffer.prototype.writeUInt16BE, 2, value, offset);
+    }
+    /**
+     * Inserts an UInt16BE value at the given offset value.
+     *
+     * @param value { Number } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertUInt16BE(value, offset) {
+        return this._insertNumberValue(Buffer.prototype.writeUInt16BE, 2, value, offset);
+    }
+    /**
+     * Writes an UInt16LE value to the current write position (or at optional offset).
+     *
+     * @param value { Number } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeUInt16LE(value, offset) {
+        return this._writeNumberValue(Buffer.prototype.writeUInt16LE, 2, value, offset);
+    }
+    /**
+     * Inserts an UInt16LE value at the given offset value.
+     *
+     * @param value { Number } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertUInt16LE(value, offset) {
+        return this._insertNumberValue(Buffer.prototype.writeUInt16LE, 2, value, offset);
+    }
+    /**
+     * Writes an UInt32BE value to the current write position (or at optional offset).
+     *
+     * @param value { Number } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeUInt32BE(value, offset) {
+        return this._writeNumberValue(Buffer.prototype.writeUInt32BE, 4, value, offset);
+    }
+    /**
+     * Inserts an UInt32BE value at the given offset value.
+     *
+     * @param value { Number } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertUInt32BE(value, offset) {
+        return this._insertNumberValue(Buffer.prototype.writeUInt32BE, 4, value, offset);
+    }
+    /**
+     * Writes an UInt32LE value to the current write position (or at optional offset).
+     *
+     * @param value { Number } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeUInt32LE(value, offset) {
+        return this._writeNumberValue(Buffer.prototype.writeUInt32LE, 4, value, offset);
+    }
+    /**
+     * Inserts an UInt32LE value at the given offset value.
+     *
+     * @param value { Number } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertUInt32LE(value, offset) {
+        return this._insertNumberValue(Buffer.prototype.writeUInt32LE, 4, value, offset);
+    }
+    /**
+     * Writes a BigUInt64BE value to the current write position (or at optional offset).
+     *
+     * @param value { Number } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeBigUInt64BE(value, offset) {
+        utils_1.bigIntAndBufferInt64Check('writeBigUInt64BE');
+        return this._writeNumberValue(Buffer.prototype.writeBigUInt64BE, 8, value, offset);
+    }
+    /**
+     * Inserts a BigUInt64BE value at the given offset value.
+     *
+     * @param value { Number } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertBigUInt64BE(value, offset) {
+        utils_1.bigIntAndBufferInt64Check('writeBigUInt64BE');
+        return this._insertNumberValue(Buffer.prototype.writeBigUInt64BE, 8, value, offset);
+    }
+    /**
+     * Writes a BigUInt64LE value to the current write position (or at optional offset).
+     *
+     * @param value { Number } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeBigUInt64LE(value, offset) {
+        utils_1.bigIntAndBufferInt64Check('writeBigUInt64LE');
+        return this._writeNumberValue(Buffer.prototype.writeBigUInt64LE, 8, value, offset);
+    }
+    /**
+     * Inserts a BigUInt64LE value at the given offset value.
+     *
+     * @param value { Number } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertBigUInt64LE(value, offset) {
+        utils_1.bigIntAndBufferInt64Check('writeBigUInt64LE');
+        return this._insertNumberValue(Buffer.prototype.writeBigUInt64LE, 8, value, offset);
+    }
+    // Floating Point
+    /**
+     * Reads an FloatBE value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { Number }
+     */
+    readFloatBE(offset) {
+        return this._readNumberValue(Buffer.prototype.readFloatBE, 4, offset);
+    }
+    /**
+     * Reads an FloatLE value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { Number }
+     */
+    readFloatLE(offset) {
+        return this._readNumberValue(Buffer.prototype.readFloatLE, 4, offset);
+    }
+    /**
+     * Writes a FloatBE value to the current write position (or at optional offset).
+     *
+     * @param value { Number } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeFloatBE(value, offset) {
+        return this._writeNumberValue(Buffer.prototype.writeFloatBE, 4, value, offset);
+    }
+    /**
+     * Inserts a FloatBE value at the given offset value.
+     *
+     * @param value { Number } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertFloatBE(value, offset) {
+        return this._insertNumberValue(Buffer.prototype.writeFloatBE, 4, value, offset);
+    }
+    /**
+     * Writes a FloatLE value to the current write position (or at optional offset).
+     *
+     * @param value { Number } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeFloatLE(value, offset) {
+        return this._writeNumberValue(Buffer.prototype.writeFloatLE, 4, value, offset);
+    }
+    /**
+     * Inserts a FloatLE value at the given offset value.
+     *
+     * @param value { Number } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertFloatLE(value, offset) {
+        return this._insertNumberValue(Buffer.prototype.writeFloatLE, 4, value, offset);
+    }
+    // Double Floating Point
+    /**
+     * Reads an DoublEBE value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { Number }
+     */
+    readDoubleBE(offset) {
+        return this._readNumberValue(Buffer.prototype.readDoubleBE, 8, offset);
+    }
+    /**
+     * Reads an DoubleLE value from the current read position or an optionally provided offset.
+     *
+     * @param offset { Number } The offset to read data from (optional)
+     * @return { Number }
+     */
+    readDoubleLE(offset) {
+        return this._readNumberValue(Buffer.prototype.readDoubleLE, 8, offset);
+    }
+    /**
+     * Writes a DoubleBE value to the current write position (or at optional offset).
+     *
+     * @param value { Number } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeDoubleBE(value, offset) {
+        return this._writeNumberValue(Buffer.prototype.writeDoubleBE, 8, value, offset);
+    }
+    /**
+     * Inserts a DoubleBE value at the given offset value.
+     *
+     * @param value { Number } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertDoubleBE(value, offset) {
+        return this._insertNumberValue(Buffer.prototype.writeDoubleBE, 8, value, offset);
+    }
+    /**
+     * Writes a DoubleLE value to the current write position (or at optional offset).
+     *
+     * @param value { Number } The value to write.
+     * @param offset { Number } The offset to write the value at.
+     *
+     * @return this
+     */
+    writeDoubleLE(value, offset) {
+        return this._writeNumberValue(Buffer.prototype.writeDoubleLE, 8, value, offset);
+    }
+    /**
+     * Inserts a DoubleLE value at the given offset value.
+     *
+     * @param value { Number } The value to insert.
+     * @param offset { Number } The offset to insert the value at.
+     *
+     * @return this
+     */
+    insertDoubleLE(value, offset) {
+        return this._insertNumberValue(Buffer.prototype.writeDoubleLE, 8, value, offset);
+    }
+    // Strings
+    /**
+     * Reads a String from the current read position.
+     *
+     * @param arg1 { Number | String } The number of bytes to read as a String, or the BufferEncoding to use for
+     *             the string (Defaults to instance level encoding).
+     * @param encoding { String } The BufferEncoding to use for the string (Defaults to instance level encoding).
+     *
+     * @return { String }
+     */
+    readString(arg1, encoding) {
+        let lengthVal;
+        // Length provided
+        if (typeof arg1 === 'number') {
+            utils_1.checkLengthValue(arg1);
+            lengthVal = Math.min(arg1, this.length - this._readOffset);
+        }
+        else {
+            encoding = arg1;
+            lengthVal = this.length - this._readOffset;
+        }
+        // Check encoding
+        if (typeof encoding !== 'undefined') {
+            utils_1.checkEncoding(encoding);
+        }
+        const value = this._buff.slice(this._readOffset, this._readOffset + lengthVal).toString(encoding || this._encoding);
+        this._readOffset += lengthVal;
+        return value;
+    }
+    /**
+     * Inserts a String
+     *
+     * @param value { String } The String value to insert.
+     * @param offset { Number } The offset to insert the string at.
+     * @param encoding { String } The BufferEncoding to use for writing strings (defaults to instance encoding).
+     *
+     * @return this
+     */
+    insertString(value, offset, encoding) {
+        utils_1.checkOffsetValue(offset);
+        return this._handleString(value, true, offset, encoding);
+    }
+    /**
+     * Writes a String
+     *
+     * @param value { String } The String value to write.
+     * @param arg2 { Number | String } The offset to write the string at, or the BufferEncoding to use.
+     * @param encoding { String } The BufferEncoding to use for writing strings (defaults to instance encoding).
+     *
+     * @return this
+     */
+    writeString(value, arg2, encoding) {
+        return this._handleString(value, false, arg2, encoding);
+    }
+    /**
+     * Reads a null-terminated String from the current read position.
+     *
+     * @param encoding { String } The BufferEncoding to use for the string (Defaults to instance level encoding).
+     *
+     * @return { String }
+     */
+    readStringNT(encoding) {
+        if (typeof encoding !== 'undefined') {
+            utils_1.checkEncoding(encoding);
+        }
+        // Set null character position to the end SmartBuffer instance.
+        let nullPos = this.length;
+        // Find next null character (if one is not found, default from above is used)
+        for (let i = this._readOffset; i < this.length; i++) {
+            if (this._buff[i] === 0x00) {
+                nullPos = i;
+                break;
+            }
+        }
+        // Read string value
+        const value = this._buff.slice(this._readOffset, nullPos);
+        // Increment internal Buffer read offset
+        this._readOffset = nullPos + 1;
+        return value.toString(encoding || this._encoding);
+    }
+    /**
+     * Inserts a null-terminated String.
+     *
+     * @param value { String } The String value to write.
+     * @param arg2 { Number | String } The offset to write the string to, or the BufferEncoding to use.
+     * @param encoding { String } The BufferEncoding to use for writing strings (defaults to instance encoding).
+     *
+     * @return this
+     */
+    insertStringNT(value, offset, encoding) {
+        utils_1.checkOffsetValue(offset);
+        // Write Values
+        this.insertString(value, offset, encoding);
+        this.insertUInt8(0x00, offset + value.length);
+        return this;
+    }
+    /**
+     * Writes a null-terminated String.
+     *
+     * @param value { String } The String value to write.
+     * @param arg2 { Number | String } The offset to write the string to, or the BufferEncoding to use.
+     * @param encoding { String } The BufferEncoding to use for writing strings (defaults to instance encoding).
+     *
+     * @return this
+     */
+    writeStringNT(value, arg2, encoding) {
+        // Write Values
+        this.writeString(value, arg2, encoding);
+        this.writeUInt8(0x00, typeof arg2 === 'number' ? arg2 + value.length : this.writeOffset);
+        return this;
+    }
+    // Buffers
+    /**
+     * Reads a Buffer from the internal read position.
+     *
+     * @param length { Number } The length of data to read as a Buffer.
+     *
+     * @return { Buffer }
+     */
+    readBuffer(length) {
+        if (typeof length !== 'undefined') {
+            utils_1.checkLengthValue(length);
+        }
+        const lengthVal = typeof length === 'number' ? length : this.length;
+        const endPoint = Math.min(this.length, this._readOffset + lengthVal);
+        // Read buffer value
+        const value = this._buff.slice(this._readOffset, endPoint);
+        // Increment internal Buffer read offset
+        this._readOffset = endPoint;
+        return value;
+    }
+    /**
+     * Writes a Buffer to the current write position.
+     *
+     * @param value { Buffer } The Buffer to write.
+     * @param offset { Number } The offset to write the Buffer to.
+     *
+     * @return this
+     */
+    insertBuffer(value, offset) {
+        utils_1.checkOffsetValue(offset);
+        return this._handleBuffer(value, true, offset);
+    }
+    /**
+     * Writes a Buffer to the current write position.
+     *
+     * @param value { Buffer } The Buffer to write.
+     * @param offset { Number } The offset to write the Buffer to.
+     *
+     * @return this
+     */
+    writeBuffer(value, offset) {
+        return this._handleBuffer(value, false, offset);
+    }
+    /**
+     * Reads a null-terminated Buffer from the current read poisiton.
+     *
+     * @return { Buffer }
+     */
+    readBufferNT() {
+        // Set null character position to the end SmartBuffer instance.
+        let nullPos = this.length;
+        // Find next null character (if one is not found, default from above is used)
+        for (let i = this._readOffset; i < this.length; i++) {
+            if (this._buff[i] === 0x00) {
+                nullPos = i;
+                break;
+            }
+        }
+        // Read value
+        const value = this._buff.slice(this._readOffset, nullPos);
+        // Increment internal Buffer read offset
+        this._readOffset = nullPos + 1;
+        return value;
+    }
+    /**
+     * Inserts a null-terminated Buffer.
+     *
+     * @param value { Buffer } The Buffer to write.
+     * @param offset { Number } The offset to write the Buffer to.
+     *
+     * @return this
+     */
+    insertBufferNT(value, offset) {
+        utils_1.checkOffsetValue(offset);
+        // Write Values
+        this.insertBuffer(value, offset);
+        this.insertUInt8(0x00, offset + value.length);
+        return this;
+    }
+    /**
+     * Writes a null-terminated Buffer.
+     *
+     * @param value { Buffer } The Buffer to write.
+     * @param offset { Number } The offset to write the Buffer to.
+     *
+     * @return this
+     */
+    writeBufferNT(value, offset) {
+        // Checks for valid numberic value;
+        if (typeof offset !== 'undefined') {
+            utils_1.checkOffsetValue(offset);
+        }
+        // Write Values
+        this.writeBuffer(value, offset);
+        this.writeUInt8(0x00, typeof offset === 'number' ? offset + value.length : this._writeOffset);
+        return this;
+    }
+    /**
+     * Clears the SmartBuffer instance to its original empty state.
+     */
+    clear() {
+        this._writeOffset = 0;
+        this._readOffset = 0;
+        this.length = 0;
+        return this;
+    }
+    /**
+     * Gets the remaining data left to be read from the SmartBuffer instance.
+     *
+     * @return { Number }
+     */
+    remaining() {
+        return this.length - this._readOffset;
+    }
+    /**
+     * Gets the current read offset value of the SmartBuffer instance.
+     *
+     * @return { Number }
+     */
+    get readOffset() {
+        return this._readOffset;
+    }
+    /**
+     * Sets the read offset value of the SmartBuffer instance.
+     *
+     * @param offset { Number } - The offset value to set.
+     */
+    set readOffset(offset) {
+        utils_1.checkOffsetValue(offset);
+        // Check for bounds.
+        utils_1.checkTargetOffset(offset, this);
+        this._readOffset = offset;
+    }
+    /**
+     * Gets the current write offset value of the SmartBuffer instance.
+     *
+     * @return { Number }
+     */
+    get writeOffset() {
+        return this._writeOffset;
+    }
+    /**
+     * Sets the write offset value of the SmartBuffer instance.
+     *
+     * @param offset { Number } - The offset value to set.
+     */
+    set writeOffset(offset) {
+        utils_1.checkOffsetValue(offset);
+        // Check for bounds.
+        utils_1.checkTargetOffset(offset, this);
+        this._writeOffset = offset;
+    }
+    /**
+     * Gets the currently set string encoding of the SmartBuffer instance.
+     *
+     * @return { BufferEncoding } The string Buffer encoding currently set.
+     */
+    get encoding() {
+        return this._encoding;
+    }
+    /**
+     * Sets the string encoding of the SmartBuffer instance.
+     *
+     * @param encoding { BufferEncoding } The string Buffer encoding to set.
+     */
+    set encoding(encoding) {
+        utils_1.checkEncoding(encoding);
+        this._encoding = encoding;
+    }
+    /**
+     * Gets the underlying internal Buffer. (This includes unmanaged data in the Buffer)
+     *
+     * @return { Buffer } The Buffer value.
+     */
+    get internalBuffer() {
+        return this._buff;
+    }
+    /**
+     * Gets the value of the internal managed Buffer (Includes managed data only)
+     *
+     * @param { Buffer }
+     */
+    toBuffer() {
+        return this._buff.slice(0, this.length);
+    }
+    /**
+     * Gets the String value of the internal managed Buffer
+     *
+     * @param encoding { String } The BufferEncoding to display the Buffer as (defaults to instance level encoding).
+     */
+    toString(encoding) {
+        const encodingVal = typeof encoding === 'string' ? encoding : this._encoding;
+        // Check for invalid encoding.
+        utils_1.checkEncoding(encodingVal);
+        return this._buff.toString(encodingVal, 0, this.length);
+    }
+    /**
+     * Destroys the SmartBuffer instance.
+     */
+    destroy() {
+        this.clear();
+        return this;
+    }
+    /**
+     * Handles inserting and writing strings.
+     *
+     * @param value { String } The String value to insert.
+     * @param isInsert { Boolean } True if inserting a string, false if writing.
+     * @param arg2 { Number | String } The offset to insert the string at, or the BufferEncoding to use.
+     * @param encoding { String } The BufferEncoding to use for writing strings (defaults to instance encoding).
+     */
+    _handleString(value, isInsert, arg3, encoding) {
+        let offsetVal = this._writeOffset;
+        let encodingVal = this._encoding;
+        // Check for offset
+        if (typeof arg3 === 'number') {
+            offsetVal = arg3;
+            // Check for encoding
+        }
+        else if (typeof arg3 === 'string') {
+            utils_1.checkEncoding(arg3);
+            encodingVal = arg3;
+        }
+        // Check for encoding (third param)
+        if (typeof encoding === 'string') {
+            utils_1.checkEncoding(encoding);
+            encodingVal = encoding;
+        }
+        // Calculate bytelength of string.
+        const byteLength = Buffer.byteLength(value, encodingVal);
+        // Ensure there is enough internal Buffer capacity.
+        if (isInsert) {
+            this.ensureInsertable(byteLength, offsetVal);
+        }
+        else {
+            this._ensureWriteable(byteLength, offsetVal);
+        }
+        // Write value
+        this._buff.write(value, offsetVal, byteLength, encodingVal);
+        // Increment internal Buffer write offset;
+        if (isInsert) {
+            this._writeOffset += byteLength;
+        }
+        else {
+            // If an offset was given, check to see if we wrote beyond the current writeOffset.
+            if (typeof arg3 === 'number') {
+                this._writeOffset = Math.max(this._writeOffset, offsetVal + byteLength);
+            }
+            else {
+                // If no offset was given, we wrote to the end of the SmartBuffer so increment writeOffset.
+                this._writeOffset += byteLength;
+            }
+        }
+        return this;
+    }
+    /**
+     * Handles writing or insert of a Buffer.
+     *
+     * @param value { Buffer } The Buffer to write.
+     * @param offset { Number } The offset to write the Buffer to.
+     */
+    _handleBuffer(value, isInsert, offset) {
+        const offsetVal = typeof offset === 'number' ? offset : this._writeOffset;
+        // Ensure there is enough internal Buffer capacity.
+        if (isInsert) {
+            this.ensureInsertable(value.length, offsetVal);
+        }
+        else {
+            this._ensureWriteable(value.length, offsetVal);
+        }
+        // Write buffer value
+        value.copy(this._buff, offsetVal);
+        // Increment internal Buffer write offset;
+        if (isInsert) {
+            this._writeOffset += value.length;
+        }
+        else {
+            // If an offset was given, check to see if we wrote beyond the current writeOffset.
+            if (typeof offset === 'number') {
+                this._writeOffset = Math.max(this._writeOffset, offsetVal + value.length);
+            }
+            else {
+                // If no offset was given, we wrote to the end of the SmartBuffer so increment writeOffset.
+                this._writeOffset += value.length;
+            }
+        }
+        return this;
+    }
+    /**
+     * Ensures that the internal Buffer is large enough to read data.
+     *
+     * @param length { Number } The length of the data that needs to be read.
+     * @param offset { Number } The offset of the data that needs to be read.
+     */
+    ensureReadable(length, offset) {
+        // Offset value defaults to managed read offset.
+        let offsetVal = this._readOffset;
+        // If an offset was provided, use it.
+        if (typeof offset !== 'undefined') {
+            // Checks for valid numberic value;
+            utils_1.checkOffsetValue(offset);
+            // Overide with custom offset.
+            offsetVal = offset;
+        }
+        // Checks if offset is below zero, or the offset+length offset is beyond the total length of the managed data.
+        if (offsetVal < 0 || offsetVal + length > this.length) {
+            throw new Error(utils_1.ERRORS.INVALID_READ_BEYOND_BOUNDS);
+        }
+    }
+    /**
+     * Ensures that the internal Buffer is large enough to insert data.
+     *
+     * @param dataLength { Number } The length of the data that needs to be written.
+     * @param offset { Number } The offset of the data to be written.
+     */
+    ensureInsertable(dataLength, offset) {
+        // Checks for valid numberic value;
+        utils_1.checkOffsetValue(offset);
+        // Ensure there is enough internal Buffer capacity.
+        this._ensureCapacity(this.length + dataLength);
+        // If an offset was provided and its not the very end of the buffer, copy data into appropriate location in regards to the offset.
+        if (offset < this.length) {
+            this._buff.copy(this._buff, offset + dataLength, offset, this._buff.length);
+        }
+        // Adjust tracked smart buffer length
+        if (offset + dataLength > this.length) {
+            this.length = offset + dataLength;
+        }
+        else {
+            this.length += dataLength;
+        }
+    }
+    /**
+     * Ensures that the internal Buffer is large enough to write data.
+     *
+     * @param dataLength { Number } The length of the data that needs to be written.
+     * @param offset { Number } The offset of the data to be written (defaults to writeOffset).
+     */
+    _ensureWriteable(dataLength, offset) {
+        const offsetVal = typeof offset === 'number' ? offset : this._writeOffset;
+        // Ensure enough capacity to write data.
+        this._ensureCapacity(offsetVal + dataLength);
+        // Adjust SmartBuffer length (if offset + length is larger than managed length, adjust length)
+        if (offsetVal + dataLength > this.length) {
+            this.length = offsetVal + dataLength;
+        }
+    }
+    /**
+     * Ensures that the internal Buffer is large enough to write at least the given amount of data.
+     *
+     * @param minLength { Number } The minimum length of the data needs to be written.
+     */
+    _ensureCapacity(minLength) {
+        const oldLength = this._buff.length;
+        if (minLength > oldLength) {
+            let data = this._buff;
+            let newLength = (oldLength * 3) / 2 + 1;
+            if (newLength < minLength) {
+                newLength = minLength;
+            }
+            this._buff = Buffer.allocUnsafe(newLength);
+            data.copy(this._buff, 0, 0, oldLength);
+        }
+    }
+    /**
+     * Reads a numeric number value using the provided function.
+     *
+     * @typeparam T { number | bigint } The type of the value to be read
+     *
+     * @param func { Function(offset: number) => number } The function to read data on the internal Buffer with.
+     * @param byteSize { Number } The number of bytes read.
+     * @param offset { Number } The offset to read from (optional). When this is not provided, the managed readOffset is used instead.
+     *
+     * @returns { T } the number value
+     */
+    _readNumberValue(func, byteSize, offset) {
+        this.ensureReadable(byteSize, offset);
+        // Call Buffer.readXXXX();
+        const value = func.call(this._buff, typeof offset === 'number' ? offset : this._readOffset);
+        // Adjust internal read offset if an optional read offset was not provided.
+        if (typeof offset === 'undefined') {
+            this._readOffset += byteSize;
+        }
+        return value;
+    }
+    /**
+     * Inserts a numeric number value based on the given offset and value.
+     *
+     * @typeparam T { number | bigint } The type of the value to be written
+     *
+     * @param func { Function(offset: T, offset?) => number} The function to write data on the internal Buffer with.
+     * @param byteSize { Number } The number of bytes written.
+     * @param value { T } The number value to write.
+     * @param offset { Number } the offset to write the number at (REQUIRED).
+     *
+     * @returns SmartBuffer this buffer
+     */
+    _insertNumberValue(func, byteSize, value, offset) {
+        // Check for invalid offset values.
+        utils_1.checkOffsetValue(offset);
+        // Ensure there is enough internal Buffer capacity. (raw offset is passed)
+        this.ensureInsertable(byteSize, offset);
+        // Call buffer.writeXXXX();
+        func.call(this._buff, value, offset);
+        // Adjusts internally managed write offset.
+        this._writeOffset += byteSize;
+        return this;
+    }
+    /**
+     * Writes a numeric number value based on the given offset and value.
+     *
+     * @typeparam T { number | bigint } The type of the value to be written
+     *
+     * @param func { Function(offset: T, offset?) => number} The function to write data on the internal Buffer with.
+     * @param byteSize { Number } The number of bytes written.
+     * @param value { T } The number value to write.
+     * @param offset { Number } the offset to write the number at (REQUIRED).
+     *
+     * @returns SmartBuffer this buffer
+     */
+    _writeNumberValue(func, byteSize, value, offset) {
+        // If an offset was provided, validate it.
+        if (typeof offset === 'number') {
+            // Check if we're writing beyond the bounds of the managed data.
+            if (offset < 0) {
+                throw new Error(utils_1.ERRORS.INVALID_WRITE_BEYOND_BOUNDS);
+            }
+            utils_1.checkOffsetValue(offset);
+        }
+        // Default to writeOffset if no offset value was given.
+        const offsetVal = typeof offset === 'number' ? offset : this._writeOffset;
+        // Ensure there is enough internal Buffer capacity. (raw offset is passed)
+        this._ensureWriteable(byteSize, offsetVal);
+        func.call(this._buff, value, offsetVal);
+        // If an offset was given, check to see if we wrote beyond the current writeOffset.
+        if (typeof offset === 'number') {
+            this._writeOffset = Math.max(this._writeOffset, offsetVal + byteSize);
+        }
+        else {
+            // If no numeric offset was given, we wrote to the end of the SmartBuffer so increment writeOffset.
+            this._writeOffset += byteSize;
+        }
+        return this;
+    }
+}
+exports.SmartBuffer = SmartBuffer;
+
+}).call(this)}).call(this,require("buffer").Buffer)
+},{"./utils":327,"buffer":68}],327:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const buffer_1 = require("buffer");
+/**
+ * Error strings
+ */
+const ERRORS = {
+    INVALID_ENCODING: 'Invalid encoding provided. Please specify a valid encoding the internal Node.js Buffer supports.',
+    INVALID_SMARTBUFFER_SIZE: 'Invalid size provided. Size must be a valid integer greater than zero.',
+    INVALID_SMARTBUFFER_BUFFER: 'Invalid Buffer provided in SmartBufferOptions.',
+    INVALID_SMARTBUFFER_OBJECT: 'Invalid SmartBufferOptions object supplied to SmartBuffer constructor or factory methods.',
+    INVALID_OFFSET: 'An invalid offset value was provided.',
+    INVALID_OFFSET_NON_NUMBER: 'An invalid offset value was provided. A numeric value is required.',
+    INVALID_LENGTH: 'An invalid length value was provided.',
+    INVALID_LENGTH_NON_NUMBER: 'An invalid length value was provived. A numeric value is required.',
+    INVALID_TARGET_OFFSET: 'Target offset is beyond the bounds of the internal SmartBuffer data.',
+    INVALID_TARGET_LENGTH: 'Specified length value moves cursor beyong the bounds of the internal SmartBuffer data.',
+    INVALID_READ_BEYOND_BOUNDS: 'Attempted to read beyond the bounds of the managed data.',
+    INVALID_WRITE_BEYOND_BOUNDS: 'Attempted to write beyond the bounds of the managed data.'
+};
+exports.ERRORS = ERRORS;
+/**
+ * Checks if a given encoding is a valid Buffer encoding. (Throws an exception if check fails)
+ *
+ * @param { String } encoding The encoding string to check.
+ */
+function checkEncoding(encoding) {
+    if (!buffer_1.Buffer.isEncoding(encoding)) {
+        throw new Error(ERRORS.INVALID_ENCODING);
+    }
+}
+exports.checkEncoding = checkEncoding;
+/**
+ * Checks if a given number is a finite integer. (Throws an exception if check fails)
+ *
+ * @param { Number } value The number value to check.
+ */
+function isFiniteInteger(value) {
+    return typeof value === 'number' && isFinite(value) && isInteger(value);
+}
+exports.isFiniteInteger = isFiniteInteger;
+/**
+ * Checks if an offset/length value is valid. (Throws an exception if check fails)
+ *
+ * @param value The value to check.
+ * @param offset True if checking an offset, false if checking a length.
+ */
+function checkOffsetOrLengthValue(value, offset) {
+    if (typeof value === 'number') {
+        // Check for non finite/non integers
+        if (!isFiniteInteger(value) || value < 0) {
+            throw new Error(offset ? ERRORS.INVALID_OFFSET : ERRORS.INVALID_LENGTH);
+        }
+    }
+    else {
+        throw new Error(offset ? ERRORS.INVALID_OFFSET_NON_NUMBER : ERRORS.INVALID_LENGTH_NON_NUMBER);
+    }
+}
+/**
+ * Checks if a length value is valid. (Throws an exception if check fails)
+ *
+ * @param { Number } length The value to check.
+ */
+function checkLengthValue(length) {
+    checkOffsetOrLengthValue(length, false);
+}
+exports.checkLengthValue = checkLengthValue;
+/**
+ * Checks if a offset value is valid. (Throws an exception if check fails)
+ *
+ * @param { Number } offset The value to check.
+ */
+function checkOffsetValue(offset) {
+    checkOffsetOrLengthValue(offset, true);
+}
+exports.checkOffsetValue = checkOffsetValue;
+/**
+ * Checks if a target offset value is out of bounds. (Throws an exception if check fails)
+ *
+ * @param { Number } offset The offset value to check.
+ * @param { SmartBuffer } buff The SmartBuffer instance to check against.
+ */
+function checkTargetOffset(offset, buff) {
+    if (offset < 0 || offset > buff.length) {
+        throw new Error(ERRORS.INVALID_TARGET_OFFSET);
+    }
+}
+exports.checkTargetOffset = checkTargetOffset;
+/**
+ * Determines whether a given number is a integer.
+ * @param value The number to check.
+ */
+function isInteger(value) {
+    return typeof value === 'number' && isFinite(value) && Math.floor(value) === value;
+}
+/**
+ * Throws if Node.js version is too low to support bigint
+ */
+function bigIntAndBufferInt64Check(bufferMethod) {
+    if (typeof BigInt === 'undefined') {
+        throw new Error('Platform does not support JS BigInt type.');
+    }
+    if (typeof buffer_1.Buffer.prototype[bufferMethod] === 'undefined') {
+        throw new Error(`Platform does not support Buffer.prototype.${bufferMethod}.`);
+    }
+}
+exports.bigIntAndBufferInt64Check = bigIntAndBufferInt64Check;
+
+},{"buffer":68}],328:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.io = exports.Socket = exports.Manager = exports.protocol = void 0;
@@ -63082,7 +66664,7 @@ var socket_1 = require("./socket");
 Object.defineProperty(exports, "Socket", { enumerable: true, get: function () { return socket_1.Socket; } });
 exports.default = lookup;
 
-},{"./manager":316,"./socket":318,"./url":320,"debug":219,"socket.io-parser":322}],316:[function(require,module,exports){
+},{"./manager":329,"./socket":331,"./url":333,"debug":229,"socket.io-parser":335}],329:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Manager = void 0;
@@ -63459,7 +67041,7 @@ class Manager extends typed_events_1.StrictEventEmitter {
 }
 exports.Manager = Manager;
 
-},{"./on":317,"./socket":318,"./typed-events":319,"backo2":195,"debug":219,"engine.io-client":238,"socket.io-parser":322}],317:[function(require,module,exports){
+},{"./on":330,"./socket":331,"./typed-events":332,"backo2":205,"debug":229,"engine.io-client":248,"socket.io-parser":335}],330:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.on = void 0;
@@ -63471,7 +67053,7 @@ function on(obj, ev, fn) {
 }
 exports.on = on;
 
-},{}],318:[function(require,module,exports){
+},{}],331:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Socket = void 0;
@@ -63933,7 +67515,7 @@ class Socket extends typed_events_1.StrictEventEmitter {
 }
 exports.Socket = Socket;
 
-},{"./on":317,"./typed-events":319,"debug":219,"socket.io-parser":322}],319:[function(require,module,exports){
+},{"./on":330,"./typed-events":332,"debug":229,"socket.io-parser":335}],332:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StrictEventEmitter = void 0;
@@ -64007,7 +67589,7 @@ class StrictEventEmitter extends Emitter {
 }
 exports.StrictEventEmitter = StrictEventEmitter;
 
-},{"component-emitter":216}],320:[function(require,module,exports){
+},{"component-emitter":226}],333:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.url = void 0;
@@ -64075,7 +67657,7 @@ function url(uri, path = "", loc) {
 }
 exports.url = url;
 
-},{"debug":219,"parseuri":294}],321:[function(require,module,exports){
+},{"debug":229,"parseuri":305}],334:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.reconstructPacket = exports.deconstructPacket = void 0;
@@ -64157,7 +67739,7 @@ function _reconstructPacket(data, buffers) {
     return data;
 }
 
-},{"./is-binary":323}],322:[function(require,module,exports){
+},{"./is-binary":336}],335:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Decoder = exports.Encoder = exports.PacketType = exports.protocol = void 0;
@@ -64439,7 +68021,7 @@ class BinaryReconstructor {
     }
 }
 
-},{"./binary":321,"./is-binary":323,"component-emitter":216,"debug":219}],323:[function(require,module,exports){
+},{"./binary":334,"./is-binary":336,"component-emitter":226,"debug":229}],336:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.hasBinary = exports.isBinary = void 0;
@@ -64496,11 +68078,1332 @@ function hasBinary(obj, toJSON) {
 }
 exports.hasBinary = hasBinary;
 
-},{}],324:[function(require,module,exports){
-arguments[4][191][0].apply(exports,arguments)
-},{"dup":191,"safe-buffer":303}],325:[function(require,module,exports){
-arguments[4][192][0].apply(exports,arguments)
-},{"dup":192}],326:[function(require,module,exports){
+},{}],337:[function(require,module,exports){
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const dns_1 = __importDefault(require("dns"));
+const tls_1 = __importDefault(require("tls"));
+const url_1 = __importDefault(require("url"));
+const debug_1 = __importDefault(require("debug"));
+const agent_base_1 = require("agent-base");
+const socks_1 = require("socks");
+const debug = debug_1.default('socks-proxy-agent');
+function dnsLookup(host) {
+    return new Promise((resolve, reject) => {
+        dns_1.default.lookup(host, (err, res) => {
+            if (err) {
+                reject(err);
+            }
+            else {
+                resolve(res);
+            }
+        });
+    });
+}
+function parseSocksProxy(opts) {
+    let port = 0;
+    let lookup = false;
+    let type = 5;
+    // Prefer `hostname` over `host`, because of `url.parse()`
+    const host = opts.hostname || opts.host;
+    if (!host) {
+        throw new TypeError('No "host"');
+    }
+    if (typeof opts.port === 'number') {
+        port = opts.port;
+    }
+    else if (typeof opts.port === 'string') {
+        port = parseInt(opts.port, 10);
+    }
+    // From RFC 1928, Section 3: https://tools.ietf.org/html/rfc1928#section-3
+    // "The SOCKS service is conventionally located on TCP port 1080"
+    if (!port) {
+        port = 1080;
+    }
+    // figure out if we want socks v4 or v5, based on the "protocol" used.
+    // Defaults to 5.
+    if (opts.protocol) {
+        switch (opts.protocol) {
+            case 'socks4:':
+                lookup = true;
+            // pass through
+            case 'socks4a:':
+                type = 4;
+                break;
+            case 'socks5:':
+                lookup = true;
+            // pass through
+            case 'socks:': // no version specified, default to 5h
+            case 'socks5h:':
+                type = 5;
+                break;
+            default:
+                throw new TypeError(`A "socks" protocol must be specified! Got: ${opts.protocol}`);
+        }
+    }
+    if (typeof opts.type !== 'undefined') {
+        if (opts.type === 4 || opts.type === 5) {
+            type = opts.type;
+        }
+        else {
+            throw new TypeError(`"type" must be 4 or 5, got: ${opts.type}`);
+        }
+    }
+    const proxy = {
+        host,
+        port,
+        type
+    };
+    let userId = opts.userId;
+    let password = opts.password;
+    if (opts.auth) {
+        const auth = opts.auth.split(':');
+        userId = auth[0];
+        password = auth[1];
+    }
+    if (userId) {
+        Object.defineProperty(proxy, 'userId', {
+            value: userId,
+            enumerable: false
+        });
+    }
+    if (password) {
+        Object.defineProperty(proxy, 'password', {
+            value: password,
+            enumerable: false
+        });
+    }
+    return { lookup, proxy };
+}
+/**
+ * The `SocksProxyAgent`.
+ *
+ * @api public
+ */
+class SocksProxyAgent extends agent_base_1.Agent {
+    constructor(_opts) {
+        let opts;
+        if (typeof _opts === 'string') {
+            opts = url_1.default.parse(_opts);
+        }
+        else {
+            opts = _opts;
+        }
+        if (!opts) {
+            throw new TypeError('a SOCKS proxy server `host` and `port` must be specified!');
+        }
+        super(opts);
+        const parsedProxy = parseSocksProxy(opts);
+        this.lookup = parsedProxy.lookup;
+        this.proxy = parsedProxy.proxy;
+    }
+    /**
+     * Initiates a SOCKS connection to the specified SOCKS proxy server,
+     * which in turn connects to the specified remote host and port.
+     *
+     * @api protected
+     */
+    callback(req, opts) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { lookup, proxy } = this;
+            let { host, port } = opts;
+            if (!host) {
+                throw new Error('No `host` defined!');
+            }
+            if (lookup) {
+                // Client-side DNS resolution for "4" and "5" socks proxy versions.
+                host = yield dnsLookup(host);
+            }
+            const socksOpts = {
+                proxy,
+                destination: { host, port },
+                command: 'connect'
+            };
+            debug('Creating socks proxy connection: %o', socksOpts);
+            const { socket } = yield socks_1.SocksClient.createConnection(socksOpts);
+            debug('Successfully created socks proxy connection');
+            if (opts.secureEndpoint) {
+                const servername = opts.servername || opts.host;
+                if (!servername) {
+                    throw new Error('Could not determine "servername"');
+                }
+                // The proxy is connecting to a TLS server, so upgrade
+                // this socket connection to a TLS connection.
+                debug('Upgrading socket connection to TLS');
+                return tls_1.default.connect(Object.assign(Object.assign({}, omit(opts, 'host', 'hostname', 'path', 'port')), { socket,
+                    servername }));
+            }
+            return socket;
+        });
+    }
+}
+exports.default = SocksProxyAgent;
+function omit(obj, ...keys) {
+    const ret = {};
+    let key;
+    for (key in obj) {
+        if (!keys.includes(key)) {
+            ret[key] = obj[key];
+        }
+    }
+    return ret;
+}
+
+},{"agent-base":203,"debug":229,"dns":1,"socks":344,"tls":1,"url":198}],338:[function(require,module,exports){
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+const agent_1 = __importDefault(require("./agent"));
+function createSocksProxyAgent(opts) {
+    return new agent_1.default(opts);
+}
+(function (createSocksProxyAgent) {
+    createSocksProxyAgent.SocksProxyAgent = agent_1.default;
+    createSocksProxyAgent.prototype = agent_1.default.prototype;
+})(createSocksProxyAgent || (createSocksProxyAgent = {}));
+module.exports = createSocksProxyAgent;
+
+},{"./agent":337}],339:[function(require,module,exports){
+(function (Buffer,setImmediate){(function (){
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SocksClientError = exports.SocksClient = void 0;
+const events_1 = require("events");
+const net = require("net");
+const ip = require("ip");
+const smart_buffer_1 = require("smart-buffer");
+const constants_1 = require("../common/constants");
+const helpers_1 = require("../common/helpers");
+const receivebuffer_1 = require("../common/receivebuffer");
+const util_1 = require("../common/util");
+Object.defineProperty(exports, "SocksClientError", { enumerable: true, get: function () { return util_1.SocksClientError; } });
+class SocksClient extends events_1.EventEmitter {
+    constructor(options) {
+        super();
+        this.options = Object.assign({}, options);
+        // Validate SocksClientOptions
+        helpers_1.validateSocksClientOptions(options);
+        // Default state
+        this.setState(constants_1.SocksClientState.Created);
+    }
+    /**
+     * Creates a new SOCKS connection.
+     *
+     * Note: Supports callbacks and promises. Only supports the connect command.
+     * @param options { SocksClientOptions } Options.
+     * @param callback { Function } An optional callback function.
+     * @returns { Promise }
+     */
+    static createConnection(options, callback) {
+        return new Promise((resolve, reject) => {
+            // Validate SocksClientOptions
+            try {
+                helpers_1.validateSocksClientOptions(options, ['connect']);
+            }
+            catch (err) {
+                if (typeof callback === 'function') {
+                    callback(err);
+                    return resolve(err); // Resolves pending promise (prevents memory leaks).
+                }
+                else {
+                    return reject(err);
+                }
+            }
+            const client = new SocksClient(options);
+            client.connect(options.existing_socket);
+            client.once('established', (info) => {
+                client.removeAllListeners();
+                if (typeof callback === 'function') {
+                    callback(null, info);
+                    resolve(info); // Resolves pending promise (prevents memory leaks).
+                }
+                else {
+                    resolve(info);
+                }
+            });
+            // Error occurred, failed to establish connection.
+            client.once('error', (err) => {
+                client.removeAllListeners();
+                if (typeof callback === 'function') {
+                    callback(err);
+                    resolve(err); // Resolves pending promise (prevents memory leaks).
+                }
+                else {
+                    reject(err);
+                }
+            });
+        });
+    }
+    /**
+     * Creates a new SOCKS connection chain to a destination host through 2 or more SOCKS proxies.
+     *
+     * Note: Supports callbacks and promises. Only supports the connect method.
+     * Note: Implemented via createConnection() factory function.
+     * @param options { SocksClientChainOptions } Options
+     * @param callback { Function } An optional callback function.
+     * @returns { Promise }
+     */
+    static createConnectionChain(options, callback) {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+            // Validate SocksClientChainOptions
+            try {
+                helpers_1.validateSocksClientChainOptions(options);
+            }
+            catch (err) {
+                if (typeof callback === 'function') {
+                    callback(err);
+                    return resolve(err); // Resolves pending promise (prevents memory leaks).
+                }
+                else {
+                    return reject(err);
+                }
+            }
+            let sock;
+            // Shuffle proxies
+            if (options.randomizeChain) {
+                util_1.shuffleArray(options.proxies);
+            }
+            try {
+                // tslint:disable-next-line:no-increment-decrement
+                for (let i = 0; i < options.proxies.length; i++) {
+                    const nextProxy = options.proxies[i];
+                    // If we've reached the last proxy in the chain, the destination is the actual destination, otherwise it's the next proxy.
+                    const nextDestination = i === options.proxies.length - 1
+                        ? options.destination
+                        : {
+                            host: options.proxies[i + 1].ipaddress,
+                            port: options.proxies[i + 1].port,
+                        };
+                    // Creates the next connection in the chain.
+                    const result = yield SocksClient.createConnection({
+                        command: 'connect',
+                        proxy: nextProxy,
+                        destination: nextDestination,
+                        // Initial connection ignores this as sock is undefined. Subsequent connections re-use the first proxy socket to form a chain.
+                    });
+                    // If sock is undefined, assign it here.
+                    if (!sock) {
+                        sock = result.socket;
+                    }
+                }
+                if (typeof callback === 'function') {
+                    callback(null, { socket: sock });
+                    resolve({ socket: sock }); // Resolves pending promise (prevents memory leaks).
+                }
+                else {
+                    resolve({ socket: sock });
+                }
+            }
+            catch (err) {
+                if (typeof callback === 'function') {
+                    callback(err);
+                    resolve(err); // Resolves pending promise (prevents memory leaks).
+                }
+                else {
+                    reject(err);
+                }
+            }
+        }));
+    }
+    /**
+     * Creates a SOCKS UDP Frame.
+     * @param options
+     */
+    static createUDPFrame(options) {
+        const buff = new smart_buffer_1.SmartBuffer();
+        buff.writeUInt16BE(0);
+        buff.writeUInt8(options.frameNumber || 0);
+        // IPv4/IPv6/Hostname
+        if (net.isIPv4(options.remoteHost.host)) {
+            buff.writeUInt8(constants_1.Socks5HostType.IPv4);
+            buff.writeUInt32BE(ip.toLong(options.remoteHost.host));
+        }
+        else if (net.isIPv6(options.remoteHost.host)) {
+            buff.writeUInt8(constants_1.Socks5HostType.IPv6);
+            buff.writeBuffer(ip.toBuffer(options.remoteHost.host));
+        }
+        else {
+            buff.writeUInt8(constants_1.Socks5HostType.Hostname);
+            buff.writeUInt8(Buffer.byteLength(options.remoteHost.host));
+            buff.writeString(options.remoteHost.host);
+        }
+        // Port
+        buff.writeUInt16BE(options.remoteHost.port);
+        // Data
+        buff.writeBuffer(options.data);
+        return buff.toBuffer();
+    }
+    /**
+     * Parses a SOCKS UDP frame.
+     * @param data
+     */
+    static parseUDPFrame(data) {
+        const buff = smart_buffer_1.SmartBuffer.fromBuffer(data);
+        buff.readOffset = 2;
+        const frameNumber = buff.readUInt8();
+        const hostType = buff.readUInt8();
+        let remoteHost;
+        if (hostType === constants_1.Socks5HostType.IPv4) {
+            remoteHost = ip.fromLong(buff.readUInt32BE());
+        }
+        else if (hostType === constants_1.Socks5HostType.IPv6) {
+            remoteHost = ip.toString(buff.readBuffer(16));
+        }
+        else {
+            remoteHost = buff.readString(buff.readUInt8());
+        }
+        const remotePort = buff.readUInt16BE();
+        return {
+            frameNumber,
+            remoteHost: {
+                host: remoteHost,
+                port: remotePort,
+            },
+            data: buff.readBuffer(),
+        };
+    }
+    /**
+     * Internal state setter. If the SocksClient is in an error state, it cannot be changed to a non error state.
+     */
+    setState(newState) {
+        if (this.state !== constants_1.SocksClientState.Error) {
+            this.state = newState;
+        }
+    }
+    /**
+     * Starts the connection establishment to the proxy and destination.
+     * @param existingSocket Connected socket to use instead of creating a new one (internal use).
+     */
+    connect(existingSocket) {
+        this.onDataReceived = (data) => this.onDataReceivedHandler(data);
+        this.onClose = () => this.onCloseHandler();
+        this.onError = (err) => this.onErrorHandler(err);
+        this.onConnect = () => this.onConnectHandler();
+        // Start timeout timer (defaults to 30 seconds)
+        const timer = setTimeout(() => this.onEstablishedTimeout(), this.options.timeout || constants_1.DEFAULT_TIMEOUT);
+        // check whether unref is available as it differs from browser to NodeJS (#33)
+        if (timer.unref && typeof timer.unref === 'function') {
+            timer.unref();
+        }
+        // If an existing socket is provided, use it to negotiate SOCKS handshake. Otherwise create a new Socket.
+        if (existingSocket) {
+            this.socket = existingSocket;
+        }
+        else {
+            this.socket = new net.Socket();
+        }
+        // Attach Socket error handlers.
+        this.socket.once('close', this.onClose);
+        this.socket.once('error', this.onError);
+        this.socket.once('connect', this.onConnect);
+        this.socket.on('data', this.onDataReceived);
+        this.setState(constants_1.SocksClientState.Connecting);
+        this.receiveBuffer = new receivebuffer_1.ReceiveBuffer();
+        if (existingSocket) {
+            this.socket.emit('connect');
+        }
+        else {
+            this.socket.connect(this.getSocketOptions());
+            if (this.options.set_tcp_nodelay !== undefined &&
+                this.options.set_tcp_nodelay !== null) {
+                this.socket.setNoDelay(!!this.options.set_tcp_nodelay);
+            }
+        }
+        // Listen for established event so we can re-emit any excess data received during handshakes.
+        this.prependOnceListener('established', (info) => {
+            setImmediate(() => {
+                if (this.receiveBuffer.length > 0) {
+                    const excessData = this.receiveBuffer.get(this.receiveBuffer.length);
+                    info.socket.emit('data', excessData);
+                }
+                info.socket.resume();
+            });
+        });
+    }
+    // Socket options (defaults host/port to options.proxy.host/options.proxy.port)
+    getSocketOptions() {
+        return Object.assign(Object.assign({}, this.options.socket_options), { host: this.options.proxy.host || this.options.proxy.ipaddress, port: this.options.proxy.port });
+    }
+    /**
+     * Handles internal Socks timeout callback.
+     * Note: If the Socks client is not BoundWaitingForConnection or Established, the connection will be closed.
+     */
+    onEstablishedTimeout() {
+        if (this.state !== constants_1.SocksClientState.Established &&
+            this.state !== constants_1.SocksClientState.BoundWaitingForConnection) {
+            this.closeSocket(constants_1.ERRORS.ProxyConnectionTimedOut);
+        }
+    }
+    /**
+     * Handles Socket connect event.
+     */
+    onConnectHandler() {
+        this.setState(constants_1.SocksClientState.Connected);
+        // Send initial handshake.
+        if (this.options.proxy.type === 4) {
+            this.sendSocks4InitialHandshake();
+        }
+        else {
+            this.sendSocks5InitialHandshake();
+        }
+        this.setState(constants_1.SocksClientState.SentInitialHandshake);
+    }
+    /**
+     * Handles Socket data event.
+     * @param data
+     */
+    onDataReceivedHandler(data) {
+        /*
+          All received data is appended to a ReceiveBuffer.
+          This makes sure that all the data we need is received before we attempt to process it.
+        */
+        this.receiveBuffer.append(data);
+        // Process data that we have.
+        this.processData();
+    }
+    /**
+     * Handles processing of the data we have received.
+     */
+    processData() {
+        // If we have enough data to process the next step in the SOCKS handshake, proceed.
+        while (this.state !== constants_1.SocksClientState.Established &&
+            this.state !== constants_1.SocksClientState.Error &&
+            this.receiveBuffer.length >= this.nextRequiredPacketBufferSize) {
+            // Sent initial handshake, waiting for response.
+            if (this.state === constants_1.SocksClientState.SentInitialHandshake) {
+                if (this.options.proxy.type === 4) {
+                    // Socks v4 only has one handshake response.
+                    this.handleSocks4FinalHandshakeResponse();
+                }
+                else {
+                    // Socks v5 has two handshakes, handle initial one here.
+                    this.handleInitialSocks5HandshakeResponse();
+                }
+                // Sent auth request for Socks v5, waiting for response.
+            }
+            else if (this.state === constants_1.SocksClientState.SentAuthentication) {
+                this.handleInitialSocks5AuthenticationHandshakeResponse();
+                // Sent final Socks v5 handshake, waiting for final response.
+            }
+            else if (this.state === constants_1.SocksClientState.SentFinalHandshake) {
+                this.handleSocks5FinalHandshakeResponse();
+                // Socks BIND established. Waiting for remote connection via proxy.
+            }
+            else if (this.state === constants_1.SocksClientState.BoundWaitingForConnection) {
+                if (this.options.proxy.type === 4) {
+                    this.handleSocks4IncomingConnectionResponse();
+                }
+                else {
+                    this.handleSocks5IncomingConnectionResponse();
+                }
+            }
+            else {
+                this.closeSocket(constants_1.ERRORS.InternalError);
+                break;
+            }
+        }
+    }
+    /**
+     * Handles Socket close event.
+     * @param had_error
+     */
+    onCloseHandler() {
+        this.closeSocket(constants_1.ERRORS.SocketClosed);
+    }
+    /**
+     * Handles Socket error event.
+     * @param err
+     */
+    onErrorHandler(err) {
+        this.closeSocket(err.message);
+    }
+    /**
+     * Removes internal event listeners on the underlying Socket.
+     */
+    removeInternalSocketHandlers() {
+        // Pauses data flow of the socket (this is internally resumed after 'established' is emitted)
+        this.socket.pause();
+        this.socket.removeListener('data', this.onDataReceived);
+        this.socket.removeListener('close', this.onClose);
+        this.socket.removeListener('error', this.onError);
+        this.socket.removeListener('connect', this.onConnect);
+    }
+    /**
+     * Closes and destroys the underlying Socket. Emits an error event.
+     * @param err { String } An error string to include in error event.
+     */
+    closeSocket(err) {
+        // Make sure only one 'error' event is fired for the lifetime of this SocksClient instance.
+        if (this.state !== constants_1.SocksClientState.Error) {
+            // Set internal state to Error.
+            this.setState(constants_1.SocksClientState.Error);
+            // Destroy Socket
+            this.socket.destroy();
+            // Remove internal listeners
+            this.removeInternalSocketHandlers();
+            // Fire 'error' event.
+            this.emit('error', new util_1.SocksClientError(err, this.options));
+        }
+    }
+    /**
+     * Sends initial Socks v4 handshake request.
+     */
+    sendSocks4InitialHandshake() {
+        const userId = this.options.proxy.userId || '';
+        const buff = new smart_buffer_1.SmartBuffer();
+        buff.writeUInt8(0x04);
+        buff.writeUInt8(constants_1.SocksCommand[this.options.command]);
+        buff.writeUInt16BE(this.options.destination.port);
+        // Socks 4 (IPv4)
+        if (net.isIPv4(this.options.destination.host)) {
+            buff.writeBuffer(ip.toBuffer(this.options.destination.host));
+            buff.writeStringNT(userId);
+            // Socks 4a (hostname)
+        }
+        else {
+            buff.writeUInt8(0x00);
+            buff.writeUInt8(0x00);
+            buff.writeUInt8(0x00);
+            buff.writeUInt8(0x01);
+            buff.writeStringNT(userId);
+            buff.writeStringNT(this.options.destination.host);
+        }
+        this.nextRequiredPacketBufferSize =
+            constants_1.SOCKS_INCOMING_PACKET_SIZES.Socks4Response;
+        this.socket.write(buff.toBuffer());
+    }
+    /**
+     * Handles Socks v4 handshake response.
+     * @param data
+     */
+    handleSocks4FinalHandshakeResponse() {
+        const data = this.receiveBuffer.get(8);
+        if (data[1] !== constants_1.Socks4Response.Granted) {
+            this.closeSocket(`${constants_1.ERRORS.Socks4ProxyRejectedConnection} - (${constants_1.Socks4Response[data[1]]})`);
+        }
+        else {
+            // Bind response
+            if (constants_1.SocksCommand[this.options.command] === constants_1.SocksCommand.bind) {
+                const buff = smart_buffer_1.SmartBuffer.fromBuffer(data);
+                buff.readOffset = 2;
+                const remoteHost = {
+                    port: buff.readUInt16BE(),
+                    host: ip.fromLong(buff.readUInt32BE()),
+                };
+                // If host is 0.0.0.0, set to proxy host.
+                if (remoteHost.host === '0.0.0.0') {
+                    remoteHost.host = this.options.proxy.ipaddress;
+                }
+                this.setState(constants_1.SocksClientState.BoundWaitingForConnection);
+                this.emit('bound', { remoteHost, socket: this.socket });
+                // Connect response
+            }
+            else {
+                this.setState(constants_1.SocksClientState.Established);
+                this.removeInternalSocketHandlers();
+                this.emit('established', { socket: this.socket });
+            }
+        }
+    }
+    /**
+     * Handles Socks v4 incoming connection request (BIND)
+     * @param data
+     */
+    handleSocks4IncomingConnectionResponse() {
+        const data = this.receiveBuffer.get(8);
+        if (data[1] !== constants_1.Socks4Response.Granted) {
+            this.closeSocket(`${constants_1.ERRORS.Socks4ProxyRejectedIncomingBoundConnection} - (${constants_1.Socks4Response[data[1]]})`);
+        }
+        else {
+            const buff = smart_buffer_1.SmartBuffer.fromBuffer(data);
+            buff.readOffset = 2;
+            const remoteHost = {
+                port: buff.readUInt16BE(),
+                host: ip.fromLong(buff.readUInt32BE()),
+            };
+            this.setState(constants_1.SocksClientState.Established);
+            this.removeInternalSocketHandlers();
+            this.emit('established', { remoteHost, socket: this.socket });
+        }
+    }
+    /**
+     * Sends initial Socks v5 handshake request.
+     */
+    sendSocks5InitialHandshake() {
+        const buff = new smart_buffer_1.SmartBuffer();
+        // By default we always support no auth.
+        const supportedAuthMethods = [constants_1.Socks5Auth.NoAuth];
+        // We should only tell the proxy we support user/pass auth if auth info is actually provided.
+        // Note: As of Tor v0.3.5.7+, if user/pass auth is an option from the client, by default it will always take priority.
+        if (this.options.proxy.userId || this.options.proxy.password) {
+            supportedAuthMethods.push(constants_1.Socks5Auth.UserPass);
+        }
+        // Custom auth method?
+        if (this.options.proxy.custom_auth_method !== undefined) {
+            supportedAuthMethods.push(this.options.proxy.custom_auth_method);
+        }
+        // Build handshake packet
+        buff.writeUInt8(0x05);
+        buff.writeUInt8(supportedAuthMethods.length);
+        for (const authMethod of supportedAuthMethods) {
+            buff.writeUInt8(authMethod);
+        }
+        this.nextRequiredPacketBufferSize =
+            constants_1.SOCKS_INCOMING_PACKET_SIZES.Socks5InitialHandshakeResponse;
+        this.socket.write(buff.toBuffer());
+        this.setState(constants_1.SocksClientState.SentInitialHandshake);
+    }
+    /**
+     * Handles initial Socks v5 handshake response.
+     * @param data
+     */
+    handleInitialSocks5HandshakeResponse() {
+        const data = this.receiveBuffer.get(2);
+        if (data[0] !== 0x05) {
+            this.closeSocket(constants_1.ERRORS.InvalidSocks5IntiailHandshakeSocksVersion);
+        }
+        else if (data[1] === constants_1.SOCKS5_NO_ACCEPTABLE_AUTH) {
+            this.closeSocket(constants_1.ERRORS.InvalidSocks5InitialHandshakeNoAcceptedAuthType);
+        }
+        else {
+            // If selected Socks v5 auth method is no auth, send final handshake request.
+            if (data[1] === constants_1.Socks5Auth.NoAuth) {
+                this.socks5ChosenAuthType = constants_1.Socks5Auth.NoAuth;
+                this.sendSocks5CommandRequest();
+                // If selected Socks v5 auth method is user/password, send auth handshake.
+            }
+            else if (data[1] === constants_1.Socks5Auth.UserPass) {
+                this.socks5ChosenAuthType = constants_1.Socks5Auth.UserPass;
+                this.sendSocks5UserPassAuthentication();
+                // If selected Socks v5 auth method is the custom_auth_method, send custom handshake.
+            }
+            else if (data[1] === this.options.proxy.custom_auth_method) {
+                this.socks5ChosenAuthType = this.options.proxy.custom_auth_method;
+                this.sendSocks5CustomAuthentication();
+            }
+            else {
+                this.closeSocket(constants_1.ERRORS.InvalidSocks5InitialHandshakeUnknownAuthType);
+            }
+        }
+    }
+    /**
+     * Sends Socks v5 user & password auth handshake.
+     *
+     * Note: No auth and user/pass are currently supported.
+     */
+    sendSocks5UserPassAuthentication() {
+        const userId = this.options.proxy.userId || '';
+        const password = this.options.proxy.password || '';
+        const buff = new smart_buffer_1.SmartBuffer();
+        buff.writeUInt8(0x01);
+        buff.writeUInt8(Buffer.byteLength(userId));
+        buff.writeString(userId);
+        buff.writeUInt8(Buffer.byteLength(password));
+        buff.writeString(password);
+        this.nextRequiredPacketBufferSize =
+            constants_1.SOCKS_INCOMING_PACKET_SIZES.Socks5UserPassAuthenticationResponse;
+        this.socket.write(buff.toBuffer());
+        this.setState(constants_1.SocksClientState.SentAuthentication);
+    }
+    sendSocks5CustomAuthentication() {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.nextRequiredPacketBufferSize = this.options.proxy.custom_auth_response_size;
+            this.socket.write(yield this.options.proxy.custom_auth_request_handler());
+            this.setState(constants_1.SocksClientState.SentAuthentication);
+        });
+    }
+    handleSocks5CustomAuthHandshakeResponse(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.options.proxy.custom_auth_response_handler(data);
+        });
+    }
+    handleSocks5AuthenticationNoAuthHandshakeResponse(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return data[1] === 0x00;
+        });
+    }
+    handleSocks5AuthenticationUserPassHandshakeResponse(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return data[1] === 0x00;
+        });
+    }
+    /**
+     * Handles Socks v5 auth handshake response.
+     * @param data
+     */
+    handleInitialSocks5AuthenticationHandshakeResponse() {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.setState(constants_1.SocksClientState.ReceivedAuthenticationResponse);
+            let authResult = false;
+            if (this.socks5ChosenAuthType === constants_1.Socks5Auth.NoAuth) {
+                authResult = yield this.handleSocks5AuthenticationNoAuthHandshakeResponse(this.receiveBuffer.get(2));
+            }
+            else if (this.socks5ChosenAuthType === constants_1.Socks5Auth.UserPass) {
+                authResult = yield this.handleSocks5AuthenticationUserPassHandshakeResponse(this.receiveBuffer.get(2));
+            }
+            else if (this.socks5ChosenAuthType === this.options.proxy.custom_auth_method) {
+                authResult = yield this.handleSocks5CustomAuthHandshakeResponse(this.receiveBuffer.get(this.options.proxy.custom_auth_response_size));
+            }
+            if (!authResult) {
+                this.closeSocket(constants_1.ERRORS.Socks5AuthenticationFailed);
+            }
+            else {
+                this.sendSocks5CommandRequest();
+            }
+        });
+    }
+    /**
+     * Sends Socks v5 final handshake request.
+     */
+    sendSocks5CommandRequest() {
+        const buff = new smart_buffer_1.SmartBuffer();
+        buff.writeUInt8(0x05);
+        buff.writeUInt8(constants_1.SocksCommand[this.options.command]);
+        buff.writeUInt8(0x00);
+        // ipv4, ipv6, domain?
+        if (net.isIPv4(this.options.destination.host)) {
+            buff.writeUInt8(constants_1.Socks5HostType.IPv4);
+            buff.writeBuffer(ip.toBuffer(this.options.destination.host));
+        }
+        else if (net.isIPv6(this.options.destination.host)) {
+            buff.writeUInt8(constants_1.Socks5HostType.IPv6);
+            buff.writeBuffer(ip.toBuffer(this.options.destination.host));
+        }
+        else {
+            buff.writeUInt8(constants_1.Socks5HostType.Hostname);
+            buff.writeUInt8(this.options.destination.host.length);
+            buff.writeString(this.options.destination.host);
+        }
+        buff.writeUInt16BE(this.options.destination.port);
+        this.nextRequiredPacketBufferSize =
+            constants_1.SOCKS_INCOMING_PACKET_SIZES.Socks5ResponseHeader;
+        this.socket.write(buff.toBuffer());
+        this.setState(constants_1.SocksClientState.SentFinalHandshake);
+    }
+    /**
+     * Handles Socks v5 final handshake response.
+     * @param data
+     */
+    handleSocks5FinalHandshakeResponse() {
+        // Peek at available data (we need at least 5 bytes to get the hostname length)
+        const header = this.receiveBuffer.peek(5);
+        if (header[0] !== 0x05 || header[1] !== constants_1.Socks5Response.Granted) {
+            this.closeSocket(`${constants_1.ERRORS.InvalidSocks5FinalHandshakeRejected} - ${constants_1.Socks5Response[header[1]]}`);
+        }
+        else {
+            // Read address type
+            const addressType = header[3];
+            let remoteHost;
+            let buff;
+            // IPv4
+            if (addressType === constants_1.Socks5HostType.IPv4) {
+                // Check if data is available.
+                const dataNeeded = constants_1.SOCKS_INCOMING_PACKET_SIZES.Socks5ResponseIPv4;
+                if (this.receiveBuffer.length < dataNeeded) {
+                    this.nextRequiredPacketBufferSize = dataNeeded;
+                    return;
+                }
+                buff = smart_buffer_1.SmartBuffer.fromBuffer(this.receiveBuffer.get(dataNeeded).slice(4));
+                remoteHost = {
+                    host: ip.fromLong(buff.readUInt32BE()),
+                    port: buff.readUInt16BE(),
+                };
+                // If given host is 0.0.0.0, assume remote proxy ip instead.
+                if (remoteHost.host === '0.0.0.0') {
+                    remoteHost.host = this.options.proxy.ipaddress;
+                }
+                // Hostname
+            }
+            else if (addressType === constants_1.Socks5HostType.Hostname) {
+                const hostLength = header[4];
+                const dataNeeded = constants_1.SOCKS_INCOMING_PACKET_SIZES.Socks5ResponseHostname(hostLength); // header + host length + host + port
+                // Check if data is available.
+                if (this.receiveBuffer.length < dataNeeded) {
+                    this.nextRequiredPacketBufferSize = dataNeeded;
+                    return;
+                }
+                buff = smart_buffer_1.SmartBuffer.fromBuffer(this.receiveBuffer.get(dataNeeded).slice(5));
+                remoteHost = {
+                    host: buff.readString(hostLength),
+                    port: buff.readUInt16BE(),
+                };
+                // IPv6
+            }
+            else if (addressType === constants_1.Socks5HostType.IPv6) {
+                // Check if data is available.
+                const dataNeeded = constants_1.SOCKS_INCOMING_PACKET_SIZES.Socks5ResponseIPv6;
+                if (this.receiveBuffer.length < dataNeeded) {
+                    this.nextRequiredPacketBufferSize = dataNeeded;
+                    return;
+                }
+                buff = smart_buffer_1.SmartBuffer.fromBuffer(this.receiveBuffer.get(dataNeeded).slice(4));
+                remoteHost = {
+                    host: ip.toString(buff.readBuffer(16)),
+                    port: buff.readUInt16BE(),
+                };
+            }
+            // We have everything we need
+            this.setState(constants_1.SocksClientState.ReceivedFinalResponse);
+            // If using CONNECT, the client is now in the established state.
+            if (constants_1.SocksCommand[this.options.command] === constants_1.SocksCommand.connect) {
+                this.setState(constants_1.SocksClientState.Established);
+                this.removeInternalSocketHandlers();
+                this.emit('established', { remoteHost, socket: this.socket });
+            }
+            else if (constants_1.SocksCommand[this.options.command] === constants_1.SocksCommand.bind) {
+                /* If using BIND, the Socks client is now in BoundWaitingForConnection state.
+                   This means that the remote proxy server is waiting for a remote connection to the bound port. */
+                this.setState(constants_1.SocksClientState.BoundWaitingForConnection);
+                this.nextRequiredPacketBufferSize =
+                    constants_1.SOCKS_INCOMING_PACKET_SIZES.Socks5ResponseHeader;
+                this.emit('bound', { remoteHost, socket: this.socket });
+                /*
+                  If using Associate, the Socks client is now Established. And the proxy server is now accepting UDP packets at the
+                  given bound port. This initial Socks TCP connection must remain open for the UDP relay to continue to work.
+                */
+            }
+            else if (constants_1.SocksCommand[this.options.command] === constants_1.SocksCommand.associate) {
+                this.setState(constants_1.SocksClientState.Established);
+                this.removeInternalSocketHandlers();
+                this.emit('established', {
+                    remoteHost,
+                    socket: this.socket,
+                });
+            }
+        }
+    }
+    /**
+     * Handles Socks v5 incoming connection request (BIND).
+     */
+    handleSocks5IncomingConnectionResponse() {
+        // Peek at available data (we need at least 5 bytes to get the hostname length)
+        const header = this.receiveBuffer.peek(5);
+        if (header[0] !== 0x05 || header[1] !== constants_1.Socks5Response.Granted) {
+            this.closeSocket(`${constants_1.ERRORS.Socks5ProxyRejectedIncomingBoundConnection} - ${constants_1.Socks5Response[header[1]]}`);
+        }
+        else {
+            // Read address type
+            const addressType = header[3];
+            let remoteHost;
+            let buff;
+            // IPv4
+            if (addressType === constants_1.Socks5HostType.IPv4) {
+                // Check if data is available.
+                const dataNeeded = constants_1.SOCKS_INCOMING_PACKET_SIZES.Socks5ResponseIPv4;
+                if (this.receiveBuffer.length < dataNeeded) {
+                    this.nextRequiredPacketBufferSize = dataNeeded;
+                    return;
+                }
+                buff = smart_buffer_1.SmartBuffer.fromBuffer(this.receiveBuffer.get(dataNeeded).slice(4));
+                remoteHost = {
+                    host: ip.fromLong(buff.readUInt32BE()),
+                    port: buff.readUInt16BE(),
+                };
+                // If given host is 0.0.0.0, assume remote proxy ip instead.
+                if (remoteHost.host === '0.0.0.0') {
+                    remoteHost.host = this.options.proxy.ipaddress;
+                }
+                // Hostname
+            }
+            else if (addressType === constants_1.Socks5HostType.Hostname) {
+                const hostLength = header[4];
+                const dataNeeded = constants_1.SOCKS_INCOMING_PACKET_SIZES.Socks5ResponseHostname(hostLength); // header + host length + port
+                // Check if data is available.
+                if (this.receiveBuffer.length < dataNeeded) {
+                    this.nextRequiredPacketBufferSize = dataNeeded;
+                    return;
+                }
+                buff = smart_buffer_1.SmartBuffer.fromBuffer(this.receiveBuffer.get(dataNeeded).slice(5));
+                remoteHost = {
+                    host: buff.readString(hostLength),
+                    port: buff.readUInt16BE(),
+                };
+                // IPv6
+            }
+            else if (addressType === constants_1.Socks5HostType.IPv6) {
+                // Check if data is available.
+                const dataNeeded = constants_1.SOCKS_INCOMING_PACKET_SIZES.Socks5ResponseIPv6;
+                if (this.receiveBuffer.length < dataNeeded) {
+                    this.nextRequiredPacketBufferSize = dataNeeded;
+                    return;
+                }
+                buff = smart_buffer_1.SmartBuffer.fromBuffer(this.receiveBuffer.get(dataNeeded).slice(4));
+                remoteHost = {
+                    host: ip.toString(buff.readBuffer(16)),
+                    port: buff.readUInt16BE(),
+                };
+            }
+            this.setState(constants_1.SocksClientState.Established);
+            this.removeInternalSocketHandlers();
+            this.emit('established', { remoteHost, socket: this.socket });
+        }
+    }
+    get socksClientOptions() {
+        return Object.assign({}, this.options);
+    }
+}
+exports.SocksClient = SocksClient;
+
+}).call(this)}).call(this,require("buffer").Buffer,require("timers").setImmediate)
+},{"../common/constants":340,"../common/helpers":341,"../common/receivebuffer":342,"../common/util":343,"buffer":68,"events":105,"ip":296,"net":1,"smart-buffer":326,"timers":197}],340:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SOCKS5_NO_ACCEPTABLE_AUTH = exports.SOCKS5_CUSTOM_AUTH_END = exports.SOCKS5_CUSTOM_AUTH_START = exports.SOCKS_INCOMING_PACKET_SIZES = exports.SocksClientState = exports.Socks5Response = exports.Socks5HostType = exports.Socks5Auth = exports.Socks4Response = exports.SocksCommand = exports.ERRORS = exports.DEFAULT_TIMEOUT = void 0;
+const DEFAULT_TIMEOUT = 30000;
+exports.DEFAULT_TIMEOUT = DEFAULT_TIMEOUT;
+// prettier-ignore
+const ERRORS = {
+    InvalidSocksCommand: 'An invalid SOCKS command was provided. Valid options are connect, bind, and associate.',
+    InvalidSocksCommandForOperation: 'An invalid SOCKS command was provided. Only a subset of commands are supported for this operation.',
+    InvalidSocksCommandChain: 'An invalid SOCKS command was provided. Chaining currently only supports the connect command.',
+    InvalidSocksClientOptionsDestination: 'An invalid destination host was provided.',
+    InvalidSocksClientOptionsExistingSocket: 'An invalid existing socket was provided. This should be an instance of stream.Duplex.',
+    InvalidSocksClientOptionsProxy: 'Invalid SOCKS proxy details were provided.',
+    InvalidSocksClientOptionsTimeout: 'An invalid timeout value was provided. Please enter a value above 0 (in ms).',
+    InvalidSocksClientOptionsProxiesLength: 'At least two socks proxies must be provided for chaining.',
+    InvalidSocksClientOptionsCustomAuthRange: 'Custom auth must be a value between 0x80 and 0xFE.',
+    InvalidSocksClientOptionsCustomAuthOptions: 'When a custom_auth_method is provided, custom_auth_request_handler, custom_auth_response_size, and custom_auth_response_handler must also be provided and valid.',
+    NegotiationError: 'Negotiation error',
+    SocketClosed: 'Socket closed',
+    ProxyConnectionTimedOut: 'Proxy connection timed out',
+    InternalError: 'SocksClient internal error (this should not happen)',
+    InvalidSocks4HandshakeResponse: 'Received invalid Socks4 handshake response',
+    Socks4ProxyRejectedConnection: 'Socks4 Proxy rejected connection',
+    InvalidSocks4IncomingConnectionResponse: 'Socks4 invalid incoming connection response',
+    Socks4ProxyRejectedIncomingBoundConnection: 'Socks4 Proxy rejected incoming bound connection',
+    InvalidSocks5InitialHandshakeResponse: 'Received invalid Socks5 initial handshake response',
+    InvalidSocks5IntiailHandshakeSocksVersion: 'Received invalid Socks5 initial handshake (invalid socks version)',
+    InvalidSocks5InitialHandshakeNoAcceptedAuthType: 'Received invalid Socks5 initial handshake (no accepted authentication type)',
+    InvalidSocks5InitialHandshakeUnknownAuthType: 'Received invalid Socks5 initial handshake (unknown authentication type)',
+    Socks5AuthenticationFailed: 'Socks5 Authentication failed',
+    InvalidSocks5FinalHandshake: 'Received invalid Socks5 final handshake response',
+    InvalidSocks5FinalHandshakeRejected: 'Socks5 proxy rejected connection',
+    InvalidSocks5IncomingConnectionResponse: 'Received invalid Socks5 incoming connection response',
+    Socks5ProxyRejectedIncomingBoundConnection: 'Socks5 Proxy rejected incoming bound connection',
+};
+exports.ERRORS = ERRORS;
+const SOCKS_INCOMING_PACKET_SIZES = {
+    Socks5InitialHandshakeResponse: 2,
+    Socks5UserPassAuthenticationResponse: 2,
+    // Command response + incoming connection (bind)
+    Socks5ResponseHeader: 5,
+    Socks5ResponseIPv4: 10,
+    Socks5ResponseIPv6: 22,
+    Socks5ResponseHostname: (hostNameLength) => hostNameLength + 7,
+    // Command response + incoming connection (bind)
+    Socks4Response: 8, // 2 header + 2 port + 4 ip
+};
+exports.SOCKS_INCOMING_PACKET_SIZES = SOCKS_INCOMING_PACKET_SIZES;
+var SocksCommand;
+(function (SocksCommand) {
+    SocksCommand[SocksCommand["connect"] = 1] = "connect";
+    SocksCommand[SocksCommand["bind"] = 2] = "bind";
+    SocksCommand[SocksCommand["associate"] = 3] = "associate";
+})(SocksCommand || (SocksCommand = {}));
+exports.SocksCommand = SocksCommand;
+var Socks4Response;
+(function (Socks4Response) {
+    Socks4Response[Socks4Response["Granted"] = 90] = "Granted";
+    Socks4Response[Socks4Response["Failed"] = 91] = "Failed";
+    Socks4Response[Socks4Response["Rejected"] = 92] = "Rejected";
+    Socks4Response[Socks4Response["RejectedIdent"] = 93] = "RejectedIdent";
+})(Socks4Response || (Socks4Response = {}));
+exports.Socks4Response = Socks4Response;
+var Socks5Auth;
+(function (Socks5Auth) {
+    Socks5Auth[Socks5Auth["NoAuth"] = 0] = "NoAuth";
+    Socks5Auth[Socks5Auth["GSSApi"] = 1] = "GSSApi";
+    Socks5Auth[Socks5Auth["UserPass"] = 2] = "UserPass";
+})(Socks5Auth || (Socks5Auth = {}));
+exports.Socks5Auth = Socks5Auth;
+const SOCKS5_CUSTOM_AUTH_START = 0x80;
+exports.SOCKS5_CUSTOM_AUTH_START = SOCKS5_CUSTOM_AUTH_START;
+const SOCKS5_CUSTOM_AUTH_END = 0xfe;
+exports.SOCKS5_CUSTOM_AUTH_END = SOCKS5_CUSTOM_AUTH_END;
+const SOCKS5_NO_ACCEPTABLE_AUTH = 0xff;
+exports.SOCKS5_NO_ACCEPTABLE_AUTH = SOCKS5_NO_ACCEPTABLE_AUTH;
+var Socks5Response;
+(function (Socks5Response) {
+    Socks5Response[Socks5Response["Granted"] = 0] = "Granted";
+    Socks5Response[Socks5Response["Failure"] = 1] = "Failure";
+    Socks5Response[Socks5Response["NotAllowed"] = 2] = "NotAllowed";
+    Socks5Response[Socks5Response["NetworkUnreachable"] = 3] = "NetworkUnreachable";
+    Socks5Response[Socks5Response["HostUnreachable"] = 4] = "HostUnreachable";
+    Socks5Response[Socks5Response["ConnectionRefused"] = 5] = "ConnectionRefused";
+    Socks5Response[Socks5Response["TTLExpired"] = 6] = "TTLExpired";
+    Socks5Response[Socks5Response["CommandNotSupported"] = 7] = "CommandNotSupported";
+    Socks5Response[Socks5Response["AddressNotSupported"] = 8] = "AddressNotSupported";
+})(Socks5Response || (Socks5Response = {}));
+exports.Socks5Response = Socks5Response;
+var Socks5HostType;
+(function (Socks5HostType) {
+    Socks5HostType[Socks5HostType["IPv4"] = 1] = "IPv4";
+    Socks5HostType[Socks5HostType["Hostname"] = 3] = "Hostname";
+    Socks5HostType[Socks5HostType["IPv6"] = 4] = "IPv6";
+})(Socks5HostType || (Socks5HostType = {}));
+exports.Socks5HostType = Socks5HostType;
+var SocksClientState;
+(function (SocksClientState) {
+    SocksClientState[SocksClientState["Created"] = 0] = "Created";
+    SocksClientState[SocksClientState["Connecting"] = 1] = "Connecting";
+    SocksClientState[SocksClientState["Connected"] = 2] = "Connected";
+    SocksClientState[SocksClientState["SentInitialHandshake"] = 3] = "SentInitialHandshake";
+    SocksClientState[SocksClientState["ReceivedInitialHandshakeResponse"] = 4] = "ReceivedInitialHandshakeResponse";
+    SocksClientState[SocksClientState["SentAuthentication"] = 5] = "SentAuthentication";
+    SocksClientState[SocksClientState["ReceivedAuthenticationResponse"] = 6] = "ReceivedAuthenticationResponse";
+    SocksClientState[SocksClientState["SentFinalHandshake"] = 7] = "SentFinalHandshake";
+    SocksClientState[SocksClientState["ReceivedFinalResponse"] = 8] = "ReceivedFinalResponse";
+    SocksClientState[SocksClientState["BoundWaitingForConnection"] = 9] = "BoundWaitingForConnection";
+    SocksClientState[SocksClientState["Established"] = 10] = "Established";
+    SocksClientState[SocksClientState["Disconnected"] = 11] = "Disconnected";
+    SocksClientState[SocksClientState["Error"] = 99] = "Error";
+})(SocksClientState || (SocksClientState = {}));
+exports.SocksClientState = SocksClientState;
+
+},{}],341:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.validateSocksClientChainOptions = exports.validateSocksClientOptions = void 0;
+const util_1 = require("./util");
+const constants_1 = require("./constants");
+const stream = require("stream");
+/**
+ * Validates the provided SocksClientOptions
+ * @param options { SocksClientOptions }
+ * @param acceptedCommands { string[] } A list of accepted SocksProxy commands.
+ */
+function validateSocksClientOptions(options, acceptedCommands = ['connect', 'bind', 'associate']) {
+    // Check SOCKs command option.
+    if (!constants_1.SocksCommand[options.command]) {
+        throw new util_1.SocksClientError(constants_1.ERRORS.InvalidSocksCommand, options);
+    }
+    // Check SocksCommand for acceptable command.
+    if (acceptedCommands.indexOf(options.command) === -1) {
+        throw new util_1.SocksClientError(constants_1.ERRORS.InvalidSocksCommandForOperation, options);
+    }
+    // Check destination
+    if (!isValidSocksRemoteHost(options.destination)) {
+        throw new util_1.SocksClientError(constants_1.ERRORS.InvalidSocksClientOptionsDestination, options);
+    }
+    // Check SOCKS proxy to use
+    if (!isValidSocksProxy(options.proxy)) {
+        throw new util_1.SocksClientError(constants_1.ERRORS.InvalidSocksClientOptionsProxy, options);
+    }
+    // Validate custom auth (if set)
+    validateCustomProxyAuth(options.proxy, options);
+    // Check timeout
+    if (options.timeout && !isValidTimeoutValue(options.timeout)) {
+        throw new util_1.SocksClientError(constants_1.ERRORS.InvalidSocksClientOptionsTimeout, options);
+    }
+    // Check existing_socket (if provided)
+    if (options.existing_socket &&
+        !(options.existing_socket instanceof stream.Duplex)) {
+        throw new util_1.SocksClientError(constants_1.ERRORS.InvalidSocksClientOptionsExistingSocket, options);
+    }
+}
+exports.validateSocksClientOptions = validateSocksClientOptions;
+/**
+ * Validates the SocksClientChainOptions
+ * @param options { SocksClientChainOptions }
+ */
+function validateSocksClientChainOptions(options) {
+    // Only connect is supported when chaining.
+    if (options.command !== 'connect') {
+        throw new util_1.SocksClientError(constants_1.ERRORS.InvalidSocksCommandChain, options);
+    }
+    // Check destination
+    if (!isValidSocksRemoteHost(options.destination)) {
+        throw new util_1.SocksClientError(constants_1.ERRORS.InvalidSocksClientOptionsDestination, options);
+    }
+    // Validate proxies (length)
+    if (!(options.proxies &&
+        Array.isArray(options.proxies) &&
+        options.proxies.length >= 2)) {
+        throw new util_1.SocksClientError(constants_1.ERRORS.InvalidSocksClientOptionsProxiesLength, options);
+    }
+    // Validate proxies
+    options.proxies.forEach((proxy) => {
+        if (!isValidSocksProxy(proxy)) {
+            throw new util_1.SocksClientError(constants_1.ERRORS.InvalidSocksClientOptionsProxy, options);
+        }
+        // Validate custom auth (if set)
+        validateCustomProxyAuth(proxy, options);
+    });
+    // Check timeout
+    if (options.timeout && !isValidTimeoutValue(options.timeout)) {
+        throw new util_1.SocksClientError(constants_1.ERRORS.InvalidSocksClientOptionsTimeout, options);
+    }
+}
+exports.validateSocksClientChainOptions = validateSocksClientChainOptions;
+function validateCustomProxyAuth(proxy, options) {
+    if (proxy.custom_auth_method !== undefined) {
+        // Invalid auth method range
+        if (proxy.custom_auth_method < constants_1.SOCKS5_CUSTOM_AUTH_START ||
+            proxy.custom_auth_method > constants_1.SOCKS5_CUSTOM_AUTH_END) {
+            throw new util_1.SocksClientError(constants_1.ERRORS.InvalidSocksClientOptionsCustomAuthRange, options);
+        }
+        // Missing custom_auth_request_handler
+        if (proxy.custom_auth_request_handler === undefined ||
+            typeof proxy.custom_auth_request_handler !== 'function') {
+            throw new util_1.SocksClientError(constants_1.ERRORS.InvalidSocksClientOptionsCustomAuthOptions, options);
+        }
+        // Missing custom_auth_response_size
+        if (proxy.custom_auth_response_size === undefined) {
+            throw new util_1.SocksClientError(constants_1.ERRORS.InvalidSocksClientOptionsCustomAuthOptions, options);
+        }
+        // Missing/invalid custom_auth_response_handler
+        if (proxy.custom_auth_response_handler === undefined ||
+            typeof proxy.custom_auth_response_handler !== 'function') {
+            throw new util_1.SocksClientError(constants_1.ERRORS.InvalidSocksClientOptionsCustomAuthOptions, options);
+        }
+    }
+}
+/**
+ * Validates a SocksRemoteHost
+ * @param remoteHost { SocksRemoteHost }
+ */
+function isValidSocksRemoteHost(remoteHost) {
+    return (remoteHost &&
+        typeof remoteHost.host === 'string' &&
+        typeof remoteHost.port === 'number' &&
+        remoteHost.port >= 0 &&
+        remoteHost.port <= 65535);
+}
+/**
+ * Validates a SocksProxy
+ * @param proxy { SocksProxy }
+ */
+function isValidSocksProxy(proxy) {
+    return (proxy &&
+        (typeof proxy.host === 'string' || typeof proxy.ipaddress === 'string') &&
+        typeof proxy.port === 'number' &&
+        proxy.port >= 0 &&
+        proxy.port <= 65535 &&
+        (proxy.type === 4 || proxy.type === 5));
+}
+/**
+ * Validates a timeout value.
+ * @param value { Number }
+ */
+function isValidTimeoutValue(value) {
+    return typeof value === 'number' && value > 0;
+}
+
+},{"./constants":340,"./util":343,"stream":181}],342:[function(require,module,exports){
+(function (Buffer){(function (){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ReceiveBuffer = void 0;
+class ReceiveBuffer {
+    constructor(size = 4096) {
+        this.buffer = Buffer.allocUnsafe(size);
+        this.offset = 0;
+        this.originalSize = size;
+    }
+    get length() {
+        return this.offset;
+    }
+    append(data) {
+        if (!Buffer.isBuffer(data)) {
+            throw new Error('Attempted to append a non-buffer instance to ReceiveBuffer.');
+        }
+        if (this.offset + data.length >= this.buffer.length) {
+            const tmp = this.buffer;
+            this.buffer = Buffer.allocUnsafe(Math.max(this.buffer.length + this.originalSize, this.buffer.length + data.length));
+            tmp.copy(this.buffer);
+        }
+        data.copy(this.buffer, this.offset);
+        return (this.offset += data.length);
+    }
+    peek(length) {
+        if (length > this.offset) {
+            throw new Error('Attempted to read beyond the bounds of the managed internal data.');
+        }
+        return this.buffer.slice(0, length);
+    }
+    get(length) {
+        if (length > this.offset) {
+            throw new Error('Attempted to read beyond the bounds of the managed internal data.');
+        }
+        const value = Buffer.allocUnsafe(length);
+        this.buffer.slice(0, length).copy(value);
+        this.buffer.copyWithin(0, length, length + this.offset - length);
+        this.offset -= length;
+        return value;
+    }
+}
+exports.ReceiveBuffer = ReceiveBuffer;
+
+}).call(this)}).call(this,require("buffer").Buffer)
+},{"buffer":68}],343:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.shuffleArray = exports.SocksClientError = void 0;
+/**
+ * Error wrapper for SocksClient
+ */
+class SocksClientError extends Error {
+    constructor(message, options) {
+        super(message);
+        this.options = options;
+    }
+}
+exports.SocksClientError = SocksClientError;
+/**
+ * Shuffles a given array.
+ * @param array The array to shuffle.
+ */
+function shuffleArray(array) {
+    // tslint:disable-next-line:no-increment-decrement
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+exports.shuffleArray = shuffleArray;
+
+},{}],344:[function(require,module,exports){
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+__exportStar(require("./client/socksclient"), exports);
+
+},{"./client/socksclient":339}],345:[function(require,module,exports){
+arguments[4][196][0].apply(exports,arguments)
+},{"dup":196,"safe-buffer":314}],346:[function(require,module,exports){
+arguments[4][200][0].apply(exports,arguments)
+},{"dup":200}],347:[function(require,module,exports){
 'use strict';
 
 var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_'.split('')
@@ -64570,4 +69473,4 @@ yeast.encode = encode;
 yeast.decode = decode;
 module.exports = yeast;
 
-},{}]},{},[193]);
+},{}]},{},[201]);

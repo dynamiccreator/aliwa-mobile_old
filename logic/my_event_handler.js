@@ -1,10 +1,10 @@
 var event_reg=[];
 
-async function my_invoke(f_name, ...params){
+async function my_invoke(f_name,...params){
 
 for(var i=0,len=event_reg.length;i<len;i++){
 	if(event_reg[i].name==f_name){
-		return event_reg[i].func(...params);
+		return event_reg[i].func(f_name,...params);
 		}
 	}
 throw ("Handle '"+f_name+"' is not registered!");

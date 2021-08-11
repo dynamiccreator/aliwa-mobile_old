@@ -18,3 +18,5 @@ bs58_2 = require("bs58");
 EC = require("elliptic").ec;
 
 browser_Buffer = require('buffer');
+
+SocksProxyAgent = require('socks-proxy-agent');

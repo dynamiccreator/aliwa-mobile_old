@@ -9,7 +9,7 @@ class db_wallet {
        
 //       var sep_linux = process.cwd().indexOf("/") > -1;
 //       var sep = sep_linux ? "/" : "\\";
-       this.default_path = ""//process.cwd() + sep + "aliwa_dat" + sep + "light_wallet.dat";
+       this.default_path = "TESTNET_light_wallet.dat";//process.cwd() + sep + "aliwa_dat" + sep + "light_wallet.dat";
        
 //        if (!fs.existsSync(process.cwd() + sep + "aliwa_dat")) {
 //            fs.mkdirSync(process.cwd() + sep + "aliwa_dat");
@@ -17,19 +17,44 @@ class db_wallet {
        
     }
 
-    read_database(path) {
+   async  read_database(path) {       
         if (path == null) {
             path = this.default_path;
         }
 
+        try {          
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,function (fs) {
 
-        try {
-            var database_string = {};//fs.readFileSync(path).toString();
+                console.log('file system open: ' + fs.name);
+                fs.root.getFile(path, {create: false, exclusive: false}, function (fileEntry) {
+
+                    console.log("fileEntry is file?" + fileEntry.isFile.toString());
+                    console.log("fileEntry.fullPath:", fileEntry.fullPath)
+                    // fileEntry.name == 'someFile.txt'
+                    // fileEntry.fullPath == '/someFile.txt'
+                    readFile(fileEntry);                  
+                }, function (e) {                    
+                    console.log("onErrorReadFile", e);
+                    temp_wallet_saver="---read error---";
+                });
+            }, function (e) {               
+                console.log("onErrorLoadFs", e);
+                temp_wallet_saver="---read error---";
+            });
+
+
         } catch (err) {
             console.error(err);
             return "file not found";
+        } 
+        while(temp_wallet_saver=="file not found"){
+            await sync_sleep(5); 
+            if(temp_wallet_saver=="---read error---"){
+                return "file not found";
+            }
         }
-        return database_string;
+//        console.log("database_string: ",temp_wallet_saver)
+        return temp_wallet_saver;
     }
 
     async load_database(data, pw) {
@@ -76,6 +101,22 @@ class db_wallet {
 
         try {
           //  fs.writeFileSync(path, database_string);
+          temp_wallet_saver=database_string;
+          window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fs) {
+
+                console.log('file system open: ' + fs.name);
+                fs.root.getFile(path, {create: true, exclusive: false}, function (fileEntry) {
+
+                    console.log("fileEntry is file?" + fileEntry.isFile.toString());
+                    console.log("fileEntry.fullPath:",fileEntry.fullPath)
+                    // fileEntry.name == 'someFile.txt'
+                    // fileEntry.fullPath == '/someFile.txt'
+                   writeFile(fileEntry, database_string);
+
+                }, function(e){console.log("onErrorCreateFile",e);});
+
+            }, function(e){console.log("onErrorLoadFs",e);});
+          
         } catch (err) {
             console.error(err);
             return false;
@@ -86,26 +127,27 @@ class db_wallet {
     async get_argon2_password_data(pw, salt) {
 
         if (salt == null) {
-            salt = crypto.randomBytes(64).toString('hex');
+            var my_number_array = new Uint8Array(64);
+            salt = crypto.getRandomValues(my_number_array);    
+            salt=intArray_to_hex_string(salt);           
         }
-        salt =Buffer.from(salt, "hex");
+        salt =hexStringToByte(salt);      
         try {
 //              var hash = await argon2.hash(pw, {salt: salt, timeCost: "12", memoryCost: "24000", type: argon2.argon2id, version: 0x13, raw: true});
-              var hash=await argon2.hash({ //argon-browser ~7x slower
-                // required
-                pass: pw,
-                salt: salt,
-                // optional
-                time: 12, // the number of iterations
-                mem: 24000, // used memory, in KiB
-                hashLen: 32, // desired hash length
-                parallelism: 1, // desired parallelism (it won't be computed in parallel, however)
-                type: argon2.ArgonType.Argon2id});  
+              var hash = await hashwasm.argon2id({
+                password: pw,
+                salt, // salt is a buffer containing random bytes
+                parallelism: 1,
+                iterations: 12, //12,
+                memorySize: 24000, // use 24MB memory
+                hashLength: 32, // output size = 32 bytes
+                outputType: 'hex', // return standard encoded string containing parameters needed to verify the key
+            }); 
             
 //            console.log("get_argon2_password_data:--------------------");
 //            console.log(hash.toString("hex") + " | " + salt.toString("hex"));
-            hash = hash.hashHex;//hash.toString("hex");
-            salt = salt.toString("hex");
+//            hash = hash.toString("hex");
+            salt = intArray_to_hex_string(salt);
             return {hash: hash, salt: salt};
 
         } catch (err) {
@@ -832,9 +874,11 @@ class db_wallet {
         
         var unspent_arr_fully=db_unspent.find({'$or':
                     [{'$and': [{'mature': {'$aeq': 1}},{'create_height': {'$gt': (config.sync_height-5)}}]},
-                     {'mature' : {'$aeq': 0}}]})
-                    .sort( () => (crypto.randomInt(0,(Math.pow(2,48)-2))/(Math.pow(2,48)-1)) - 0.5) ;
-        var unspent_arr=db_unspent.find().sort( () => (crypto.randomInt(0,(Math.pow(2,48)-2))/(Math.pow(2,48)-1)) - 0.5) ;
+                     {'mature' : {'$aeq': 0}}]});
+                    //.sort( () => (crypto.randomInt(0,(Math.pow(2,48)-2))/(Math.pow(2,48)-1)) - 0.5) ;
+            shuffleArray(unspent_arr_fully);
+        var unspent_arr=db_unspent.find();//.sort( () => (crypto.randomInt(0,(Math.pow(2,48)-2))/(Math.pow(2,48)-1)) - 0.5) ;
+            shuffleArray(unspent_arr);
                
         var balance=config.balance.available;
         var dust_threshold=balance < 0.002 ? 0 : (balance < 0.02 ? 0.001 : (balance < 0.2 ? 0.01 : (balance < 2 ? 0.1 : (balance < 20 ? 0.1 : 1)))); 

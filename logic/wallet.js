@@ -1,9 +1,12 @@
 //intial states & data
 //  ->serverlist
 
-var aliwa_serverlist=[{label:"Default Server (onion)",address:"ws://aliwa5ld6pm66lbwb2kfyzvqzco24ihnmzoknvaqg4uqhpdtelnfa4id.onion:3000"},
+
+var aliwa_serverlist=[{label:"Default Server (onion)",address:"ws://fastyy35vqxve2vwo6rz6x5upbiqaazpyvymspkf4shzdzcohls2hvid.onion:3000"},                     
+                      {label:"Default Server #2 (onion)",address:"ws://fastgnwu34hphgehucqx54jlkwjysx3su66bxpx5zljgvdzsiho5jgad.onion:3000"},
+                      {label:"ALiWA Test server (onion)",address:"ws://aliwa5ld6pm66lbwb2kfyzvqzco24ihnmzoknvaqg4uqhpdtelnfa4id.onion:3000"},   
                       {label:"localhost",address:"ws://localhost:3000"},
-                      {label:"ssl example",address:"wss://example.com:port"}];
+                      {label:"ssl example",address:"wss://your_domain:port"}];
 
 
 class aliwa_wallet{       
@@ -52,7 +55,7 @@ class aliwa_wallet{
                                       is_notifications_enabled:false,
                                       aliwa_server_address_label:aliwa_serverlist[0].label,aliwa_server_address:aliwa_serverlist[0].address,
                                       has_backup:backup});
-                                  
+                              
         await this.set_wallet_pw(wallet_pw);                           
                                   
         //add basic contacts
@@ -66,8 +69,8 @@ class aliwa_wallet{
         
     }
     
-    read_wallet_DB(path){       
-        var data=this.db_wallet.read_database(path);
+    async read_wallet_DB(path){       
+        var data=await this.db_wallet.read_database(path);
         if(data=="file not found"){return false;}
         else{
             return data;
@@ -98,7 +101,7 @@ class aliwa_wallet{
         //start the server for light wallet 
         var cnf = this.db_wallet.get_config_values();
                
-        var SocksProxyAgent = require('socks-proxy-agent');
+//        var SocksProxyAgent = require('socks-proxy-agent');
         var agent = new SocksProxyAgent("socks://localhost:9050");
         
         
@@ -148,6 +151,7 @@ class aliwa_wallet{
 
             var message = JSON.parse(result.message);
             if (message.result == undefined || message.result == null) {
+                this.gui_was_updated = "failed_send";
                 return false;
             }
             if (message.result.length == 64) {    //only if result is a valid tx
@@ -164,6 +168,7 @@ class aliwa_wallet{
                 this.save_wallet(null);
             } else {
                 console.error(message.error);
+                this.gui_was_updated = "failed_send";
                 return message.error;
             }
 
@@ -207,7 +212,7 @@ class aliwa_wallet{
     }
     
      sync(st_start,ch_start){
-        if(!this.db_wallet.wallet_loaded && this.socket!=null){        
+        if(!this.db_wallet.wallet_loaded || this.socket==null){        
             return;
         }
         this.sync_state="syncing";
@@ -230,9 +235,10 @@ class aliwa_wallet{
         console.log("addresses | "+addresses.length);
 //        console.log(addresses);
 //    console.log('sync_from '+cnf.sync_height+"\n",cnf.last_rewind);
-        
+        var my_number_array = new Uint8Array(12);
+        var rand_num_arr = crypto.getRandomValues(my_number_array);  
        
-        this.sync_id=crypto.randomBytes(12).toString('hex');               
+        this.sync_id=intArray_to_hex_string(rand_num_arr);//crypto.randomBytes(12).toString('hex');               
         this.socket.emit('sync_from',cnf.sync_height, addresses,cnf.last_rewind,this.sync_id);
 //this.socket.emit('sync_from',0, addresses,cnf.last_rewind);
     }
@@ -341,7 +347,7 @@ class aliwa_wallet{
             this.db_wallet.update_config({"wallet_pw":null,"wallet_pw_salt":null,"wallet_pw_clear":null}); 
         }
         
-        this.save_wallet(null); 
+        this.save_wallet(null,true); 
         return true;
     }
     
@@ -468,7 +474,7 @@ class aliwa_wallet{
     
     get_highest_unused_receive_address(){
         var receive_addresses=this.db_wallet.get_receive_addresses();
-        var latest_addr=receive_addresses.chain().find().simplesort("pos", {desc: true}).data({forceClones: true, removeMeta: true})[0];  
+        var latest_addr=receive_addresses.chain().find().simplesort("pos", {desc: true}).data({forceClones: true, removeMeta: true})[0];      
         return latest_addr;
     }
     
@@ -641,6 +647,22 @@ class aliwa_wallet{
         
     }
     
+    async get_server_info(){
+        var cnf=this.db_wallet.get_config_values(); 
+        var info={};
+        info.blockheight=cnf.sync_height;  
+        info.server_name=cnf.aliwa_server_address_label;
+        info.server_address=cnf.aliwa_server_address;
+        if(cnf.aliwa_server_address!=undefined){
+        info.is_over_tor=cnf.aliwa_server_address.includes(".onion");
+        }else{
+            info.is_over_tor=false;
+        }
+            
+        return info;
+        
+    }
+    
      list_transactions(page, order_field, direction, search) {
         // returns the number of all transactions 
         // + an array of transactions ordered by order_field in acsending or descending order based on direction from page "page" 
@@ -709,7 +731,10 @@ class aliwa_wallet{
         this.socket.emit("send_raw_tx",hex,tx_object);             
     }
     
-    create_transaction(destinations,fee,utxo_result,fee_only) {        
+    create_transaction(destinations,fee,utxo_result,fee_only) { 
+        if(fee_only!=true && this.sync_state=="syncing"){            
+            return "server_not_synced";
+        }       
         var amount=numeral(0);
         for(var i=0;i<destinations.length;i++){
             amount.add(destinations[i].amount);
@@ -757,12 +782,11 @@ class aliwa_wallet{
                 
             var dest_copy=JSON.parse(JSON.stringify(destinations));
             var change_amount=numeral(utxo_result.sum.value()).subtract(amount.value()).value();
-//            console.log("change_amount:"+change_amount);
-            if(utxo_result.sum.value()!=amount.value()){
-                
-                
-                dest_copy.push({destination_address: change_address, amount: change_amount});
-                
+//            console.log("change_amount:"+change_amount);  
+            var has_change=false;
+            if(utxo_result.sum.value()!=amount.value()){                              
+                dest_copy.push({destination_address: change_address, amount: change_amount}); 
+                has_change=true;
             }    
 //            console.log("dest_copy",dest_copy);    
             var prepared_tx={inputs:tx_inputs,outputs:dest_copy};                     
@@ -772,11 +796,32 @@ class aliwa_wallet{
             var tx_size=build_tx.length/2; // 2 hex len  -> 1 byte len 
             var total_fee=numeral((Math.ceil((tx_size+10)/1000))).multiply(this.const_fee).value();
             if(fee!=total_fee){
-                console.error("fee to small: "+fee+ " < "+total_fee);
-                return this.create_transaction(destinations,total_fee,utxo_result,fee_only);
+                if(has_change && change_amount <= (numeral(this.const_fee).multiply(2).value()) ){
+                    var prepared_tx_2 = {inputs: tx_inputs, outputs: destinations};
+                    var build_tx_2 = this.wallet_functions.build_hex_transaction(prepared_tx_2);
+//            console.log(build_tx);
+
+                    var tx_size_2 = build_tx_2.length / 2; // 2 hex len  -> 1 byte len 
+                    var total_fee_2=numeral((Math.ceil((tx_size_2+10)/1000))).multiply(this.const_fee).value();
+                    if(numeral(total_fee).subtract(total_fee_2).value() == this.const_fee){
+//                        console.log("destinations:",destinations)
+                        return {hex:build_tx_2,
+                               fee: numeral(total_fee_2).add( numeral(change_amount).subtract(this.const_fee).value() ).value(),
+                               tx_object:prepared_tx_2};
+                    }
+                     else{
+//                      console.log("ELSE CASE 1")
+                        return this.create_transaction(destinations,total_fee,utxo_result,fee_only);
+                     }
+                }
+                else{
+//                  console.log("ELSE CASE 2")
+                    return this.create_transaction(destinations,total_fee,utxo_result,fee_only);
+                }                     
             }
             else{
 //                console.log("final fee: "+fee);
+//console.log("destinations:",dest_copy)
                 return {hex:build_tx,fee:fee,tx_object:prepared_tx};
             }
 
@@ -918,6 +963,8 @@ class aliwa_wallet{
         //rewind -100 in case other server has lower sync_height / different orphans
         this.db_wallet.delete_orphans(new_height);
        
+        this.sync_state="syncing";
+        this.gui_was_updated=false;
         
         
         this.connect_to_server();

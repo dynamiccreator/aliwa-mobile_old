@@ -74,14 +74,65 @@ var addressbook_receiving_last_search_time=0;
 var addressbook_contacts_sorting={page:0,field:"pos",descending:true,search:null};
 var addressbook_contacts_last_search_time=0;
 
+var last_backactionfunc=null;
+var backactionfunc=null;
 
 
 
+ async function gui() {  
+ /*   chrome.system.cpu.getInfo(async function(result) {
+        try {
+            var arch=result.archName;
+                  
+        if(arch.startsWith("i")){
+//            alert("Your CPU arch: 32 bit");
+            
+//            window.ShellExec.exec('uptime', function(res){
+//            console.log('exit status: ' + res.exitStatus)
+//            console.log('cmd output: ' + res.output)
+//          })
+          
+        window.ShellExec.exec('ls cd /', function (res) {
+            console.log('exit status: ' + res.exitStatus)
+            console.log('cmd output: ', res.output)
+            console.log('cmd output: ', res)
+        });
 
- async function gui() {    
-   //start_up    
-    view_start_up();
-
+          
+          
+         
+            
+            
+        }
+        if(arch.startsWith("x86")){
+            alert("Your CPU arch: x86");
+           
+        }
+         if(arch.startsWith("x86_64")){
+            alert("Your CPU arch: x86_64");
+           
+        }
+        if(arch.startsWith("arm64")){
+            alert("Your CPU arch: arm64");
+           
+        }
+        if(arch.startsWith("armeabi")){
+            alert("Your CPU arch: armeabi");
+           
+        }
+        setTimeout(function(){
+            show_dialogue_info(templ_loads,"CPU TYPE",result.archName,"OK",function(){});
+        },1000); 
+        } catch (e) {
+            alert(e);
+        }
+    
+        //start_up    
+        view_start_up();
+    });
+*/
+  //start_up    
+  view_start_up();   
     }
 
 
@@ -155,12 +206,28 @@ function view_start_up(){
                 $('#view_start_up_when_wallet_encrypted').slideDown(800,"easeInOutQuad");
                 $('#view_start_up_when_wallet_exists').slideDown(800,"easeInOutQuad");
                 $('#view_start_up_button_open_wallet').off("click").on("click",async function(){
-                    var password=$("#view_startup_input_password").val();
-                    var try_password=await my_invoke("load_wallet",password);
-                    if(try_password){view_overview();}
-                    else{
+                    $(this).hide(0);
+                    $("#view_start_up_button_open_wallet_loading").show(0);
+
+                    if ($("#view_startup_input_password").val() == "") {
+                        $(this).show(0);
+                        $("#view_start_up_button_open_wallet_loading").hide(0);
                         $('#view_start_up_button_open_wallet').transition('shake');
-                        show_popup_action(templ_loads,"error","Wrong Password");
+                        show_popup_action(templ_loads, "error", "Password must not be empty!");
+                        return;
+                    }
+
+                    var password = $("#view_startup_input_password").val();
+                    var try_password = await my_invoke("load_wallet", password);
+                    if (try_password) {
+                        view_overview();
+                    } else {
+                        $(this).show(0);
+                        $("#view_start_up_button_open_wallet_loading").hide(0);
+                        $('#view_start_up_button_open_wallet').transition('shake');
+                        show_popup_action(templ_loads, "error", "Wrong Password");
+                        $("#view_startup_input_password").focus();
+
                     }
                 });
                 
@@ -248,9 +315,8 @@ function view_import_from_seed() {
      show_dialogue_modal(templ_loads,"Import Wallet Method","You can enter your Backup Phrase or import from file.","Import from File","Enter Backup Prase",null
         ,async function(){                                             
                 setTimeout(async function(){
-                    var import_path=await my_invoke('import_file_dialogue');
-                    console.log("import_path:",import_path);
-                    if(!import_path.canceled){                       
+                    var import_path=await my_invoke('import_file_dialogue');                  
+                    if(import_path){                       
                         setTimeout(function(){
                             $('.ui.modal').modal("hide");
                             view_start_up();
@@ -267,6 +333,15 @@ function view_import_from_seed() {
         if (seed_words == "") {
             seed_words = null;
         }
+        if(seed_words == null || seed_words.length<1){ 
+//            $('.ui.modal').modal("hide");
+//            setTimeout(function () {
+//                show_dialogue_info(templ_loads,"Empty Seed!","Your seed must not be empty!","OK",function(){});
+//            }, 300);
+             $("#dialogues_input_yes").transition('shake');
+             show_popup_action(templ_loads,"error","Your seed must not be empty!"); 
+            return;
+        }
         $('.ui.modal').modal("hide");
         setTimeout(function () {
                     show_dialogue_input(templ_loads, "Enter your seed password.", "Enter your seed password", "Seed password", "text", "Proceed", "Abort", "data", async function () {
@@ -278,6 +353,16 @@ function view_import_from_seed() {
 
                         await my_invoke('create_wallet', seed_words, seed_pw, null, true);
                         await my_invoke("load_wallet", null);
+                        var seed_words_loaded=await my_invoke("get_wallet_seed");
+                        if(seed_words!=seed_words_loaded.seed_words){                           
+                            alert("CREATE WALLET - I/O ERROR \n\n Could not write or read wallet from disk.\n Your wallet was NOT created!\n Try again or contact support.");
+                            $('.ui.modal').modal("hide");
+                            setTimeout(function () {
+                                view_start_up();
+                            }, 300);
+                            return;
+                        }
+                        
                         $('.ui.modal').modal("hide");
                         setTimeout(function () {
                             view_overview();
@@ -349,11 +434,20 @@ function actions_overview(){
      $("#view_settings").off("click").on("click",function(){
         view_settings();              
      });
-     
+            
      //show balance
      set_balance();
      
      start_sync_interval();
+}
+
+async function set_about() {
+    var server_infos = await my_invoke("get_server_info");
+//    console.log(server_infos)
+    $("#view_about_blockheight").text(server_infos.blockheight);
+    $("#view_about_server_label").text(server_infos.server_name);
+    $("#view_about_server_address").text(server_infos.server_address);
+    $("#view_about_is_tor").text((server_infos.is_over_tor ? "Yes" : "No"));
 }
 
 async function set_balance() {
@@ -373,18 +467,20 @@ async function set_balance() {
         if(selected!=undefined && selected!=null)
         {selected=selected.toLowerCase()}
         else{selected="usd"}
-        var calc_total=numeral(global_balance.total).multiply(alias_prices[selected]).value();
-        var format_l=Math.ceil((Math.log(calc_total)/Math.log(9.99999)*-1))+2;
-        format_l= format_l > 8 ? 8 : format_l; //infinity memory error !!!!!!!!!!!!!!!!!!!!!!!!!       
-        format_l=format_l<2 ? 2 : format_l;
-        var f_string="";
-        for(var i=0;i<format_l;i++){
-         f_string+="0";   
-        }
-        console.log(calc_total+" | "+f_string)
-//        var formatted_currency_value=numeral(global_balance.total).multiply(alias_prices[selected]).value();
+        try {
+            var calc_total = numeral(global_balance.total).multiply(alias_prices[selected]).value();
+            var format_l = Math.ceil((Math.log(calc_total) / Math.log(9.99999) * -1)) + 2;
+            format_l = format_l > 8 ? 8 : format_l; //infinity memory error !!!!!!!!!!!!!!!!!!!!!!!!!       
+            format_l = format_l < 2 ? 2 : format_l;
+            var f_string = "";
+            for (var i = 0; i < format_l; i++) {
+                f_string += "0";   
+            }
+            console.log(calc_total+" | "+f_string)
+//          var formatted_currency_value=numeral(global_balance.total).multiply(alias_prices[selected]).value();
         
-        $("#balance_currency").text(numeral(global_balance.total).multiply(alias_prices[selected]).format("0."+f_string));
+            $("#balance_currency").text(numeral(global_balance.total).multiply(alias_prices[selected]).format("0."+f_string));
+        } catch (e) {}
         $("#currency").text(selected.toUpperCase());
 
         //update send
@@ -395,7 +491,8 @@ async function set_balance() {
 async function start_sync_interval(){   
     if(sync_interval==null){
       sync_interval=setInterval(async function(){
-            load_balance();     
+            load_balance();
+            set_about();
             }, 250);
     }
 }
@@ -404,6 +501,13 @@ async function load_balance(){
     var sync_state = await my_invoke("get_sync_state");
             if (sync_state == "synced") {
                 var was_updated= await my_invoke("gui_was_updated");
+                //failed sends
+                if(was_updated=="failed_send"){                  
+                    setTimeout(function(){
+                        show_dialogue_info(templ_loads,"SEND ERROR!","Your transaction could not be sent! <br><br> This could be caused by an unsynced server, no sufficient funds or other unknown reasons.","OK",function(){});
+                    },4000);
+                    await my_invoke("set_gui_updated");
+                }
                 if(!was_updated){                  
                     await my_invoke("set_gui_updated");
                     //update overview and Send
@@ -412,7 +516,7 @@ async function load_balance(){
                     alias_prices= await my_invoke("get_alias_prices");                 
                     set_balance();
                     
-                                                         
+                                                     
                     //update transactions
                    if($("#view_transactions_table_body").html()!=null){
                        // console.log($("#view_transactions_table_body"))
@@ -429,11 +533,16 @@ async function load_balance(){
                     //update tx and etc. 
                     if(notifications_enabled){
                         var notifications= await my_invoke("get_notifications");
-                        for(var i=0;i<notifications.length;i++){
-                            new Notification(notifications[i].title, {
-                                icon: 'view_resources/img/aliwa_light.png',
-                                body: notifications[i].body
-                            });
+                        for(var i=0;i<notifications.length;i++){                           
+//                            new Notification(notifications[i].title, {
+//                                icon: 'view_resources/img/aliwa_light.png',
+//                                body: notifications[i].body
+//                            });
+                              cordova.plugins.notification.local.schedule({
+                                title: notifications[i].title,
+                                text: notifications[i].body,
+                                foreground: true
+                              });
                         }
                     }
                 }
@@ -513,26 +622,99 @@ function view_send(user_inputs){
          view_overview();
      });
      
-     $("#view_send_button_copy").off("click").on("click",async function(){
-          try {
-            var clip_text=await navigator.clipboard.readText();
-//          console.log(clip_text);
-          $("#view_send_input_destination").val(clip_text.trim());
-//          await set_label_from_contacts(); 
-          $("#view_send_input_destination").trigger("change");     
-        } catch (e) {
-            console.error(e);
-        }
-
-                
+     if(backactionfunc!=null){document.removeEventListener("backbutton",backactionfunc);}
+     document.addEventListener("backbutton", backactionfunc = function(e){
+         e.preventDefault();
+         fill_send_form(false);
+         view_overview();
+         document.removeEventListener("backbutton",backactionfunc);
      });
      
-     $("#view_send_button_scan").off("click").on("click",async function(){
-         fill_send_form(false);
-          //cordova camera
-          //qr reader
-          //....
+     $("#view_send_button_copy").off("click").on("click",async function(){
+         cordova.plugins.clipboard.paste(function (clip_text) {
+            $("#view_send_input_destination").val(clip_text.trim());
+//          await set_label_from_contacts(); 
+            $("#view_send_input_destination").trigger("change");    
+             
+         });
+                                   
      });
+     
+    $("#view_send_button_scan").off("click").on("click", async function () {
+        // Start a scan. Scanning will continue until something is detected or
+// `QRScanner.cancelScan()` is called.
+        QRScanner.show(function(status){
+        console.log(status);       
+        }); 
+        $("nav,#tab_main_tab,section,.segment").css("opacity","0");
+        $("body").append('<div id="aliwa_qr_expand_icon" style="position:fixed;top:calc(50% - 20vw);width:100%;height:100%;height:100vh;opacity:100%;z-index:1000;text-align:center;"><i class="ui inverted expand icon" style="font-size:40vw !important;"></i></div>');
+        $("body").append('<div id="aliwa_qr_flash_icon" style="position:fixed;top:85vh;width:100%;height:100%;height:100vh;opacity:100%;z-index:1000;text-align:center;"><button class="ui icon button" style="background:#382b3f;border-radius:10px;"><i class="ui inverted bolt icon huge"></i></button></div>');
+        
+        var flash_on=false;
+        $('#aliwa_qr_flash_icon').off("click").on("click",function(){
+            if(!flash_on){
+                QRScanner.enableLight(function(err, status){
+                err && console.error(err);
+                console.log(status);
+                });
+                flash_on=true;
+            }
+            else{
+                QRScanner.disableLight(function(err, status){
+                err && console.error(err);
+                console.log(status);
+                });
+                flash_on=false;
+            }
+        });
+        
+         if(backactionfunc!=null){document.removeEventListener("backbutton",backactionfunc);}
+         document.addEventListener("backbutton", backactionfunc = function(e){
+             
+         e.preventDefault();   
+         document.removeEventListener("backbutton",backactionfunc);
+            QRScanner.disableLight(function(err, status){
+            err && console.error(err);
+            console.log(status);
+            });
+         
+            QRScanner.destroy(function (status) {
+                console.log(status);
+                $("nav,#tab_main_tab,section,.segment").css("opacity", "100");
+                $("#aliwa_qr_expand_icon").remove();
+                $("#aliwa_qr_flash_icon").remove();
+                $("html").css("background-color", "#382b3f");
+                $("body").css("background-color", "#382b3f");
+                show_popup_action(templ_loads,"error","QR-Scan canceled!",250);
+            });        
+     });
+
+        QRScanner.scan(displayContents);
+
+        function displayContents(err, text) {  
+            QRScanner.disableLight(function(err, status){
+            err && console.error(err);
+            console.log(status);
+            });
+            
+            
+            QRScanner.destroy(function (status) {
+                console.log(status);
+                $("nav,#tab_main_tab,section,.segment").css("opacity", "100");
+                $("#aliwa_qr_expand_icon").remove();
+                $("#aliwa_qr_flash_icon").remove();
+                $("html").css("background-color", "#382b3f");
+                $("body").css("background-color", "#382b3f");
+            });
+           
+            if (err) {
+                // an error occurred, or the scan was canceled (error code `6`)
+                show_popup_action(templ_loads,"error","QR-Scan Error",250);
+            } else {
+                fill_from_qr_code_text(text);
+            }
+        }
+    });
      
      $("#view_send_button_address_book").off("click").on("click",function(){
          fill_send_form(false);
@@ -689,6 +871,35 @@ function view_send(user_inputs){
      });     
 }
 
+function fill_from_qr_code_text(qr_text){
+    try {       
+         if(qr_text.startsWith("alias:")){
+             var qr_text=qr_text.substring(6);
+             var split_text=qr_text.split("?");
+             
+             var address=split_text[0];
+             var rest=split_text[1].split("=");
+             var label=decodeURIComponent(rest[1].split("&")[0]);
+             var narration=decodeURIComponent(rest[2].split("&")[0]);
+             var amount=decodeURIComponent(rest[3]);
+             
+           //  alert(address+" | "+label+" | "+narration+" | "+amount);
+             $("#view_send_input_destination").val(address).trigger("change");
+             $("#view_send_input_label").val(label).trigger("change");
+             $("#view_send_input_note").val(narration).trigger("change");
+             $("#view_send_input_amount").val(amount).trigger("change");
+         }
+         else{
+          //  alert(qr_text);
+            $("#view_send_input_destination").val(qr_text).trigger("change");
+            
+         }
+} catch (e) {
+alert(e);
+}
+   
+}
+
 function set_view_send_currency(){
     $("#view_send_input_amount").off("change").on("change",function(){
         set_view_send_currency();
@@ -703,8 +914,12 @@ function set_view_send_currency(){
         var amount=($("#view_send_input_amount").val()=="" ? "0" : $("#view_send_input_amount").val()); 
         amount=amount.replace(",",".");  
         
-        $("#send_currency_value").text(numeral((isNaN(amount) ? 0 : amount)).multiply(alias_prices[selected_currency.toString().toLowerCase()]).format("0.00000000"));
-         
+        try {
+        $("#send_currency_value").text(numeral((isNaN(amount) ? 0 : amount)).multiply(alias_prices[selected_currency.toString().toLowerCase()]).format("0.00000000"));    
+        } catch (e) {
+            
+        }
+              
      });
 }
 
@@ -892,6 +1107,7 @@ async function open_send_dialogue(list_only){
                 }
              }
              var tx_info=await my_invoke("get_raw_tx",tx_dest);
+             if(tx_info=="server_not_synced"){show_popup_action(templ_loads,"error","Wallet is not connected or synced with the server!",2500);return;}
              if(tx_info==false){show_popup_action(templ_loads,"error","Unknown error"); return;}
              
              var fee=tx_info.fee;
@@ -964,6 +1180,13 @@ function clear_send_form() {
     $("#view_send_input_label").val("");
     $("#view_send_input_note").val("");
     $("#view_send_input_amount").val("");
+    
+    input_clear_button_func("#view_send_input_destination","#view_send_input_destination_clear");
+    input_clear_button_func("#view_send_input_label","#view_send_input_label_clear");
+    input_clear_button_func("#view_send_input_note","#view_send_input_note_clear");
+    input_clear_button_func("#view_send_input_amount","#view_send_input_amount_clear");
+    
+    $("#view_send_input_amount").trigger("change");
 }
 
 async function add_or_update_contact(address,label) {
@@ -1138,9 +1361,15 @@ async function view_receive(){
          view_overview();
      });
      
+     if(backactionfunc!=null){document.removeEventListener("backbutton",backactionfunc);}
+     document.addEventListener("backbutton", backactionfunc = function(e){
+         e.preventDefault();     
+         view_overview();
+         document.removeEventListener("backbutton",backactionfunc);
+     });
      
      
-     
+         
      $("#view_receive_address_address").text(address_obj.address);
      $("#view_receive_address_label").text(address_obj.label);
      $("#view_receive_address_label_input").val(address_obj.label!=null ? address_obj.label : "");
@@ -1163,7 +1392,7 @@ async function view_receive(){
 //     });
      
      $("#view_receive_copy_button").off("click").on("click",function(){
-          navigator.clipboard.writeText($("#view_receive_address_address").text());
+          cordova.plugins.clipboard.copy($("#view_receive_address_address").text());
          show_popup_action(templ_loads,"info","Address copied");
      });
      
@@ -1271,7 +1500,7 @@ async function view_receive_payment(address_obj){
 //     });
      
      $("#view_receive_payment_copy_button").off("click").on("click",function(){        
-         navigator.clipboard.writeText("alias:"+address_obj.address+"?label="+encodeURIComponent($("#view_receive_payment_address_label").text())+"&narration="+encodeURIComponent($("#view_receive_payment_note_input").val())+"&amount="+encodeURIComponent($("#view_receive_payment_amount_input").val())+"");
+         cordova.plugins.clipboard.copy("alias:"+address_obj.address+"?label="+encodeURIComponent($("#view_receive_payment_address_label").text())+"&narration="+encodeURIComponent($("#view_receive_payment_note_input").val())+"&amount="+encodeURIComponent($("#view_receive_payment_amount_input").val())+"");
          show_popup_action(templ_loads,"info","Payment copied");                           
      });
             
@@ -1297,6 +1526,13 @@ async function view_address_book_contacts(){
      });
      $("#view_back_current").off("click").on("click",function(){
          view_overview();
+     });
+     
+     if(backactionfunc!=null){document.removeEventListener("backbutton",backactionfunc);}
+     document.addEventListener("backbutton", backactionfunc = function(e){
+         e.preventDefault();     
+         view_overview();
+         document.removeEventListener("backbutton",backactionfunc);
      });
      
     address_book_contacts_actions();
@@ -1637,7 +1873,7 @@ function address_book_receiving_actions(){
     
     $('#tab_first').off("click").on('click',function(){
           tab_address_book_contacts();
-      }); 
+      });
       
       $(".address_book_line_receiving").off("click").on("click",function(){
        show_dialogue_address($(this),templ_loads,"receiving");       
@@ -1863,6 +2099,17 @@ async function view_settings(){
          view_overview();
      });
      
+//     $("backbutton").off("trigger").on("trigger",function(e){
+//         e.preventDefault();
+//         view_overview();
+//     });
+     if(backactionfunc!=null){document.removeEventListener("backbutton",backactionfunc);}
+     document.addEventListener("backbutton", backactionfunc = function(e){
+         e.preventDefault();
+         view_overview();
+         document.removeEventListener("backbutton",backactionfunc);
+     });
+     
      //settings
      $("#settings_backup").off("click").on("click",function(){
          view_backup();
@@ -1903,9 +2150,17 @@ async function view_settings(){
         $("#Settings_notifications_enabled").find("input[type=checkbox]").prop("checked",false);
       }
       
-      $("#Settings_notifications_enabled").off("click").on("click", async function (e) {
-          e.preventDefault();
-          console.log('$(this).find("input[type=checkbox]").prop("checked"):',$(this).find("input[type=checkbox]").prop("checked"))
+      $("#Settings_notifications_enabled").find("input[type=checkbox]").off("click").on("click", async function (e) {
+            if (notifications_enabled) {
+                $(this).prop("checked", true);
+            } else {
+                $(this).prop("checked", false);
+            }
+      });
+      
+    $("#Settings_notifications_enabled").off("click").on("click", async function (e) {
+//          e.preventDefault();
+//          console.log('$(this).find("input[type=checkbox]").prop("checked"):',$(this).find("input[type=checkbox]").prop("checked"))
         if ($(this).find("input[type=checkbox]").prop("checked")) {
             $(this).find("label").text('OFF');
 //            $(this).find("input[type=checkbox]").trigger('click');
@@ -1922,16 +2177,21 @@ async function view_settings(){
             notifications_enabled = true;
             
             
-            new Notification("ALiWa Wallet", {
-                icon: 'view_resources/img/aliwa_light.png',
-                body: "Notifications enabled"
-            });
-                    
+//                new Notification("ALiWa Wallet", {
+//                    icon: 'view_resources/img/aliwa_light.png',
+//                    body: "Notifications enabled"
+//                });
+                  cordova.plugins.notification.local.schedule({
+                    title: 'ALiWa Wallet',
+                    text: 'Notifications enabled',
+                    foreground: true
+                  });
+                                                                  
             await my_invoke("set_notifications_enabled", true);
             await my_invoke("save_wallet", null);
             
             
-        }            
+        }       
     });
     
      $("#settings_custom_server").off("click").on("click",function(){
@@ -2142,7 +2402,7 @@ async function view_settings_custom_server(){
             return;
             }
             
-            show_dialogue_input(templ_loads, "Edit Server", "Enter a label and a server address.<br>", "Address", "text", "Edit Server Server", "Abort", "data", async function () {
+            show_dialogue_input(templ_loads, "Edit Server", "Edit address of server <b>\""+cur_label+"\"</b><br>", "Address", "text", "Edit Server", "Abort", "data", async function () {
             var address = $("#dialogues_input_input").val();
                  
             var can_add = await my_invoke("edit_aliwa_server_address",cur_label,address);            
@@ -2155,6 +2415,7 @@ async function view_settings_custom_server(){
                 show_popup_action(templ_loads, "error", "Unknown error!");
             }
             }, async function () {});
+            setTimeout(function(){$("#dialogues_input_input").val(cur_address);},50);
         }
         
         if(view_settings_custom_server_site_state=="delete" && $(this).hasClass("aliwa_custom_server_address_item")){          
@@ -2236,6 +2497,13 @@ async function tab_to_transactions(){
       $('#tab_first').off("click").on('click',function(){
           tab_to_overview();
       });
+      
+      if(backactionfunc!=null){document.removeEventListener("backbutton",backactionfunc);}
+     document.addEventListener("backbutton", backactionfunc = function(e){
+         e.preventDefault();     
+          tab_to_overview();
+         document.removeEventListener("backbutton",backactionfunc);
+     });
       
       
          
@@ -2562,7 +2830,7 @@ function view_single_transaction_in_dialogue(tx,full_tx,confirmations) {
      
         
         //tx
-        $("#single_transaction_dialogue_tx_link a").attr("href", 'https://chainz.cryptoid.info/alias/tx.dws?' + tx + '.htm');
+        $("#single_transaction_dialogue_tx_link a").attr("href", 'https://chainz.cryptoid.info/alias-test/tx.dws?' + tx + '.htm');
         $("#single_transaction_dialogue_tx_link a").text(tx);
 
         $("#single_transaction_dialogue_tx_link").off("click").on("click", function () {
@@ -2573,12 +2841,13 @@ function view_single_transaction_in_dialogue(tx,full_tx,confirmations) {
             
             $("#single_transaction_dialogue_popup_tx_confirm").off("click").on("click", async function () {
                 await my_invoke("open_tx_link", $("#single_transaction_dialogue_tx_link a").attr("href"));
+//                  window.open($("#single_transaction_dialogue_tx_link a").attr("href"), _system);
             });
                        
         });
         
         //blockhash
-        $("#single_transaction_dialogue_blockhash_link a").attr("href", 'https://chainz.cryptoid.info/alias/block.dws?' + full_tx.blockhash + '.htm');
+        $("#single_transaction_dialogue_blockhash_link a").attr("href", 'https://chainz.cryptoid.info/alias-test/block.dws?' + full_tx.blockhash + '.htm');
         $("#single_transaction_dialogue_blockhash_link a").text(full_tx.blockhash);
 
         $("#single_transaction_dialogue_blockhash_link").off("click").on("click", function () {
@@ -2590,6 +2859,7 @@ function view_single_transaction_in_dialogue(tx,full_tx,confirmations) {
             
             $("#single_transaction_dialogue_popup_blockhash_confirm").off("click").on("click", async function () {
                 await my_invoke("open_tx_link", $("#single_transaction_dialogue_blockhash_link a").attr("href"));
+//                  window.open($("#single_transaction_dialogue_blockhash_link a").attr("href"), _system);
             });
                        
         });
@@ -2628,7 +2898,7 @@ function view_single_transaction_in_dialogue(tx,full_tx,confirmations) {
         
         $(".single_transaction_dialogue_destinations_copy_address").off("click").on("click", function () {
             var clip_text=$(this).find("i").attr("value");                  
-           navigator.clipboard.writeText(clip_text);
+           cordova.plugins.clipboard.copy(clip_text);
            show_popup_action(templ_loads,"info","Address copied");
         });
         
@@ -2735,7 +3005,8 @@ function view_transactions(){
 
 async function view_set_password(startup=false,seed_words){
     window.scrollTo(0, 0);
-    if(startup){       
+    if(startup){
+         $("view_set_password_button_setPassword").text("Create Wallet Now");
          $("body").html(templ_loads["set_password"]+"</div>").hide();
          $("body").fadeIn(100,"easeInOutQuad");
          $("#view_set_password_input_OldPassword_fluid,#view_set_password_input_OldPassword_label").hide();
@@ -2878,6 +3149,15 @@ async function view_set_password(startup=false,seed_words){
             if(startup){
                 await my_invoke('create_wallet', seed_words.seed_words, seed_words.seed_pw, null,true);
                 await my_invoke("load_wallet", null);
+                var seed_words_loaded = await my_invoke("get_wallet_seed");
+                if (seed_words.seed_words != seed_words_loaded.seed_words) {
+                    alert("CREATE WALLET - I/O ERROR \n\n Could not write or read wallet from disk.\n Your wallet was NOT created!\n Try again or contact support.");
+                    $('.ui.modal').modal("hide");
+                    setTimeout(function () {
+                        view_start_up();
+                    }, 300);
+                    return;
+                }
                 view_overview();
                 return;
             }                      
@@ -2905,10 +3185,21 @@ async function view_set_password(startup=false,seed_words){
             if(startup){
                 await my_invoke('create_wallet', seed_words.seed_words, seed_words.seed_pw, new_pw,true);
                 await my_invoke("load_wallet", new_pw);
+                var seed_words_loaded = await my_invoke("get_wallet_seed");
+                if (seed_words.seed_words != seed_words_loaded.seed_words) {
+                    alert("CREATE WALLET - I/O ERROR \n\n Could not write or read wallet from disk.\n Your wallet was NOT created!\n Try again or contact support.");
+                    $('.ui.modal').modal("hide");
+                    setTimeout(function () {
+                        view_start_up();
+                    }, 300);
+                    return;
+                }
                 view_overview();
                 return;
-            }
-            
+            }            
+            $(this).hide(0);
+            $("#view_set_password_button_setPassword_loading").show(0);
+            $("#view_set_password_button_setPassword").text("Hashing Password").addClass("loading");
             var is_set= await my_invoke("set_password",new_pw);
             view_settings();
             setTimeout(function(){show_popup_action(templ_loads,"info","Password was set!");},300);
@@ -3050,6 +3341,13 @@ async function view_backup_page_start_up_info(startup,segment,seed_words){
         view_settings();
     });
     
+    if(backactionfunc!=null){document.removeEventListener("backbutton",backactionfunc);}
+     document.addEventListener("backbutton", backactionfunc = function(e){
+         e.preventDefault();     
+         view_settings();
+         document.removeEventListener("backbutton",backactionfunc);
+     });
+    
     $("#view_backup_it_is_safe").off("click").on("click",function(e){         
        if($("#view_backup_it_is_safe_checkbox").prop("checked")==true){
         $("#view_backup_it_is_safe_checkbox").prop("checked", false);} 
@@ -3065,14 +3363,32 @@ async function view_backup_page_start_up_info(startup,segment,seed_words){
         $("#view_backup_it_is_safe_checkbox").prop("checked", true);}
    });   
      
-    $("#view_start_backup_button").off("click").on("click", function () {
-        if($("#view_backup_it_is_safe_checkbox").prop("checked")==true){
-            view_backup_page_write_down(startup,segment,seed_words,1); 
+    $("#view_start_backup_button").off("click").on("click", async function () {
+        var pw_result=true;
+        if(!startup){
+             pw_result = await my_invoke("compare_password", "");
         }
-        else{
-           show_popup_action(templ_loads, "error", 'Select the "It is safe" checkbox!');
+          
+        if ($("#view_backup_it_is_safe_checkbox").prop("checked") == true) {
+            if (pw_result) {
+                view_backup_page_write_down(startup, segment, seed_words, 1);
+            } else {
+                show_dialogue_input(templ_loads, "Enter Password", "Your password is required.<br>", "Password", "password", "Show Backup Phrase", "Abort", "data", async function () {
+                    var pw_result = await my_invoke("compare_password", $("#dialogues_input_input").val());
+                    if (pw_result) {
+                        $('.ui.modal').modal("hide");
+                        setTimeout(function(){view_backup_page_write_down(startup, segment, seed_words, 1);},300);
+                    } else {
+                        $("#dialogues_input_yes").transition('shake');
+                        show_popup_action(templ_loads, "error", "Wrong password!");
+                    }
+
+                }, async function () {});
+            }
+        } else {
+            show_popup_action(templ_loads, "error", 'Select the "It is safe" checkbox!');
         }
-       
+                   
     });
     
     if(startup){
@@ -3238,7 +3554,16 @@ function view_backup_page_seed_password_no_backup(startup,segment,seed_words){
                     seed_pw = null;
         }
         await my_invoke('create_wallet', seed_words.seed_words, seed_pw, null);
-        await my_invoke("load_wallet", null);       
+        await my_invoke("load_wallet", null); 
+        var seed_words_loaded = await my_invoke("get_wallet_seed");
+        if (seed_words.seed_words != seed_words_loaded.seed_words) {
+            alert("CREATE WALLET - I/O ERROR \n\n Could not write or read wallet from disk.\n Your wallet was NOT created!\n Try again or contact support.");
+            $('.ui.modal').modal("hide");
+            setTimeout(function () {
+                view_start_up();
+            }, 300);
+            return;
+        }
         view_overview();
     });
     
@@ -3364,7 +3689,7 @@ function view_backup_page_verify(startup,segment,seed_words){
             }
             else{return;}
             console.log(autocomplete_bip39($(this).val(),seed_words_split));
-            var auto_text=autocomplete_bip39($(this).val(),seed_words_split);
+            var auto_text=autocomplete_bip39($(this).val().toString().toLowerCase(),seed_words_split);
              $(this).parent().find(".aliwa_autocomplete_popup").css("visibility","hidden");
             if(auto_text.length>0){
                 var auto_items="";
@@ -3476,9 +3801,6 @@ function view_backup_page_verify(startup,segment,seed_words){
                 if (seed_words.seed_pw == "") {
                     seed_words.seed_pw = null;
                 }
-//                await my_invoke('create_wallet', seed_words.seed_words, seed_words.seed_pw, null);
-//                await my_invoke("load_wallet", null);
-//                view_overview();
                   view_set_password(true,seed_words); 
             } else {
                 await my_invoke("set_backup");
@@ -3498,7 +3820,7 @@ function autocomplete_bip39(input,seed_words){
     var outlist=[];
     if(input.length>0){
         for(var i=0;i<seed_words.length;i++){
-            if(seed_words[i].startsWith(input)){
+            if(seed_words[i].toString().toLowerCase().startsWith(input)){
                 outlist.push(seed_words[i]);
             }
         }

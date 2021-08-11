@@ -4,8 +4,8 @@
    var wallet=null;
    var syncing_loop_timeout=null;
    
-   
-
+  
+         
 document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
     console.log(cordova.file);
@@ -32,7 +32,7 @@ function onDeviceReady() {
           
    my_handle('open_wallet', async (event) => {
     var wal = new aliwa_wallet();
-    var data = wal.read_wallet_DB();
+    var data = await wal.read_wallet_DB();
     if (data == false) {return false;}
     else{ return true;}
    });
@@ -48,7 +48,7 @@ function onDeviceReady() {
     //inital update for address gen
     await wal.db_wallet.update_addressbook_receive(-1);   
     await wal.save_wallet(null,true,true);  
-    var data = wal.read_wallet_DB();
+    var data = await wal.read_wallet_DB();
     if (data == false) {return false;}
     else{ return true;}
    });
@@ -94,8 +94,9 @@ function onDeviceReady() {
         wallet=null;
     }
     wallet = new aliwa_wallet();
-    var data = wallet.read_wallet_DB();
-    var can_load_db = await wallet.load_wallet_DB(data, pw);   
+    var data = await wallet.read_wallet_DB();
+    var can_load_db = await wallet.load_wallet_DB(data, pw); 
+    console.log("can_load_db ?: ",can_load_db)
     if (can_load_db === true) {
         await wallet.connect_to_server();
         if(syncing_loop_timeout!=null){
@@ -124,6 +125,11 @@ function onDeviceReady() {
         return balance;   
    });
    
+    my_handle('get_server_info', async (event) => {     
+        var info=await wallet.get_server_info();
+        return info;   
+   });
+   
    //RECEIVE*****************************************************************
        my_handle('get_latest_receive_addr', async (event) => {             
         return wallet.get_highest_unused_receive_address();
@@ -144,8 +150,24 @@ function onDeviceReady() {
    
    //SENDING***************************************************************** 
     my_handle('send', async (event,tx_info) => {             
-        console.log("before_sending: ",tx_info);
-        wallet.send_transaction(tx_info.hex,tx_info.tx_object);
+      //  console.log("before_sending: ",JSON.stringify(tx_info));
+       //CLEAN Private and Public KEYS!!!!
+       var cleaned_tx_info={};
+       cleaned_tx_info.inputs=[];
+       for(var i=0;i<tx_info.tx_object.inputs.length;i++){
+           var input={};
+           input.prev_tx=tx_info.tx_object.inputs[i].prev_tx;
+           input.input_index=tx_info.tx_object.inputs[i].input_index;
+           input.script_pubkey=tx_info.tx_object.inputs[i].script_pubkey;        
+           cleaned_tx_info.inputs.push(input);
+       }
+       cleaned_tx_info.outputs=JSON.parse(JSON.stringify(tx_info.tx_object.outputs));
+//       for(var i=0;i<tx_info.tx_object.outputs.length;i++){
+//           var outputs={};             
+//           cleaned_tx_info.outputs.push(JSON.parse(JSON.stringify(outputs[i])));
+//       }
+       console.log(JSON.stringify(cleaned_tx_info));
+        wallet.send_transaction(tx_info.hex,cleaned_tx_info);
    });
    
    my_handle('get_fee', async (event,destinations) => {
@@ -154,7 +176,7 @@ function onDeviceReady() {
         if(tx_build.exceed!=undefined){
             console.log("exceed returned with: "+tx_build.exceed);
             return tx_build;
-        }    
+        }        
         return tx_build.fee;
         }
         else{return false;}
@@ -320,7 +342,7 @@ var addFileEntry = function (entry) {
        window.resolveLocalFileSystemURL(localURLs[i], function(sub){
            alert("SUB: "+JSON.stringify(sub)); 
        }, addError);
-    }
+       }
     var dirReader = entry.createReader();
     dirReader.readEntries(
         function (entries) {
@@ -362,14 +384,20 @@ for (i = 0; i < localURLs.length; i++) {
 
         
         
-        return false;
-    });
+       return false;
+   });
    my_handle('import_file_dialogue', async (event) => {
+        
+       const file = await chooser.getFile();
+       
+       console.log(file ? file.name : 'canceled');
+       console.log(file ? file : 'canceled');
+       
        /*var filename = await dialog.showOpenDialog({title:"Import Backup File",buttonLabel:"Import Backup File"});
        console.log(filename);
        if(!filename.canceled){
            var wal = new aliwa_wallet();
-           var data = wal.read_wallet_DB(filename.filePaths[0]);
+           var data = await wal.read_wallet_DB(filename.filePaths[0]);
            if (data == false) {console.log("nothing to read");return false;}
            else{ 
                 try {
@@ -384,7 +412,7 @@ for (i = 0; i < localURLs.length; i++) {
             }                                             
        }*/
        return false;
-   }); 
+   });
    
    //save on exit test
 //   ipcMain.handle('wallet_save_on_exit', async (event) => {
@@ -395,4 +423,48 @@ for (i = 0; i < localURLs.length; i++) {
         if(wallet!=null){
             await wallet.save_wallet(null,true);
         }
-    }        
+    }
+    
+ 
+document.addEventListener("pause", async () => {   
+      await save_on_exit();
+}, false);    
+
+ temp_wallet_saver="file not found";
+ sync_sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+
+function writeFile(fileEntry, dataObj) {
+    // Create a FileWriter object for our FileEntry (log.txt).
+    fileEntry.createWriter(function (fileWriter) {
+
+        fileWriter.onwriteend = function() {
+            console.log("Successful file write...");    
+        };
+
+        fileWriter.onerror = function (e) {
+            console.log("Failed file write: " + e.toString());
+        };
+
+        // If data object is not passed in,
+        // create a new Blob instead.
+        if (!dataObj) {
+            dataObj = new Blob(['some file data'], { type: 'text/plain' });
+        }
+
+        fileWriter.write(dataObj);
+    });
+}
+
+function readFile(fileEntry) {
+
+    fileEntry.file(function (file) {
+        var reader = new FileReader();       
+       reader.onloadend = function() {
+            console.log("Successful file read: ");// + this.result);
+//            displayFileData(fileEntry.fullPath + ": " + this.result);
+            temp_wallet_saver=this.result;           
+        };
+        reader.readAsText(file);  
+       
+    }, function(){console.error("onErrorReadFile");temp_wallet_saver="---read error---";});
+}

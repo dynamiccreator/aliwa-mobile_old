@@ -28,7 +28,7 @@ function show_dialogue_address(current_line,templ_loads,type){
             
 //            console.log("copy to clipboard:"+clip_text);
            
-           navigator.clipboard.writeText(clip_text);
+           cordova.plugins.clipboard.copy(clip_text);
            show_popup_action(templ_loads,"info","Address copied");
         });
         
